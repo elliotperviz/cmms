@@ -19,7 +19,7 @@ Why?
 - Over the duration of the course, you will learn both how to use the simulation software, and the manipulation of input and output data through the guided tutorials that we have prepared.
 
 ### 1. Download the tutorial files
-First, clone this github repository to download the prepared input files. In the Linux the following commands in the location where you would like to download the files:
+First, clone this github repository to download the prepared input files. In the Linux terminal copy the following commands in the location where you would like to download the files:
 ```bash
 mkdir cmms
 cd cmms
@@ -33,7 +33,7 @@ For your convenience, we have prepared scripts to simplify some aspects of post-
 commands here
 ```
 
-To understand the purpose of the different scripts, more context is provided in the README file in the scripts folder: [scripts/README.md]
+To understand the purpose of the different scripts, more context is provided in the README file in the [scripts](scripts/) folder.
 
 For your reference, we provide a list of the relevant software used throughout the tutorials below:
 [list here]
