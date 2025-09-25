@@ -23,10 +23,10 @@ Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying p
 
 ### 1) Minimisation - minimise potential energy
 Objectives: <br>
-I)   Check optimised system is physically reasonable with VMD <br>
-	[hint: use output trajectory file ending .lammpstrj] <br>
-II)  Ensure maximum forces are less than chosen tolerance (verification of force field part) <br>
-	[hint: check standard out or log.lammps] <br>
+	I)   Check optimised system is physically reasonable with VMD <br>
+		[hint: use output trajectory file ending .lammpstrj] <br>
+	II)  Ensure maximum forces are less than chosen tolerance (verification of force field part) <br>
+		[hint: check standard out or log.lammps] <br>
            
 ### 2) Heating - initialise velocities at 10K, heat to 500K
 	Objectives:
