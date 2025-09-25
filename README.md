@@ -1,8 +1,9 @@
 # Computational Methods for Materials Science
 Here you will find lecture and tutorial material for the course **Computational Methods for Materials Science**.
 
-Written by Prof. Antonio Cammarata and MSc. Elliot Perviz<br>
-Maintained by MSc. Elliot Perviz
+Written and maintained by<br>
+- Prof. Antonio Cammarata (cammaant@fel.cvut.cz)<br>
+- MSc. Elliot Perviz (perviell@fel.cvut.cz)<br>
 
 ## Installation (software and tutorial material)
 
