@@ -2,8 +2,8 @@
 
 In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) to calculate
 - a) the diffusion coefficient, and
-- b) the pair correlation function
-of Argon at 94.4 K and 1.374 g cm<sup>-3<\sup>
+- b) the pair correlation function <br>
+of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>
 
 The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964.
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
