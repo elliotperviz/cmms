@@ -15,7 +15,10 @@ Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying p
 
 ## Simulation procedure:
 ### 0) Initialisation - initialise randomised positions and velocities
-**Objectives**: [this output is pre-done as this step can take a long time]
+
+**Note**: this initialisation step is pre-calculated, since the simulation time is long. You may use the output provided, or run the calculation yourself.
+
+<u>Objectives</u>:
 
 --- OPTIONAL ---<br>
 - Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate<br>
