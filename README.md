@@ -9,11 +9,11 @@ Written and maintained by<br>
 
 In the laboratory sessions, the machines are prepared to have all relevant software pre-installed. The **only requirement** is to clone this github repository to download the prepared input files. Use the following commands in the location where you would like to download the files:
 
-``bash
-mkdir cmms
-cd cmms
-git clone https://github.com/elliotperviz/cmms.git
-``
+```bash
+mkdir cmms<br>
+cd cmms<br>
+git clone https://github.com/elliotperviz/cmms.git<br>
+```
 
 For your reference, we provide a list of the relevant software used throughout the tutorials below:
 [list here]
