@@ -9,8 +9,8 @@ of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>.
 The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964.
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
-**Outline**:
-Step 1 - minimising the potential (no time, no Newton's equations)
+## Outline
+Step 1 - minimising the potential (no time, no Newton's equations) <br>
 Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying potential, kinetic energy etc. in time)
 
 ## Simulation procedure:
