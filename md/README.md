@@ -10,7 +10,7 @@ The setup of this investigation is based on the paper *Correlations in the Motio
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
 For further resources, for example if you want to setup your own LAMMPS simulation, we recommend you to check out the LAMMPS manual. It is a complete and well-written resource that you should use to check the proper usage of commands, and how to setup up different types of simulations, and also to find relevant references. See the following link: <br>
-docs.lammps.org
+[https://docs.lammps.org]
 
 ## Outline
 How to setup a LAMMPS simulation to measure equilibrium properties of a system...
