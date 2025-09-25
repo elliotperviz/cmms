@@ -18,18 +18,21 @@ Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying p
 
 **Note**: this initialisation step is pre-calculated, since the simulation time is long. You may use the output provided, or run the calculation yourself.
 
-<u>Objectives</u>:
+**Objectives**
+
 
 --- OPTIONAL ---<br>
 - Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate<br>
 [hint: plot total energy as a function of time, fit straight line]<br>
 
 ### 1) Minimisation - minimise potential energy
-Objectives: <br>
-	I)   Check optimised system is physically reasonable with VMD <br>
-		[hint: use output trajectory file ending .lammpstrj] <br>
-	II)  Ensure maximum forces are less than chosen tolerance (verification of force field part) <br>
-		[hint: check standard out or log.lammps] <br>
+
+**Objectives**
+
+- I) Check optimised system is physically reasonable with VMD <br>
+	[hint: use output trajectory file ending .lammpstrj] <br>
+- II) Ensure maximum forces are less than chosen tolerance (verification of force field part) <br>
+	[hint: check standard out or log.lammps]
            
 ### 2) Heating - initialise velocities at 10K, heat to 500K
 	Objectives:
