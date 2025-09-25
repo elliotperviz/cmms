@@ -9,7 +9,7 @@ Written and maintained by<br>
 
 ## Installation (software and tutorial material)
 
-### 0. Foreword
+### 0. Let's get started
 In the laboratory sessions, the machines are prepared to have all relevant software pre-installed. As such, the necessary preparation steps are minimal.
 
 It is important to be aware that we use machines with a **Linux operating system** installed. Moreover, we will almost exclusively work inside the **Linux terminal**, both for installation and to carry out the various tutorials in the laboratory.
@@ -38,13 +38,15 @@ commands here
 
 To understand the purpose of the different scripts, more context is provided in the README file in the [scripts](scripts/) folder.
 
+### 3. Additional information
+
 For your reference, we provide a list of the relevant software used throughout the tutorials below:
 [list here]
 
 For installation on your home computer, please check the relevant installation guides for the different software packages. [In the future, we may provide short installation guides here for different types of machine]
 
-
-
 ## Tutorial Outline
+Add to this section as the tutorial material is checked
 ### Subsection
+
 
