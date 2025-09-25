@@ -1,8 +1,14 @@
-LAMMPS Molecular Dynamics Tutorial
+# Molecular Dynamics Tutorial
 
-Goal: Calculate a) diffusion coefficient and b) pair correlation function of Argon at 94.4 K and 1.374 g cm^{-3}
+In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) to calculate
+- a) the diffusion coefficient, and
+- b) the pair correlation function
+of Argon at 94.4 K and 1.374 g cm<sup>-3<\sup>
 
-Important:
+The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964.
+[DOI: https://doi.org/10.1103/PhysRev.136.A405]
+
+Outline:
 Step 1 - minimising the potential (no time, no Newton's equations)
 Steps 2-5 - integrate Newton's equations (time, potential, kinetic energy...)
 
@@ -15,21 +21,21 @@ Extract data:
 Plotting/fitting:
 ---> Use gnuplot
 
-Simulation procedure:
-0) Initialisation - initialise randomised positions and velocities
+## Simulation procedure:
+### 0) Initialisation - initialise randomised positions and velocities
 	Objectives: [the output is pre-done as this step is long]
 	--- OPTIONAL ---
 	I)   Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate
 	     [hint: plot total energy as a function of time, fit straight line]
 
-1) Minimisation - minimise potential energy
+### 1) Minimisation - minimise potential energy
 	Objectives:
 	I)   Check optimised system is physically reasonable with VMD
 	     [hint: use output trajectory file ending .lammpstrj]
         II)  Ensure maximum forces are less than chosen tolerance (verification of force field part)
              [hint: check standard out or log.lammps]
            
-2) Heating - initialise velocities at 10K, heat to 500K
+### 2) Heating - initialise velocities at 10K, heat to 500K
 	Objectives:
 	I)   Check integration scheme and choice of timestep are appropriate
 	     [hint: integrate Newton's equations in NVE and plot total energy as a
@@ -41,14 +47,14 @@ Simulation procedure:
 	IV)  Integrate Newton's equations and heat to 5000K in NVT ensemble
 	     [hint: you must first disable NVE integration]
 
-3) Cooling - cool system to 94.4 K (our target temperature)
+### 3) Cooling - cool system to 94.4 K (our target temperature)
 	Objectives:
 	I)   Check T reaches 94.4 K
 	     [hint: Plot T vs t]
 	--- OPTIONAL ---
 	II)  Integration Newton's equations and cool to 94.4K in NVT ensemble
 	
-4) Equilibration - prepare system for measurement at 94.4 K
+### 4) Equilibration - prepare system for measurement at 94.4 K
 	Objectives:
 	I)   Check system is in equilibrium
 	     [hint: Plot T vs t, fit straight line]
@@ -57,7 +63,7 @@ Simulation procedure:
 	     as a function of time, should observe reduction in stddev as t increases
 	     [hint: using moving_avg_stddev.c code (must be compiled first)]
 	     
-5) Production - calculate diffusion coefficient (D) and pair correlation function 
+### 5) Production - calculate diffusion coefficient (D) and pair correlation function 
 	Objectives:
 	I)   Calculate D
 	     [hint: plot mean square displacement vs time, D is proportional to
