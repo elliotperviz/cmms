@@ -6,10 +6,15 @@ In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecula
 
 of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>.
 
-The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964.
+The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964. <br>
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
+For further resources, for example if you want to setup your own LAMMPS simulation, we recommend you to check out the LAMMPS manual. It is a complete and well-written resource that you should use to check the proper usage of commands, and how to setup up different types of simulations, and also to find relevant references. See the following link: <br>
+docs.lammps.org
+
 ## Outline
+How to setup a LAMMPS simulation to measure equilibrium properties of a system...
+
 Step 1 - minimising the potential (no time, no Newton's equations) <br>
 Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying potential, kinetic energy etc. in time)
 
