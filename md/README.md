@@ -4,14 +4,14 @@ In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecula
 - a) the diffusion coefficient, and
 - b) the pair correlation function
 
-of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>
+of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>.
 
 The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964.
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
 Outline:
 Step 1 - minimising the potential (no time, no Newton's equations)
-Steps 2-5 - integrate Newton's equations (time, potential, kinetic energy...)
+Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying potential, kinetic energy etc. in time)
 
 Observe trajectories:
 ---> Use VMD
@@ -24,17 +24,17 @@ Plotting/fitting:
 
 ## Simulation procedure:
 ### 0) Initialisation - initialise randomised positions and velocities
-	Objectives: [the output is pre-done as this step is long]
-	--- OPTIONAL ---
-	I)   Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate
-	     [hint: plot total energy as a function of time, fit straight line]
+Objectives: [this output is pre-done as this step can take a long time]
+--- OPTIONAL ---
+I)   Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate
+[hint: plot total energy as a function of time, fit straight line]
 
 ### 1) Minimisation - minimise potential energy
-	Objectives:
-	I)   Check optimised system is physically reasonable with VMD
-	     [hint: use output trajectory file ending .lammpstrj]
-        II)  Ensure maximum forces are less than chosen tolerance (verification of force field part)
-             [hint: check standard out or log.lammps]
+Objectives:
+I)   Check optimised system is physically reasonable with VMD
+	[hint: use output trajectory file ending .lammpstrj]
+II)  Ensure maximum forces are less than chosen tolerance (verification of force field part)
+	[hint: check standard out or log.lammps]
            
 ### 2) Heating - initialise velocities at 10K, heat to 500K
 	Objectives:
