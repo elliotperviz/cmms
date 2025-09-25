@@ -1,0 +1,63 @@
+# H2O molecule in a big box
+# Geometry is optimized with ixc=1 functional (LDA=CA), but density
+# is calculated with ixc=11 (GGA=PBE)
+# Print the charge density that corresponds to optimized 
+# interatomic distance.
+
+pseudos = "o.psp8, h.psp8"
+prtden 1
+prtposcar 1
+prtdipole 1
+prtcif 1
+prtgeo 2
+
+ixc    11
+
+#-----------------------------------------------------------------
+
+
+#Definition of the unit cell
+acell 15 15 15    # The keyword "acell" refers to the
+                  # lengths of the primitive vectors (in Bohr)
+rprim  1 0 0      # Real space PRIMitive translations
+       0 1 0
+       0 0 1 
+
+#Definition of the atom types
+ntypat 2          # There is only one type of atom
+znucl 8 1           # The keyword "znucl" refers to the atomic number of the 
+                  # possible type(s) of atom. The pseudopotential(s) 
+                  # mentioned in the "files" file must correspond
+                  # to the type(s) of atom. 
+
+
+#Definition of the atoms
+natom 3           # There are three atoms
+typat 1 2 2       # the first is of type 1, the second and the third are of type 2
+#typat 1 2*2
+xred                                                           # This keyword indicate that the location of the atoms
+ 4.9762495126E-01  5.0000000000E-01  5.0000000000E-01         # will follow, one triplet of number for each atom
+ 5.7452083037E-01  4.0358751724E-01  5.0000000000E-01         # Triplet giving the coordinates of atom 1, in Bohr
+ 5.7452083037E-01  5.9641248276E-01  5.0000000000E-01         # Triplet giving the coordinates of atom 2, in Bohr
+
+#Definition of the planewave basis set
+ecut 20.0         # Maximal kinetic energy cut-off, in Hartree
+
+#Definition of the k-point grid
+kptopt 0          # Enter the k points manually 
+nkpt 1            # Only one k point is needed for isolated system,
+                  # taken by default to be 0.0 0.0 0.0
+
+#Definition of the SCF procedure
+nstep 100          # Maximal number of SCF cycles
+toldfe 1.0d-8     # Will stop when, twice in a row, the difference
+                  # between two consecutive evaluations of total energy
+                  # differ by less than toldfe (in Hartree)
+                  # This value is way too large for most realistic studies of materials
+diemac 2.0        # Although this is not mandatory, it is worth to
+                  # precondition the SCF cycle. The model dielectric
+                  # function used as the standard preconditioner
+                  # is described in the "dielng" input variable section.
+                  # Here, we follow the prescriptions for molecules
+                  # in a big box
+

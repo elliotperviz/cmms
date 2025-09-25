@@ -1,0 +1,94 @@
+# Crystalline silicon 
+#
+
+pseudos "si.psp8"
+#spgroup 227
+#brvltt 0
+chkprim 0
+#tolsym 1e-6
+chksymbreak = 0
+
+#Definition of the unit cell
+acell 1.0 1.0 1.0 Angstrom 
+rprim     0.0000000000000000    2.7833000421500003    2.7833000421500003     
+          2.7833000421500003    0.0000000000000000    2.7833000421500003     
+          2.7833000421500003    2.7833000421500003    0.0000000000000000     
+
+#Definition of the atom types
+ntypat 1          # There is only one type of atom
+znucl 14          # The keyword "znucl" refers to the atomic number of the 
+                  # possible type(s) of atom. The pseudopotential(s) 
+                  # mentioned in the "files" file must correspond
+                  # to the type(s) of atom. Here, the only type is Silicon.
+
+
+#Definition of the atoms
+natom 2           # There are two atoms
+typat 1 1         # They both are of type 1, that is, Silicon.
+xred              # This keyword indicate that the location of the atoms
+                  # will follow, one triplet of number for each atom
+   0.0  0.0  0.0  # Triplet giving the REDUCED coordinate of atom 1.
+   1/4  1/4  1/4  # Triplet giving the REDUCED coordinate of atom 2.
+                  # Note the use of fractions (remember the limited 
+                  # interpreter capabilities of ABINIT)
+
+#Definition of the planewave basis set
+ecut  500 eV         # Maximal kinetic energy cut-off, in Hartree
+
+#Definition of the k-point grid
+kptopt 1          # Option for the automatic generation of k points, taking
+                  # into account the symmetry
+ngkpt 7 7 7       # This is a 2x2x2 grid based on the primitive vectors
+
+#Definition of the SCF procedure
+nstep 20          # Maximal number of SCF cycles
+diemac 12.0       # Although this is not mandatory, it is worth to
+                  # precondition the SCF cycle. The model dielectric
+                  # function used as the standard preconditioner
+                  # is described in the "dielng" input variable section.
+                  # Here, we follow the prescription for bulk silicon.
+
+ndtset 3 jdtset 1 2 3
+
+#DATASET1 : scf calculation: GS WF in the BZ
+#********************************************
+   toldfe1    1.0d-6
+
+#DATASET2 : non scf calculation: GS WF in the whole BZ
+#*****************************************************
+   getden2    1
+   kptopt2    3
+     iscf2   -2
+   getwfk2    1
+   tolwfr2    1.0d-10
+    nband2    20
+dosdeltae2    0.0069986 eV
+   prtdos2    3
+  prtdosm2    1
+   prtelf2    2
+
+#DATASET3 : Electronic Band Structure
+#********************************************
+  getden3   1
+  getwfk3   1
+  prtden3   0
+  tolwfr3   1.0d-8
+  nband3    20
+  iscf3     -2
+  kptopt3   -11
+  ndivsm3   10
+  kptbounds3
+   0.0000   0.0000   0.0000   ! \Gamma
+   0.5000   0.0000   0.5000   ! X
+   0.5000   0.2500   0.7500   ! W
+   0.3750   0.3750   0.7500   ! K
+   0.0000   0.0000   0.0000   ! \Gamma
+   0.5000   0.5000   0.5000   ! L
+   0.6250   0.2500   0.6250   ! U
+   0.5000   0.2500   0.7500   ! W
+   0.5000   0.5000   0.5000   ! L
+   0.3750   0.3750   0.7500   ! K
+   0.6250   0.2500   0.6250   ! U
+   0.5000   0.0000   0.5000   ! X
+
+

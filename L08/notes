@@ -1,0 +1,22 @@
+- describe the input and output files
+- mention existence of abipy but use gnuplot and xmgrace for results
+- describe the variational theorem for the energy and basis set
+- describe how to use cut3d to produce input files for VESTA
+
+H2_1: The H2 molecule without convergence studies
+https://docs.abinit.org/tutorial/base1/
+
+H2_2: The H2 molecule without convergence studies, computation of the interatomic distance from PEC
+https://docs.abinit.org/tutorial/base1/#computation-of-the-interatomic-distance-method-1
+	Experimental H2 bond length: 1.401 Bohr
+
+H2_3: The H2 molecule without convergence studies, computation of the charge density
+https://docs.abinit.org/tutorial/base1/#computation-of-the-charge-density
+
+H2O_ixc11: The H2O molecule converged with ixc=11 PBE functional, computation of the charge density
+
+H2O_ixc1: The H2O molecule converged with ixc=1 LDA functional, computation of the charge density
+	Experimental OH bond length 0.96 A, H-O-H angle 104.5 deg, dipole 1.85 D
+	
+
+

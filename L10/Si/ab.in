@@ -1,0 +1,77 @@
+# Crystalline silicon 
+#
+prtposcar 1
+prtgeo 2
+
+pseudos "si.psp8"
+
+#Definition of the unit cell
+acell 1.0 1.0 1.0 Angstrom
+rprim  
+      0.0000000000000000    2.7833000421500003    2.7833000421500003
+     2.7833000421500003    0.0000000000000000    2.7833000421500003
+     2.7833000421500003    2.7833000421500003    0.0000000000000000      
+
+#Definition of the atom types
+ntypat 1          # There is only one type of atom
+znucl 14          # The keyword "znucl" refers to the atomic number of the 
+                  # possible type(s) of atom. The pseudopotential(s) 
+                  # mentioned in the "files" file must correspond
+                  # to the type(s) of atom. Here, the only type is Silicon.
+
+#Definition of the atoms
+natom 2             
+typat 1 1
+#typat 2*1          
+#     Si
+xred              
+   0.0000000000000000  0.0000000000000000  0.0000000000000000
+  0.2500000000000000  0.2500000000000000  0.2500000000000000                 
+                  
+
+#Definition of the planewave basis set
+ecut  400.0  eV      
+ecutsm 0.5
+
+#Definition of the k-point grid
+kptopt 1          # Option for the automatic generation of k points, taking
+                  # into account the symmetry
+ngkpt 4 4 4       # This is a 2x2x2 grid based on the primitive vectors
+nshiftk 4         # of the reciprocal space (that form a BCC lattice !),
+                 # repeated four times, with different shifts :
+shiftk 0.5 0.5 0.5
+       0.5 0.0 0.0
+       0.0 0.5 0.0
+       0.0 0.0 0.5
+                  # In cartesian coordinates, this grid is simple cubic, and
+                  # actually corresponds to the
+                  # so-called 4x4x4 Monkhorst-Pack grid
+
+#Definition of the SCF procedure
+nstep 10          # Maximal number of SCF cycles
+toldfe 1.0d-9 eV  # Will stop when, twice in a row, the difference 
+                  # between two consecutive evaluations of total energy 
+                  # differ by less than toldfe (in Hartree) 
+                  # This value is way too large for most realistic studies of materials
+diemac 12.0       # Although this is not mandatory, it is worth to
+                  # precondition the SCF cycle. The model dielectric
+                  # function used as the standard preconditioner
+                  # is described in the "dielng" input variable section.
+                  # Here, we follow the prescription for bulk silicon.
+
+ndtset 2 jdtset 1 2
+
+#DATASET 1: SCF
+##############
+ iscf1   17
+
+#DATASET 2: geometry optimization
+#################################
+ dilatmx2  1.1
+ optcell2  2
+ ionmov2   2
+ ntime2    300
+ tolmxf2   5.0d-5
+
+
+

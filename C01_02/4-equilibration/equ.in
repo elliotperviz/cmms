@@ -1,0 +1,60 @@
+
+### begin ##############
+clear                  # just for fun
+
+units           real   # mass = grams/mole					      
+		       # distance = Angstroms				     
+		       # time = femtoseconds				     
+		       # energy = Kcal/mole					     
+		       # velocity = Angstroms/femtosecond			     
+		       # force = Kcal/mole-Angstrom				     
+		       # temperature = Kelvin				     
+		       # pressure = atmospheres				     
+		       # charge = multiple of electron charge (1.0 is a proton)  
+		       # density = gram/cm^3                                   
+
+boundary        p p p  # periodic in all directions
+
+atom_style	atomic # no bonds, angles, charges
+
+pair_style	lj/cut 7.65 # pairwise interaction
+########################
+
+### initial conf #######
+read_data       cool_final.data # read a data file
+########################
+
+### force field part ###
+pair_coeff	1 1 0.238464804 3.4 7.65 # define the force field parameters
+########################
+
+### neighbor list ######
+neighbor	5.0 bin # define the skin
+
+neigh_modify	every 1 delay 10 check yes # options of the neighbor list
+########################
+
+### output definition ##
+thermo		1 # every many steps output is printed
+
+thermo_style    custom time etotal pe ke temp press # print thermodynamic variables
+########################
+
+# print the trajectory
+dump		traj all custom 100 equ.lammpstrj element x y z
+dump_modify 	traj element Ar
+dump_modify 	traj sort id
+########################
+
+### MD run #############
+timestep	10.0
+
+fix		integ all nve # integrate equation of motion
+fix 		thermos all temp/berendsen 94.4 94.4 1000.0 # Berendsen thermostat
+
+run 		50000
+########################
+
+### write data #########
+write_data      equ_final.data
+########################
