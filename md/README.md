@@ -9,25 +9,16 @@ of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>.
 The setup of this investigation is based on the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964.
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
-Outline:
+**Outline**:
 Step 1 - minimising the potential (no time, no Newton's equations)
 Steps 2-5 - integrate Newton's equations, obtain dynamical trajectory (varying potential, kinetic energy etc. in time)
 
-Observe trajectories:
----> Use VMD
-
-Extract data:
----> Use awk/sed and grep, or vim visual mode
-
-Plotting/fitting:
----> Use gnuplot
-
 ## Simulation procedure:
 ### 0) Initialisation - initialise randomised positions and velocities
-Objectives: [this output is pre-done as this step can take a long time]
---- OPTIONAL ---
-I)   Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate
-[hint: plot total energy as a function of time, fit straight line]
+Objectives: [this output is pre-done as this step can take a long time] <br>
+--- OPTIONAL ---<br>
+- Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate<br>
+[hint: plot total energy as a function of time, fit straight line]<br>
 
 ### 1) Minimisation - minimise potential energy
 Objectives: <br>
@@ -48,7 +39,7 @@ II)  Ensure maximum forces are less than chosen tolerance (verification of force
 	IV)  Integrate Newton's equations and heat to 5000K in NVT ensemble
 	     [hint: you must first disable NVE integration]
 
-### 3) Cooling - cool system to 94.4 K (our target temperature)
+### 3) Cooling - cool system to 94.4 K
 	Objectives:
 	I)   Check T reaches 94.4 K
 	     [hint: Plot T vs t]
@@ -70,5 +61,15 @@ II)  Ensure maximum forces are less than chosen tolerance (verification of force
 	     [hint: plot mean square displacement vs time, D is proportional to
 	     gradient. Recall definition of D from lecture notes]
 	II)  Calculate pair correlation function [NOT WORKING]
+
+## Post-processing and analysis
+Observe trajectories:
+---> Use VMD
+
+Extract data:
+---> Use awk/sed and grep, or vim visual mode
+
+Plotting/fitting:
+---> Use gnuplot
 	     [hint: Compile rdf.f90 and run on output...this script is not working right now]
 		
