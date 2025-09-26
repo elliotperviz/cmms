@@ -11,7 +11,7 @@ When we perform a MD simulation, generally we might be interested in the dynamic
 - The choice of statistical ensemble (effectively, the constraints we impose on the system)
 
 If we wish to measure equilibrium properties, we **must** ensure the system is suitably equilibrated over the duration of the measurement. In the ideal case, Hamiltonian dynamics ensures that an isolated system conserves the total energy exactly, so in the microcanonical (NVE) ensemble the sum of kinetic and potential energies is constant. However, in practice, when we setup an MD simulation we face two important issues:
-1 - 
+1. bla bla bla 
 
 For example, to sample the microcanonical NVE ensemble, we should have an isolated system with fixed number of particles (N), fixed volume (V), and constant total energy (E). In practice, when we setup the MD simulation we fix N and V by definition of the simulation box. The same cannot be said for the total energy - even if we isolate the simulation box, in general there can be exchange between kinetic and potential energy...
 
