@@ -2,17 +2,20 @@
 
 ## What is Molecular Dynamics?
 
+[Reference to relevant chapter in lecture notes]
+
 Molecular Dynamics (MD) is a computational simulation method that models the time evolution of the *state* of a system of particles (i.e. their positions and momenta) via Newton's Equations of motion. The time integration is implemented numerically, such that we solve to obtain the state of the system at discrete *timesteps* in our chosen time window. Suppose we specify the initial configuration (positions and momenta at time t=0) - at the end of the integration we have a deterministic *dynamical trajectory*, which tells us the variation of the system state as a function of time.
 
-When we perform a MD simulation, generally we might be interested in the dynamical variation of a particular observable property of the system, or perhaps its average values over time. Measuring the dynamical variation is simple, in the sense that if we are able to derive the observable property based on the positions and momenta of the particles, we simply perform this calculation at each timestep of the numerical integration and extract the output. Calculating the time average is also easy, we take the average of the dynamical variation of the observable property in time. However, the interpretation of this time average depends on a number of factors:
+When we perform a MD simulation, generally we might be interested in the dynamical variation of a particular observable property of the system, or perhaps its average values over time. Measuring the dynamical variation is simple, in the sense that if we are able to derive the observable property based on the positions and momenta of the particles, we simply perform this calculation at each timestep of the numerical integration and extract the output. Calculating the time average is also easy, we take the average of the dynamical variation of the observable property in time. However, the interpretation of this time average depends on a some key factors:
+- Whether we make the measurement in *equilibrium* or *non-equilibrium* conditions
 - The choice of statistical ensemble (effectively, constraints which we impose on the system)
-- Whether we make the measurement in *equilibrium* or *non-equilibrium* conditions.
+If we wish to measure equilibrium properties, we **must** ensure the system is suitably equilibrated over the duration of the measurement. In practice, this means that the variation of properties of the system that we constrain through the choice of the statistical ensemble should be constant
 
 Now, in *classical* MD we solve a coupled set of differential equations (N equations for N particles), using interatomic forces derived from a pre-determined *force-field* (FF) at each timestep. This force field is an analytical function that tells us the force on any particle (via the gradient of the potential) in the system due to interactions with all others (in principle). It is very computationally difficult to treat the exact interatomic forces (in fact, this would require a different level of description including quantum mechanical degrees of freedom of the electrons), so in practice the FF is an *approximate* function. Accordingly, there is a tradeoff between computational load and the accuracy of the force field. 
 
 # Tutorial
 
-In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) to calculate
+In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
 - a) the diffusion coefficient, and
 - b) the pair correlation function
 
