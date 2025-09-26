@@ -20,9 +20,6 @@ So, if we wish to measure equilibrium properties, we **must** ensure that the sy
 
 Nevertheless, once equilibration is finished we can invoke the *ergodic hypothesis*: the time averages along a trajectory for a system in equilibrium can be taken as equivalent to ensemble averages. This is the "production" phase of the simulation.
 
-
-Only once observables (e.g. temperature, pressure, energy fluctuations) stabilise do we switch to the production phase of the simulation.
-
 **[What about non-equlibrium setup?]**
 
 
