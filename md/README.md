@@ -11,7 +11,13 @@ When we perform a MD simulation, generally we might be interested in the dynamic
 - The choice of statistical ensemble (effectively, the constraints we impose on the system)
 
 If we wish to measure equilibrium properties, we **must** ensure the system is suitably equilibrated over the duration of the measurement. In the ideal case, Hamiltonian dynamics ensures that an isolated system conserves the total energy exactly, so in the microcanonical (NVE) ensemble the sum of kinetic and potential energies is constant. However, in practice, when we setup an MD simulation we face two important issues:
-1. bla bla bla 
+1. Choice of initial conditions<br>
+Typically, we assign initial particle positions from a crystalline or random arrangement, and initial velocities from a guessed distribution (often Maxwell–Boltzmann at the target temperature). Such a state is not guaranteed to correspond to equilibrium. For example, if atoms start too close together, the system may undergo large potential energy relaxation, converting abruptly into kinetic energy, and the instantaneous kinetic/potential partition will not yet reflect equilibrium fluctuations.
+2. Numerical integration and finite precision<br>
+The numerical scheme (e.g. velocity Verlet) only approximates the true dynamics. This introduces small integration errors that can accumulate, leading to a slow drift in total energy. While good integrators keep this drift small, it means that in practice the “constant energy” of NVE is not perfectly realised.
+
+Because of these factors, we must run the system for some equilibration time before collecting measurements. During equilibration, the system relaxes towards the correct distribution of states consistent with the chosen ensemble. Only once observables (e.g. temperature, pressure, energy fluctuations) stabilise do we switch to the production phase of the simulation.
+
 
 For example, to sample the microcanonical NVE ensemble, we should have an isolated system with fixed number of particles (N), fixed volume (V), and constant total energy (E). In practice, when we setup the MD simulation we fix N and V by definition of the simulation box. The same cannot be said for the total energy - even if we isolate the simulation box, in general there can be exchange between kinetic and potential energy...
 
