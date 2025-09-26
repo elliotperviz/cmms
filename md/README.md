@@ -1,4 +1,12 @@
-# Molecular Dynamics Tutorial
+# Molecular Dynamics
+
+## What is Molecular Dynamics (MD)?
+
+A computational simulation method that models the time evolution of the *state* of a system of particles (i.e. their positions and momenta) via Newton's Equations of motion. The time integration is implemented numerically, such that we solve to obtain the state of the system at discrete *timesteps* in our chosen time window. At the end of the integration we have a *dynamical trajectory*, which tells us the variation of the state (positions and momenta) as a function of time.
+
+Now, in *classical* MD we solve a coupled set of differential equations (N equations for N particles), using interatomic forces derived from a pre-determined *force-field* (FF) at each timestep. This force field is an analytical function that tells us the force on any particle (via the gradient of the potential) in the system due to interactions with all others (in principle). It is very computationally difficult to treat the exact interatomic forces (in fact, this would require a different level of description including quantum mechanical degrees of freedom of the electrons), so in practice the FF is an *approximate* function. Accordingly, there is a tradeoff between computational load and the accuracy of the force field. 
+
+# Tutorial
 
 In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) to calculate
 - a) the diffusion coefficient, and
