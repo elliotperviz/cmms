@@ -2,7 +2,7 @@
 
 # What is Molcular Dynamics?
 <details>
-<summary>Expand for details</summary>
+<summary>Summary and practical considerations</summary>
 [Reference to relevant chapter in lecture notes]
 
 Molecular Dynamics (MD) is a computational simulation method that we will employ to model materials at the resolution where matter is not continuous, but made of a discrete arrangement of atoms. In MD, we study the time evolution of a system of atoms via the dynamical variation of the system state (i.e. positions and momenta of the atoms) by integrating Newton's Equations of motion. The time integration is implemented numerically, such that we solve to obtain the state of the system at discrete *timesteps* in a chosen time window. In practice, the timestep must be small enough to resolve the fastest atomic vibrations (typically on the order of femtoseconds), which limits the total simulated timescales to nanosceconds or microseconds. The simulated system size is typically limited to nanometres, with the number of atoms ranging from thousands to millions. This is far smaller than most experimental samples, and long-wavelength or mesoscale phenomena are therefore not directly accessible in atomistic MD. Thus, we understand both the power and limitation of MD simulations: it provides a detailed atomistic description of materials behaviour, but it is a necessarily small and short-time view of materials behaviour.
@@ -27,9 +27,21 @@ Now, in fully *classical* MD we solve a coupled set of differential equations (N
 
 Another practical consideration in MD is the use of boundary conditions. To mimic bulk materials and avoid artefacts from surfaces, simulations almost always employ periodic boundary conditions, where the simulation cell is replicated in all directions. While this reduces finite-size effects, the system size is still limited by computational resources, and care must be taken when interpreting properties that depend sensitively on fluctuations or long-range interactions.
 
-In summary, we can outline a general workflow for performing MD simulations to measure equilibrium properties of a particular material described as a discrete arrangement of atoms:
-
 </details>
+
+<details>
+<summary>Practical workflow for equilibrium measurements</summary>
+1. Initialise positions and minise potential energy
+	- IMPORTANT: No time integration, no kinetic energy
+	- We check if the starting positions are reasonable, and if the FF provides a reasonable description of interatomic forces
+2. Preparation
+	- Choose ensemble and impose constraints
+	- Define initial velocities, either explicitly or via temperature with the Boltzmann distribution
+	- Prepare the system in the target conditions, e.g. select <br>
+	In practice this is more complex than simply initialising the system in the desired conditions at which we wish to measure. Even if the potential energy is minimised, introducing 
+	
+</details>
+
 
 # Tutorial
 
