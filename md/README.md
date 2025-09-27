@@ -29,8 +29,8 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 </details>
 
-<details>
-<summary>Practical workflow for equilibrium measurements</summary>
+## Practical workflow for equilibrium measurements
+
 1. Initialise positions and minise potential energy
   - IMPORTANT: No time integration, no kinetic energy
   - We check if the starting positions are reasonable, and if the FF provides a reasonable description of interatomic forces
@@ -39,14 +39,6 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
   - Define initial velocities, either explicitly or via temperature with the Boltzmann distribution
   - Prepare the system in the target conditions, e.g. select <br>
   In practice this is more complex than simply initialising the system in the desired conditions at which we wish to measure. Even if the potential energy is minimised, introducing 
-	
-</details>
-
-
-Is this a list?
-1. test
-2. test
-3. 
 
 # Tutorial
 
