@@ -19,7 +19,7 @@ There is no individual mark for your lab report, rather it is considered togethe
 
 ## Final exam
 
-The final exam is an oral assessnebt of both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. If the topic was not presented during the course (some things we may not have time for) then we will not examine you on it.
+The final exam is an oral assessment of both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. If the topic was not presented during the course (some things we may not have time for) then we will not examine you on it.
 
 You will receive a single final grade considering both the lab report and the oral exam (there is not a separate grade for each component).
 
