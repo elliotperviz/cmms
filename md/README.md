@@ -3,6 +3,18 @@
 ## What is Molecular Dynamics?
 
 <details>
+  <summary><h2>Installation Instructions</h2></summary>
+
+  Here are the detailed installation steps.
+
+  bash
+  git clone git@github.com:elliotperviz/cmms.git
+  cd cmms
+  make
+
+</details>
+
+<details>
   <summary>Click to expand!</summary>
 
   This is the hidden content.  
