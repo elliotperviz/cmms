@@ -1,4 +1,21 @@
-# Instructions for the lab report and final exam
+# Instructions for the final exam and lab report
+
+## Final exam
+
+The final exam is an oral assessment of both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. If the topic was not presented during the course (some things we may not have time for) then we will not examine you on it.
+
+You will receive a single final grade considering both the **lab report** and the **oral exam** (there is not a separate grade for each component).
+
+The current tentative dates for the oral exams (and corresponding deadlines for the lab report) are as follows:
+- Exam Date 1: TBA, Lab report: TBA
+- Exam Date 2: TBA, Lab report: TBA
+- Exam Date 3: TBA, Lab report: TBA
+
+We will write via KOS to confirm the exam dates/times once we have room reservation approved.
+
+You should submit the lab report as a PDF via email to [cammaant@fel.cvut.cz].
+
+If you encounter problems whilst performing your investigations that you cannot solve, and equally if you have questions about the lecture material, you are welcome to ask or write to us for support (preferably not one day before the exam).
 
 ## Lab report
 
@@ -17,24 +34,7 @@ We provide this outline as a suggestion, it is up to you how much information yo
 
 There is no individual mark for your lab report, rather it is considered together with your performance in the final exam when awarding you a final grade.
 
-## Final exam
-
-The final exam is an oral assessment of both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. If the topic was not presented during the course (some things we may not have time for) then we will not examine you on it.
-
-You will receive a single final grade considering both the lab report and the oral exam (there is not a separate grade for each component).
-
-The current tentative dates for the oral exams (and corresponding deadlines for the lab report) are as follows:
-- Exam Date 1: TBA, Lab report: TBA
-- Exam Date 2: TBA, Lab report: TBA
-- Exam Date 3: TBA, Lab report: TBA
-
-Antonio will write via KOS to confirm the exam dates/times once we have room reservation approved.
-
-You should submit the lab report as a PDF via email to [cammaant@fel.cvut.cz].
-
-If you encounter problems whilst performing your investigations that you cannot solve, and equally if you have questions about the lecture material, you are welcome to ask or write to us for support (preferably not one day before the exam).
-
-# Generating images for the lab report
+## Generating images for the lab report
 
 You may wish to provide 1) a snapshot of atomic structure or 2) plots of data in your report. We did not discuss how to generate publication-style images during the lab sessions, but we can provide brief instructions for the three main visualisation tools that we used:
 1. VMD - click "File" -> "Render..." and select desired format from the drop down menu in "Render the current scene using:". A suggested format is to select "Taychon" from the drop-down - this produces a .tga file which can be read by common image readers (e.g. ImageMagick or GIMP on Linux, GIMP or Photoshop on Windows) and subsequently exported in a format (e.g. png, pdf, eps...) that can be used in your report. For further detail please refer to the relevant page from the VMD documentation:
