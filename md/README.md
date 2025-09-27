@@ -33,7 +33,7 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 1. Initialisation: Potential energy minimisation
   - Define simulation box, boundary conditions
-  - place atoms at their initial positions and minimise the potential energy
+  - Place atoms at their initial positions and minimise the potential energy
   - IMPORTANT: No time integration, no kinetic energy, no temperature!!!
   - We check if the starting positions are reasonable, and if the FF provides a sensible description of interatomic forces
   - Note that this is typically a *local* minimisation, so the quality of the starting configuration matters
