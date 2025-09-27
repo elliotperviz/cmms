@@ -30,9 +30,9 @@ The current tentative dates for the oral exams (and corresponding deadlines for 
 
 Antonio will write via KOS to confirm the exam dates/times once we have room reservation approved.
 
-When submitting your lab report, send a pdf via email to Antonio and myself (no printing necessary).
+You should submit the lab report as a PDF via email to [cammaant@fel.cvut.cz].
 
-If you encounter problems whilst performing your investigations that you cannot solve, and equally if you have questions about the lecture material, you are welcome to write to myself or Antonio (preferably not one day before the exam).
+If you encounter problems whilst performing your investigations that you cannot solve, and equally if you have questions about the lecture material, you are welcome to ask or write to us for support (preferably not one day before the exam).
 
 # Generating images for the lab report
 
