@@ -1,8 +1,14 @@
 # Instructions for the lab report and final exam
 
-In the lab report, we expect a **minimum** of two sections, consisting of at least one section related to classical and quantum simulations respectively, with at least one calculated property per section.
+## Lab report
 
-The lab report is an opportunity to demonstrate that you know not just how to use molecular dynamics or quantum mechanics simulation tools, but also that you understand the physical meaning behind the input parameters that you choose and the validity of the results which you present (as opposed to using the simulation tool as a black box). A suggested lab report structure and topics to discuss (similar to that provided in the examples) could be as follows:
+The lab report is an opportunity to demonstrate that you know not just how to use molecular dynamics or quantum mechanics simulation tools, but also that you understand the physical meaning behind the input parameters that you choose and the validity of the results which you present (as opposed to using the simulation tool as a black box). 
+
+Thus, your task is to perform your own classical and quantum simulations, on a material (or materials) of your choice. Note that you should not choose an overly complicated system, as you want the simulations to be able to run locally on the machines in the laboratory within reasonable time.
+
+You must measure **at least** one property from your classical and quantum simulations respectively.
+
+Afterwards, you are required to write-up a lab report, detailing the results of your investigation. The lab report must contain a **minimum** of two sections, one for each type of simulation (quantum/classical). A recommended lab report structure and topics to discuss (similar to that provided in the examples) could be as follows:
 - Abstract
 - Introduction
 - Computational details
@@ -11,7 +17,11 @@ The lab report is an opportunity to demonstrate that you know not just how to us
 
 We provide this outline as a suggestion, it is up to you how much information you include and how you want to structure your report, as long as you include the minimum expected results. For additional notes on how to generate images/plots for your report, see the next section.
 
-Please note, the oral exam is assessing both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. According to the lecture syllabus, as written on the KOS page for BE0M35EAS (https://www.kos.cvut.cz/course-syllabus/BE0M35EAS/B242), the examinable topics are lectures 1-5 and 7-11. There are additional topics listed in the lecture syllabus on KOS, but if the topic was not presented during the course (some things we did not have time for) then we will not examine you on it.
+There is no individual mark for your lab report, but it considered together with your performance in the final exam when awarding you a final grade.
+
+## Final exam
+
+The final exam is an oral exam which assesses both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. According to the lecture syllabus, as written on the KOS page for BE0M35EAS (https://www.kos.cvut.cz/course-syllabus/BE0M35EAS/B242), the examinable topics are lectures 1-5 and 7-11. There are additional topics listed in the lecture syllabus on KOS, but if the topic was not presented during the course (some things we did not have time for) then we will not examine you on it.
 
 You will receive a single final grade considering both the lab report and the oral exam (there is not a separate grade for each component).
 
