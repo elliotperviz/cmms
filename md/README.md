@@ -11,6 +11,8 @@ Suppose we specify the initial state at time t=0 and integrate - at the end of t
 - Whether we want to measure *equilibrium* or *non-equilibrium* observable properties
 - The choice of statistical ensemble (effectively, the constraints we impose on the system)
 
+<hr>
+
 Lets focus first on the measurement of equilibrium properties - we cannot assume that just because we impose the constraints of a particular ensemble, e.g. the microcanonical (NVE) ensemble, that we can automatically extract the associated equilibrium properties of the system. When we setup an MD simulation we face two problems:
 1. Choice of initial conditions<br>
 Typically, we assign initial particle positions from a crystalline or random arrangement, and initial velocities from a guessed distribution (often Maxwell–Boltzmann at the target temperature). Such a state is not guaranteed to correspond to equilibrium. For example, if atoms start too close together, the system may undergo large potential energy relaxation, converting abruptly into kinetic energy, and the instantaneous kinetic/potential partition will not yet reflect equilibrium fluctuations.
