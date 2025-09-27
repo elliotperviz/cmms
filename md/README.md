@@ -43,8 +43,8 @@ It is useful to summarise explicitly what is the core loop implemented in MD, wh
 
 0. Read initial parameters (timestep, number of timesteps, simulation box, boundary conditions)
 1. Read initial positions and velocities
-2. Compute forces on each atom via classical force field (FF)
-3. Integrate Newton's equation of motion for the state (positions and momenta) at the next timestep in chosen statistical ensemble (e.g. NVE, NVT, NPT)
+2. Compute forces on each atom via the chosen classical force field (FF)
+3. Integrate Newton's equation of motion for the state (positions and momenta) at the next timestep in the chosen statistical ensemble (e.g. NVE, NVT, NPT)
 4. Compute and print thermodynamic averages of desired quantities (this can be done every timestep, or every few timesteps)
 5. Repeat from step 2, until total number of timesteps completed
 
