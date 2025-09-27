@@ -4,11 +4,9 @@
 
 The lab report is an opportunity to demonstrate that you know not just how to use molecular dynamics or quantum mechanics simulation tools, but also that you understand the physical meaning behind the input parameters that you choose and the validity of the results which you present (as opposed to using the simulation tool as a black box). 
 
-Thus, your task is to perform your own classical and quantum simulations, on a material (or materials) of your choice. Note that you should not choose an overly complicated system, as you want the simulations to be able to run locally on the machines in the laboratory within reasonable time.
+Thus, your task is to perform your own classical and quantum simulations, and investigate at **at least** one property in each case. Note that you should not choose an overly complicated system, as you want the simulations to be able to run locally on the machines in the laboratory within reasonable time.
 
-You must measure **at least** one property from your classical and quantum simulations respectively.
-
-Afterwards, you are required to write-up a lab report, detailing the results of your investigation. The lab report must contain a **minimum** of two sections, one for each type of simulation (quantum/classical). A recommended lab report structure and topics to discuss (similar to that provided in the examples) could be as follows:
+Afterwards, you are required to write-up a lab report detailing the results of your investigation. The lab report must contain a **minimum** of two sections, one for each type of simulation (quantum/classical). A recommended lab report structure and topics to discuss (similar to that provided in the examples) could be as follows:
 - Abstract
 - Introduction
 - Computational details
