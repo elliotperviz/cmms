@@ -55,7 +55,7 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
 
 4. Production
   - After equilibrium is achieved, continue the simulation under the same conditions to collect trajectory data
-  - Compute time averages of obsevrables quantities along the equilibrium trajectory
+  - Compute time averages of observable quantities along the equilibrium trajectory
   - For sufficiently long simulations, time avreages become equivalent to ensemble averages (ergodicity)
   - In practice: Ensure that the sampling frequency and total trajectory length are sufficient to obtain statistically meaningful, decorrelated data
 
