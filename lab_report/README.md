@@ -15,7 +15,7 @@ Afterwards, you are required to write-up a lab report detailing the results of y
 
 We provide this outline as a suggestion, it is up to you how much information you include and how you want to structure your report, as long as you include the minimum expected results. Some example lab reports are provided in the [examples](examples/) folder. For additional notes on how to generate high quality images/plots for your report, see the next section.
 
-There is no individual mark for your lab report, but it considered together with your performance in the final exam when awarding you a final grade.
+There is no individual mark for your lab report, rather it is considered together with your performance in the final exam when awarding you a final grade.
 
 ## Final exam
 
