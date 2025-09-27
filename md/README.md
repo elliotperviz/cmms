@@ -32,9 +32,7 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium.
 
-First, we present the general workflow / approach, which is useful to understand why we split the MD simulation into different steps.
-
-Then, we follow step by step a practical example.
+First, we present the general workflow / approach. Then, we follow step by step a practical example.
 
 ## General workflow for equilibrium measurements
 
