@@ -7,7 +7,7 @@ The lab report is an opportunity to demonstrate that you know not just how to us
 - Results
 - Conclusion
 
-We provide this outline as a suggestion, it is up to you how much information you include and how you want to structure your report, as long as you include the minimum expected results. For additional notes on how to generate images/plots for your report, see the comment at the end of this email.
+We provide this outline as a suggestion, it is up to you how much information you include and how you want to structure your report, as long as you include the minimum expected results. For additional notes on how to generate images/plots for your report, see the next section.
 
 Please note, the oral exam is assessing both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. According to the lecture syllabus, as written on the KOS page for BE0M35EAS (https://www.kos.cvut.cz/course-syllabus/BE0M35EAS/B242), the examinable topics are lectures 1-5 and 7-11. There are additional topics listed in the lecture syllabus on KOS, but if the topic was not presented during the course (some things we did not have time for) then we will not examine you on it.
 
@@ -23,7 +23,7 @@ When submitting your lab report, send a pdf via email to Antonio and myself (no 
 
 If you encounter problems whilst performing your investigations that you cannot solve, and equally if you have questions about the lecture material, you are welcome to write to myself or Antonio (preferably not one day before the exam).
 
-Comment: Generating images for the lab report
+# Generating images for the lab report
 
 You may wish to provide 1) a snapshot of atomic structure or 2) plots of data in your report. We did not discuss how to generate publication-style images during the lab sessions, but I can provide brief instructions for the three main visualisation tools that we used:
 1. VMD - click "File" -> "Render..." and select desired format from the drop down menu in "Render the current scene using:". A suggested format is to select "Taychon" from the drop-down - this produces a .tga file which can be read by common image readers (e.g. ImageMagick or GIMP on Linux, GIMP or Photoshop on Windows) and subsequently exported in a format (e.g. png, pdf, eps...) that can be used in your report. For further detail please refer to the relevant page from the VMD documentation:
