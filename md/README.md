@@ -40,7 +40,7 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 2. Preparation: realising target conditions
   - Choose statistical ensemble (NVE, NVT, NPT etc.) and impose any required constraints
   - Assign initial velocities either explicitly or by sampling from the Maxwell-Boltzmann distribution at the desired initial temperature<br>
-  - Thermalisation / barostatting ramp
+  - Thermalisation / barostatting ramp<br>
   If necessary (e.g. for NVT or NPT simulations), integrate Newton's Equations of motion to gradually bring the system to the target temperature and/or pressure by applying a thermostat and/or barostat.
   
   It is good practice *not* to immediately initialise the system directly at the final target conditions, as this may not correspond to a physically reasonable state. Even if the potential energy has been minimised, introduction of velocities adds extra degrees of freedom that can lead to significant energy fluctuations.
