@@ -36,7 +36,7 @@ First, we present the general workflow / approach. Then, we follow step by step 
 
 ## General workflow for equilibrium measurements
 
-1. Initialisation: Potential energy minimisation
+1. Initialisation and potential energy minimisation
   - Define simulation box, boundary conditions
   - Place atoms at their initial positions and minimise the potential energy
   - IMPORTANT: No time integration, no kinetic energy, no temperature!!!
