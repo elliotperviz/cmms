@@ -70,7 +70,7 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
 
 # Example
 
-In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
+For the practical demonstration, we will show how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
 - a) the diffusion coefficient, and
 - b) the pair correlation function
 
