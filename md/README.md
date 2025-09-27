@@ -43,6 +43,11 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 </details>
 
 
+Is this a list?
+1. test
+2. test
+3. 
+
 # Tutorial
 
 In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
