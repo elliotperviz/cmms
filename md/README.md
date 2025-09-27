@@ -1,6 +1,6 @@
 # Molecular Dynamics
 
-## What is Molcular Dynamics>
+# What is Molcular Dynamics
 <details>
 <summary><h2>Expand for details</h2></summary>
 [Reference to relevant chapter in lecture notes]
