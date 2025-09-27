@@ -5,7 +5,7 @@ The discussion here is separated into different sections, where we discuss:
 - The core molecular dynamics loop
 - A general workflow for equilibrium measurements
 
-We demonstrate the use of molecular dynamics with an example, which may be found in the [example](/C01_02) folder
+We demonstrate the use of molecular dynamics with an example, which may be found in the [example](/C01_02) folder.
 
 ## What is Molecular Dynamics?
 
