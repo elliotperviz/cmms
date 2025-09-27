@@ -1,4 +1,5 @@
 # Molecular Dynamics
+
 <details>
 <summary>Click here for a detailed summary and practical considerations</summary>
 [Reference to relevant chapter in lecture notes]
@@ -27,7 +28,15 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 </details>
 
-## General workflow for equilibrium measurements
+# Tutorial
+
+In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium.
+
+First, we present the general workflow / approach, which is useful to understand why we split the MD simulation into different steps.
+
+Then, we follow step by step a practical example.
+
+## Introduction: General workflow for equilibrium measurements
 
 In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium. Before continuing to the example, it is recommended to check the following outline to understand the general approach to measure equilibrium properties via MD simulations. This is especially important if you want to perform your own investigation, for example for the **final lab report**.
 
@@ -63,7 +72,7 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
   - Perform statistical analysis of the collected data (e.g. averages, fluctuations, autocorrelation functions)
   - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficient) properties.
 
-# Tutorial
+# Example
 
 In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
 - a) the diffusion coefficient, and
