@@ -27,7 +27,9 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 </details>
 
-## Practical workflow for equilibrium measurements
+## General workflow for equilibrium measurements
+
+In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium. Before continuing to the example, it is recommended to check the following outline to understand the general approach to measure equilibrium properties via MD simulations. This is especially important if you want to perform your own investigation, for example for the **final lab report**.
 
 1. Initialisation: Potential energy minimisation
   - Define simulation box, boundary conditions
