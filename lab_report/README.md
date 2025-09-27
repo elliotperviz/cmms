@@ -29,6 +29,7 @@ The current tentative dates for the oral exams (and corresponding deadlines for 
 - Exam Date 1: TBA, Lab report: TBA
 - Exam Date 2: TBA, Lab report: TBA
 - Exam Date 3: TBA, Lab report: TBA
+- 
 Antonio will write via KOS to confirm the exam dates/times once we have room reservation approved.
 
 When submitting your lab report, send a pdf via email to Antonio and myself (no printing necessary).
