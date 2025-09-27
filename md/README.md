@@ -37,9 +37,9 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 </details>
 
-## The core algorithm
+## The core loop
 
-It is useful to summarise explicitly what is the core loop (or algorithm) implemented in MD, which is central to all the dynamics which we investigate using this simulation technique.
+It is useful to summarise explicitly what is the core loop implemented in MD, which is central to all the dynamics which we investigate using this simulation technique.
 
 0. Read initial parameters (timestep, number of timesteps, simulation box, boundary conditions)
 1. Read initial positions and velocities
