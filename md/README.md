@@ -2,7 +2,7 @@
 
 ## What is Molecular Dynamics?
 <details>
-<summary>Expand for details</summary>
+<summary><h2>What is Molecular Dynamics?</h2></summary>
 [Reference to relevant chapter in lecture notes]
 
 Molecular Dynamics (MD) is a computational simulation method that we will employ to model materials at the resolution where matter is not continuous, but made of a discrete arrangement of atoms. In MD, we study the time evolution of a system of atoms via the dynamical variation of the system state (i.e. positions and momenta of the atoms) by integrating Newton's Equations of motion. The time integration is implemented numerically, such that we solve to obtain the state of the system at discrete *timesteps* in a chosen time window. In practice, the timestep must be small enough to resolve the fastest atomic vibrations (typically on the order of femtoseconds), which limits the total simulated timescales to nanosceconds or microseconds. The simulated system size is typically limited to nanometres, with the number of atoms ranging from thousands to millions. This is far smaller than most experimental samples, and long-wavelength or mesoscale phenomena are therefore not directly accessible in atomistic MD. Thus, we understand both the power and limitation of MD simulations: it provides a detailed atomistic description of materials behaviour, but it is a necessarily small and short-time view of materials behaviour.
@@ -10,8 +10,6 @@ Molecular Dynamics (MD) is a computational simulation method that we will employ
 Suppose we specify the initial state at time t=0 and integrate - at the end of the integration we will have a deterministic *dynamical trajectory*, which tells us the variation of the system state as a function of time. When we perform an MD simulation, we might be interested in the dynamical variation of a particular observable property of the system, or perhaps its average values over time. Measuring the dynamical variation is simple, in the sense that if we are able to derive the observable property based on the positions and momenta of the particles, we simply perform this calculation at each timestep of the numerical integration and extract the output. Calculating the time average is also easy, we take the average of the dynamical variation of the observable property in time. However, the interpretation of the time average depends on some key factors:
 - Whether we want to measure *equilibrium* or *non-equilibrium* observable properties
 - The choice of statistical ensemble (effectively, the constraints we impose on the system)
-
-<hr>
 
 Lets focus first on the measurement of equilibrium properties - we cannot assume that just because we impose the constraints of a particular ensemble, e.g. the microcanonical (NVE) ensemble, that we can automatically extract the associated equilibrium properties of the system. When we setup an MD simulation we face two problems:
 1. Choice of initial conditions<br>
@@ -32,6 +30,8 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 In summary, we can outline a general workflow for performing MD simulations to measure equilibrium properties of a particular material described as a discrete arrangement of atoms:
 
 </details>
+
+<hr>
 
 # Tutorial
 
