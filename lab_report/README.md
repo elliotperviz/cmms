@@ -1,6 +1,6 @@
 # Instructions for the lab report and final exam
 
-In the lab report, we expect a **minimum** of two sections, one for classical and another for quantum, with one calculated property per section.
+In the lab report, we expect a **minimum** of two sections, consisting of at least one section related to classical and quantum simulations respectively, with at least one calculated property per section.
 
 The lab report is an opportunity to demonstrate that you know not just how to use molecular dynamics or quantum mechanics simulation tools, but also that you understand the physical meaning behind the input parameters that you choose and the validity of the results which you present (as opposed to using the simulation tool as a black box). A suggested lab report structure and topics to discuss (similar to that provided in the examples) could be as follows:
 - Abstract
