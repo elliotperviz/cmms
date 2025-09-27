@@ -2,15 +2,11 @@
 
 In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium.
 
-First, we present the general workflow / approach. Then, we follow step by step a practical example.
-
-## Example
-
 We will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
 - a) the diffusion coefficient, and
 - b) the pair correlation function
 
-of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>.
+of Argon gas at density  1.374 g cm<sup>-3</sup> in equilibrium at 94.4 K.
 
 In this investigation we aim to replicate the results of the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964. <br>
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
