@@ -56,7 +56,7 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
   - Integrate Newton's Equations of Motion at the target conditions, without imposing further ramps
   - Allow the system to stabilise; during this stage, fluctuatations of thermodynamic quantities should gradually reduce as the system approaches equilibrium
   - Equilibrium is reached once fluctuations are within a given desired tolerance
-  - In practice: check for equilibration by monitoring time series variation of quantities such as temperature, pressure, total energy, or volume (in NPT).
+  - In practice: check for equilibration by monitoring time series variation of quantities such as temperature, pressure, total energy, or volume (in NPT)
 
 4. Production
   - After equilibrium is achieved, continue the simulation under the same conditions to collect trajectory data
@@ -66,4 +66,4 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
 
 5. Post-processing and analysis
   - Perform statistical analysis of the collected data (e.g. averages, fluctuations, autocorrelation functions)
-  - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficient) properties.
+  - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficient) properties
