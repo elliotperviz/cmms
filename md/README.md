@@ -31,8 +31,6 @@ In summary, we can outline a general workflow for performing MD simulations to m
 
 </details>
 
-<hr>
-
 # Tutorial
 
 In this tutorial, we will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
