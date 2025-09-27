@@ -31,14 +31,37 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 ## Practical workflow for equilibrium measurements
 
-1. Initialise positions and minimise potential energy
-  - IMPORTANT: No time integration, no kinetic energy
-  - We check if the starting positions are reasonable, and if the FF provides a reasonable description of interatomic forces
-2. Preparation
-  - Choose ensemble (NVE, NVT, NPT etc.) and impose constraints
-  - Define initial velocities, either explicitly or via temperature with the Boltzmann distribution<br>
+1. Initialisation: Potential energy minimisation
+  - Define simulation box, boundary conditions
+  - place atoms at their initial positions and minimise the potential energy
+  - IMPORTANT: No time integration, no kinetic energy, no temperature!!!
+  - We check if the starting positions are reasonable, and if the FF provides a sensible description of interatomic forces
+  - Note that this is typically a *local* minimisation, so the quality of the starting configuration matters
+2. Preparation: realising target conditions
+  - Choose statistical ensemble (NVE, NVT, NPT etc.) and impose any required constraints
+  - Assign initial velocities either explicitly or by sampling from the Maxwell-Boltzmann distribution at the desired initial temperaturen<br>
+  - Thermalisation / barostatting ramp
+  If necessary (e.g. for NVT or NPT simulations), integrate Newton's Equations of motion to gradually bring the system to the target temperature and/or pressure by applying a thermostat and/or barostat.
   
-  It is good practice *not* to immediately initialise the system in the conditions at which we want to measure, as this is not guaranteed to be a physically reasonable state. Even if we minimise the interatomic forces of the stationary atoms in the first step, after initialising velocities we have an additional degree of freedom which may lead to large variations in the potential energy. For example, in the case that we wish to equilibrate the system at a particular temperature in the NVT ensemble, we might impose a temperature ramp to heat the system *above* the target temperature, and then cool to the target temperature. We first head above the target temperature, as we want to reduce the initial condition dependence - direct heating to the target temperature may not give the system enough energy to overcome initial structural biases that will allow it to escape local minima. Then, we cool the system to its target temperature, which "relaxes" the system into the lower energy state that is more representative of equliibrium.
+  It is good practice *not* to immediately initialise the system directly at the final target conditions, as this may not correspond to a physically reasonable state. Even if the potential energy has been minimised, introduction of velocities adds extra degrees of freedom that can lead to significant energy fluctuations.
+  
+  For example, if equilibrating at a given temperature in the NVT ensemble, we might heat the system from 0K to a temperature *above* the target, then cool down to the target temperature. Overshooting the temperature reduces dependence on the initial configuration by giving the system enough energy to escape local minima, while subsequent cooling allows the system to relax into a lower-energy state representative of euqlibrium. This procedure mimics experimental thermal cycling.
+
+3. Equilibrate at target conditions
+  - Integrate Newton's Equations of Motion at the target conditions, without imposing further ramps
+  - Allow the system to stabilise; during this stage, fluctuatations of thermodynamic quantities should gradually reduce as the system approaches equilibrium
+  - Equilibrium is reached once fluctuations are within a given desired tolerance
+  - In practice: check for equilibration by monitoring time series variation of quantities such as temperature, pressure, total energy, or volume (in NPT).
+
+4. Production
+  - After equilibrium is achieved, continue the simulation under the same conditions to collect trajectory data
+  - Compute time averages of obsevrables quantities along the equilibrium trajectory
+  - For sufficiently long simulations, time avreages become equivalent to ensemble averages (ergodicity)
+  - In practice: Ensure that the sampling frequency and total trajectory length are sufficient to obtain statistically meaningful, decorrelated data
+
+5. Post-processing and analysis
+  - Perform statistical analysis of the collected ata (e.g. averages, fluctuations, autocorrelation functions)
+  - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficients) properties.
 
 # Tutorial
 
