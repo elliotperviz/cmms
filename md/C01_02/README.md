@@ -1,3 +1,8 @@
+# Tutorial
+
+In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium.
+
+First, we present the general workflow / approach. Then, we follow step by step a practical example.
 
 ## Example
 
