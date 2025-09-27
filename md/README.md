@@ -30,11 +30,11 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 </details>
 
-# The core algorithm
+## The core algorithm
 
 text text text
 
-# General workflow for equilibrium measurements
+## General workflow for equilibrium measurements
 
 1. Initialisation and potential energy minimisation
   - Define simulation box, boundary conditions
