@@ -38,8 +38,6 @@ Then, we follow step by step a practical example.
 
 ## Introduction: General workflow for equilibrium measurements
 
-In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium. Before continuing to the example, it is recommended to check the following outline to understand the general approach to measure equilibrium properties via MD simulations. This is especially important if you want to perform your own investigation, for example for the **final lab report**.
-
 1. Initialisation: Potential energy minimisation
   - Define simulation box, boundary conditions
   - Place atoms at their initial positions and minimise the potential energy
