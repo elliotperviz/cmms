@@ -56,11 +56,11 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
 4. Production
   - After equilibrium is achieved, continue the simulation under the same conditions to collect trajectory data
   - Compute time averages of observable quantities along the equilibrium trajectory
-  - For sufficiently long simulations, time avreages become equivalent to ensemble averages (ergodicity)
+  - For sufficiently long simulations, time averages become equivalent to ensemble averages (ergodicity)
   - In practice: Ensure that the sampling frequency and total trajectory length are sufficient to obtain statistically meaningful, decorrelated data
 
 5. Post-processing and analysis
-  - Perform statistical analysis of the collected ata (e.g. averages, fluctuations, autocorrelation functions)
+  - Perform statistical analysis of the collected data (e.g. averages, fluctuations, autocorrelation functions)
   - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficients) properties.
 
 # Tutorial
