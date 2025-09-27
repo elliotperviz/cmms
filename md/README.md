@@ -1,5 +1,12 @@
 # Molecular Dynamics
 
+Thus discussion here is separated into different sections, where we discuss:
+- What is molecular dynamics, and some key practical considerations
+- The core molecular dynamics loop
+- A general workflow for equilibrium measurements
+
+The specific example may be found
+
 ## What is Molecular Dynamics?
 
 <details>
