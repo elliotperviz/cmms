@@ -6,14 +6,14 @@ The lab report is an opportunity to demonstrate that you know not just how to us
 
 Thus, your task is to perform your own classical and quantum simulations, and investigate at **at least** one property in each case. Note that you should not choose an overly complicated system, as you want the simulations to be able to run locally on the machines in the laboratory within reasonable time.
 
-Afterwards, you are required to write-up a lab report detailing the results of your investigation. The lab report must contain a **minimum** of two sections, one for each type of simulation (quantum/classical). A recommended lab report structure and topics to discuss (similar to that provided in the examples) could be as follows:
+Afterwards, you are required to write-up a lab report detailing the results of your investigation. The lab report must contain a **minimum** of two sections, one for each type of simulation (quantum/classical). A recommended lab report structure is to follow the style of a scientific paper, that is:
 - Abstract
 - Introduction
 - Computational details
 - Results
 - Conclusion
 
-We provide this outline as a suggestion, it is up to you how much information you include and how you want to structure your report, as long as you include the minimum expected results. For additional notes on how to generate images/plots for your report, see the next section.
+We provide this outline as a suggestion, it is up to you how much information you include and how you want to structure your report, as long as you include the minimum expected results. Some example lab reports are provided in the [examples](examples/) folder. For additional notes on how to generate high quality images/plots for your report, see the next section.
 
 There is no individual mark for your lab report, but it considered together with your performance in the final exam when awarding you a final grade.
 
