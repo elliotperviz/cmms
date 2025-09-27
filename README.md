@@ -22,10 +22,8 @@ Why?
 The aim of this course is not to teach users how to use the Linux terminal. Nevertheless, we have prepared a small "cheat sheet" **TO DO!!!** for common commands that we will use regularly.
 
 ### 1. Download the tutorial files
-First, clone this github repository to download the tutorial files. In the Linux terminal copy the following commands in the location where you would like to download the files:
+First, clone this github repository to download the tutorial files. In the Linux terminal copy the following command in the location where you would like to download the files (note: the files download into a single folder, you don't need to make one yourself):
 ```bash
-mkdir cmms
-cd cmms
 git clone https://github.com/elliotperviz/cmms.git
 ```
 
