@@ -45,7 +45,7 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
   
 **Note**: It is good practice *not* to immediately initialise the system directly at the final target conditions, as this may not correspond to a physically reasonable state. Even if the potential energy has been minimised, introduction of velocities adds extra degrees of freedom that can lead to significant energy fluctuations.
   
-For example, if equilibrating at a given temperature in the NVT ensemble, we might heat the system from 0K to a temperature *above* the target, then cool down to the target temperature. Overshooting the temperature reduces dependence on the initial configuration by giving the system enough energy to escape local minima, while subsequent cooling allows the system to relax into a lower-energy state representative of euqlibrium. This procedure mimics experimental thermal cycling.
+For example, if equilibrating at a given temperature in the NVT ensemble, we might heat the system from 0K to a temperature *above* the target, then cool down to the target temperature. Overshooting the temperature reduces dependence on the initial configuration by giving the system enough energy to escape local minima, while subsequent cooling allows the system to relax into a lower-energy state that is more representative of equilibrium. This procedure mimics experimental thermal cycling.
 
 3. Equilibrate at target conditions
   - Integrate Newton's Equations of Motion at the target conditions, without imposing further ramps
