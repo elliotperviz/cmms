@@ -36,7 +36,7 @@ First, we present the general workflow / approach, which is useful to understand
 
 Then, we follow step by step a practical example.
 
-## Introduction: General workflow for equilibrium measurements
+## General workflow for equilibrium measurements
 
 1. Initialisation: Potential energy minimisation
   - Define simulation box, boundary conditions
