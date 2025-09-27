@@ -30,6 +30,10 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 </details>
 
+## The core algorithm
+
+text text text
+
 # Tutorial
 
 In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium.
