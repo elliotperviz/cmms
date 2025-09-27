@@ -28,7 +28,7 @@ git clone https://github.com/elliotperviz/cmms.git
 ```
 
 ### 2. Compile scripts for post-processing and analysis
-For your convenience, we have prepared scripts to simplify some aspects of post-processing and analysis. To be able to use the scripts, you should add them to the Linux ```$PATH``` variable and build the relevant executables from source. Enter (or copy) the following commands into your terminal:
+For your convenience, we have prepared scripts to simplify some aspects of post-processing and analysis. To be able to use the scripts, you should add the folder to the Linux ```$PATH``` variable and build the relevant executables from source. Enter (or copy) the following commands into your terminal:
 
 ```bash
 commands here
