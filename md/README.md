@@ -78,7 +78,7 @@ We will demonstrate how to use the Large-scale Atomic/Molecular Massively Parall
 
 of Argon at 94.4 K and 1.374 g cm<sup>-3</sup>.
 
-In this investigation we follow replicate the results of the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964. <br>
+In this investigation we aim to replicate the results of the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964. <br>
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
 For further resources, for example if you want to setup your own LAMMPS simulation, we recommend you to check out the LAMMPS manual. It is a complete and well-written resource that you should use to check the proper usage of commands, and how to setup up different types of simulations, and also to find relevant references. See the following link: <br>
