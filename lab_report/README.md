@@ -21,14 +21,14 @@ There is no individual mark for your lab report, but it considered together with
 
 ## Final exam
 
-The final exam is an oral exam which assesses both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. According to the lecture syllabus, as written on the KOS page for BE0M35EAS (https://www.kos.cvut.cz/course-syllabus/BE0M35EAS/B242), the examinable topics are lectures 1-5 and 7-11. There are additional topics listed in the lecture syllabus on KOS, but if the topic was not presented during the course (some things we did not have time for) then we will not examine you on it.
+The final exam is an oral exam which assesses both your simulations and understanding of the theory, which includes any of the lecture material presented during the semester. If the topic was not presented during the course (some things we may not have time for) then we will not examine you on it.
 
 You will receive a single final grade considering both the lab report and the oral exam (there is not a separate grade for each component).
 
 The current tentative dates for the oral exams (and corresponding deadlines for the lab report) are as follows:
-- Exam: 12/6, Lab report: 05/6
-- Exam: 17/6, Lab report: 10/6
-- Exam: 24/6, Lab report: 17/6
+- Exam Date 1: TBA, Lab report: TBA
+- Exam Date 2: TBA, Lab report: TBA
+- Exam Date 3: TBA, Lab report: TBA
 Antonio will write via KOS to confirm the exam dates/times once we have room reservation approved.
 
 When submitting your lab report, send a pdf via email to Antonio and myself (no printing necessary).
