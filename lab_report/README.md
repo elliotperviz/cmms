@@ -36,7 +36,7 @@ If you encounter problems whilst performing your investigations that you cannot 
 
 # Generating images for the lab report
 
-You may wish to provide 1) a snapshot of atomic structure or 2) plots of data in your report. We did not discuss how to generate publication-style images during the lab sessions, but I can provide brief instructions for the three main visualisation tools that we used:
+You may wish to provide 1) a snapshot of atomic structure or 2) plots of data in your report. We did not discuss how to generate publication-style images during the lab sessions, but we can provide brief instructions for the three main visualisation tools that we used:
 1. VMD - click "File" -> "Render..." and select desired format from the drop down menu in "Render the current scene using:". A suggested format is to select "Taychon" from the drop-down - this produces a .tga file which can be read by common image readers (e.g. ImageMagick or GIMP on Linux, GIMP or Photoshop on Windows) and subsequently exported in a format (e.g. png, pdf, eps...) that can be used in your report. For further detail please refer to the relevant page from the VMD documentation:
 https://www.ks.uiuc.edu/Research/vmd/current/ug/node18.html
 Also remember, if you wish to view the boundaries of the simulation box in your image, you should open "Extensions" -> "Tk Console" and write the following command in the terminal window: "pbc box".
