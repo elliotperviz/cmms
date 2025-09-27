@@ -1,27 +1,8 @@
 # Molecular Dynamics
 
 ## What is Molecular Dynamics?
-
 <details>
-  <summary><h2>Installation Instructions</h2></summary>
-
-  Here are the detailed installation steps.
-
-  bash
-  git clone git@github.com:elliotperviz/cmms.git
-  cd cmms
-  make
-
-</details>
-
-<details>
-  <summary>Click to expand!</summary>
-
-  This is the hidden content.  
-  It can include **Markdown**, code blocks, images, lists, etc.
-  </summary>
-</details>
-
+<summary>Expand for details</summary>
 [Reference to relevant chapter in lecture notes]
 
 Molecular Dynamics (MD) is a computational simulation method that we will employ to model materials at the resolution where matter is not continuous, but made of a discrete arrangement of atoms. In MD, we study the time evolution of a system of atoms via the dynamical variation of the system state (i.e. positions and momenta of the atoms) by integrating Newton's Equations of motion. The time integration is implemented numerically, such that we solve to obtain the state of the system at discrete *timesteps* in a chosen time window. In practice, the timestep must be small enough to resolve the fastest atomic vibrations (typically on the order of femtoseconds), which limits the total simulated timescales to nanosceconds or microseconds. The simulated system size is typically limited to nanometres, with the number of atoms ranging from thousands to millions. This is far smaller than most experimental samples, and long-wavelength or mesoscale phenomena are therefore not directly accessible in atomistic MD. Thus, we understand both the power and limitation of MD simulations: it provides a detailed atomistic description of materials behaviour, but it is a necessarily small and short-time view of materials behaviour.
@@ -48,6 +29,7 @@ Another practical consideration in MD is the use of boundary conditions. To mimi
 
 In summary, we can outline a general workflow for performing MD simulations to measure equilibrium properties of a particular material described as a discrete arrangement of atoms:
 
+</details>
 
 # Tutorial
 
