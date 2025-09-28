@@ -297,6 +297,8 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   run             25000
   ########################
   ```
+  Extract the thermodynamic output from `log.lammps` using your preferred approach (`sed`/`awk`). You may want to visualize the trajectory in `vmd`, or plot the variation of thermodynamic variables as a function of time in `gnuplot`.
+  
 **Questions**
 
 - Is the heating behaviour in NVT the same as in NVE? (compare the gradients in `gnuplot`) 
