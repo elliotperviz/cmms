@@ -143,7 +143,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   #fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
   ```
   When opening the file in vim, if you hit "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
-  Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow once you get used to the terminal.<br>
+  Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow once you get used to its usage.<br>
   Now, run LAMMPS (only NVE for system at 10K):
   ```bash
   lmp -in heat.in
