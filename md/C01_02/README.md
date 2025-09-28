@@ -15,7 +15,7 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 [https://docs.lammps.org]
 
 ## Outline
-1. Initialisation, potential minimisation (no time, no kinetic energy, no Newton's equations)
+1. Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
 2. Heating - initialise velocities at 10K, heat to 500K
 3. Cooling - cool system to 94.4K
 4. Equilibration - prepare system for measurement at 94.4K
