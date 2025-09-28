@@ -54,7 +54,7 @@ Do we specify minimisation based on the *energy* or the *forces*? Although the g
 
 <details>
 <summary>Click here for the answer</summary>
-The forces are obtained from the gradient of the potential energy and vanish at a **stationary point**. A force-based stopping criterion ensures that the system is in mechanical equilibrium. By contrast, an energy-based criterion only checks for small changes in energy and provides no information about the local shape of the energy surface.
+The forces are obtained from the gradient of the potential energy and vanish at a stationary point. A force-based stopping criterion ensures that the system is in mechanical equilibrium. By contrast, an energy-based criterion only checks for small changes in energy and provides no information about the local shape of the energy surface.
 </details>
 
 Type ":q" (without the "") to return to the terminal.
