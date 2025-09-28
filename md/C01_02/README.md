@@ -109,7 +109,40 @@ vim heat.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step (initialisation)?
+What are the differences between this input and the input from the last step (initialisation)? In particular, see sections related to "initialize velocities" and "MD run":
+
+```bash
+# initialize velocities
+velocity        all create 10.0 111 mom yes rot yes
+########################
+
+### MD run #############
+timestep        10.0
+
+fix             integ all nve # integrate equation of motion
+
+fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
+
+#fix            baros all press/berendsen iso 1.0 1.0 10000.0 # Berendsen barostat
+
+#fix            integ all nvt temp 10.0 500.0 1000.0 # integrate equation of motion + Nose-Hoover thermostat
+
+run             10000
+########################
+```
+
+In this input, we initialize the velocities at 10K, then tell LAMMPS to perform molecular dynamics in the NVE ensemble. We also impose a Berendsen thermostat to heat the system from 10K to 500K.
+
+Is it correct to impose a thermostat in the NVE ensemble? Check the description of this thermostat in the LAMMPS manual.
+
+**Objectives**
+
+- Check the choice of timestep is appropriate <br>
+  Remove the Berendsen thermostat, by "commenting" the line in `heat.in`.
+  ```bash
+  #fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
+  ```
+  When opening the file in vim, if you hit "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exist edit mode, and type ":w" to save changes (and :q to quit).
 
 	Objectives:
 	I)   Check integration scheme and choice of timestep are appropriate
