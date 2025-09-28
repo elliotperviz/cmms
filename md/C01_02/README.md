@@ -31,17 +31,29 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 - Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate<br>
 [hint: plot total energy as a function of time, fit straight line]<br>
 
-### 1. Initialisation & minimisation
+### 1. Initialisation & potential minimisation
 
-**Objectives**
+Change into [1-init](1-init/):
+```bash
+cd 1-init/
+```
+
+View the contents of the directory and inspect the input file:
+```bash
+ls
+vim mini.in
+```
+Inside vim, use PAGEUP and PAGEDOWN keys to navigate, type ":q" (without the "") to return to the terminal.
+
+Now, run lammps:
 ```bash
 lmp -in mini.in
 ```
 
-
-- I) Check optimised system is physically reasonable with VMD <br>
-	[hint: use output trajectory file ending .lammpstrj] <br>
-- II) Ensure maximum forces are less than chosen tolerance (verification of force field part) <br>
+**Objectives**
+- Check optimised system is physically reasonable with VMD <br>
+  [hint: load output trajectory file ending .lammpstrj]
+- Ensure maximum forces are less than chosen tolerance (verification of force field) <br>
 	[hint: check standard out or log.lammps]
            
 ### 2. Heating - initialise velocities at 10K, heat to 500K
