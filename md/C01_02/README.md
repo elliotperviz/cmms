@@ -48,7 +48,7 @@ Inside vim, use PAGEUP and PAGEDOWN keys to navigate.
 
 Check the section labelled "initial conf" and related keywords against the LAMMPS manual. What system have we setup?
 
-Aside from initialising the atomic positions, we also want to minimise the potential. For this purpose, we employ the conjugate gradient algorithm. Note the section "minimization", and the in particular the keywords "min_style" and "minimize". Check the syntax of these commands in the LAMMPS manual.
+Aside from initialising the atomic positions, we also want to minimise the potential. For this purpose, we employ the conjugate gradient algorithm. Note the section "minimization", and in particular the keywords "min_style" and "minimize". Check the syntax of these commands in the LAMMPS manual.
 
 Do we specify minimisation based on the *energy* or the *forces*? Although the goal is to reduce the potential energy, why might a stopping criterion based on forces be more physically meaningful?
 
