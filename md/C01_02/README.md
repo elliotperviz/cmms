@@ -45,10 +45,19 @@ vim mini.in
 ```
 Inside vim, use PAGEUP and PAGEDOWN keys to navigate, type ":q" (without the "") to return to the terminal.
 
-Now, run lammps:
+Now, run LAMMPS:
 ```bash
 lmp -in mini.in
 ```
+
+Inspect the *standard output* (the lines printed to the terminal after running the above command).
+
+Inspect the output files written by LAMMPS, e.g.:
+```bash
+perviell@postel 1-init$ ls
+log.lammps  mini_final.data  mini.in  mini.lammpstrj
+```
+
 
 **Objectives**
 - Check optimised system is physically reasonable with VMD <br>
