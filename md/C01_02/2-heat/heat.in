@@ -60,7 +60,7 @@ fix 		thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
 
 #fix 		baros all press/berendsen iso 1.0 1.0 100.0 # Berendsen barostat
 
-#fix		integ all nvt temp 10.0 500.0 1000.0 # integrate equation of motion + Nose-Hoover thermostat
+#fix		integ all nvt temp 10.0 500.0 100.0 # integrate equation of motion + Nose-Hoover thermostat
 
 run 		25000
 ########################
