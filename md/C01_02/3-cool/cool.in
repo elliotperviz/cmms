@@ -21,7 +21,7 @@ pair_style	lj/cut 7.65 # pairwise interaction
 ########################
 
 ### initial conf #######
-read_data       melt_final.data # read a data file
+read_data       heat_final.data # read a data file
 ########################
 
 ### force field part ###
