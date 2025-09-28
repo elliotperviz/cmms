@@ -137,7 +137,8 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
 **Objectives**
 
-- **Check the choice of timestep is appropriate** <br>
+- **Check the choice of timestep is appropriate**
+  
   Remove the Berendsen thermostat, by "commenting" i.e. adding a hashtag to the beginning of the appropriate line in `heat.in`.
   ```bash
   #fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
@@ -186,15 +187,15 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
   Now, we extract and write this output to a new file using `sed` (note, the line numbers that you extract may not be exactly the same, replace the numbers with those extracted from your output):
   ```bash
-  sed -n '92,10093p' log.lammps > heat.dat
-  sed -i '1s/^/#/' heat.dat
+  sed -n '92,10093p' log.lammps > benchmark.dat
+  sed -i '1s/^/#/' benchmark.dat
   ```
   We keep line 92, since it is useful to have the header reminding us what the different columns correspond to, but ignore 10094. The second `sed` command prepends a '#' key, to turn the first line into a comment.
 
   Now, let's plot the data using gnuplot.
   ```bash
   gnuplot
-  gnuplot> plot "heat.dat" using 1:2 with lines
+  gnuplot> plot "benchmark.dat" using 1:2 with lines
   ```
   This command plots the 1st (time) and 2nd (total energy) columns of heat.dat in the x and y axes respectively. You may also wish to check the variation of other thermodynamic variables as a function of time, by plotting 1:NUM (where NUM is the number of any of the other columns).
 
@@ -207,7 +208,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   gnuplot> f(x) = m*x + c
   gnuplot> m = 1
   gnuplot> c = 1
-  gnuplot> fit f(x) "heat.dat" using 1:2 via m,c
+  gnuplot> fit f(x) "benchmark.dat" using 1:2 via m,c
   ```
   Note, the initial definition of m and c are the starting guesses, gnuplot then finds the optimum values of m and c via linear regression. The output should look something like this:
   ```bash
@@ -244,16 +245,31 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   m               1.000
   c              -0.866  1.000
   ```
-  Note the "final set of parameters" in the output. The gradient is on the order of 1.8e-07 (the exact value may differ for you). This tells us that the drift of the total energy over the trajectory is small. For this tutorial, it is more than enough. We can also overlay the straight line on top of the data in the gnuplot plot:
+  A copy is written to a file called `fit.log`. Note the "final set of parameters" in the output. The gradient is on the order of 1.8e-07 (the exact value may differ for you). This tells us that the drift of the total energy over the trajectory is small. For this tutorial, it is more than enough. We can also overlay the straight line on top of the data in the gnuplot plot:
 
   ```bash
-  gnuplot> plot "heat.dat" using 1:2 with lines, f(x)
+  gnuplot> plot "benchmark.dat" using 1:2 with lines, f(x)
   ```
 
-  
+- Reapply the Berendsen thermostat (still within the NVE ensemble) and heat to 500K.
 
-  For this purpose, we will introduce and use some new command line tools for post-processing the output files:
+  Modify heat.in (e.g. with vim) to uncomment the Berendsen thermostat.
+
+  Run lammps again:
   ```bash
+  lmp -in heat.in
+  ```
+
+  If we follow the 5th column, we should see the temperature steadily approach 500K.
+
+  Visualize this trajectory with `vmd`.
+
+  Using the same approach in the benchmark step, extract the thermodynamic output at each timestep from `log.lammps`. Write to a file (e.g. `heat.dat`) and plot using gnuplot.
+
+  Try fitting another straight line, what is the gradient this time?
+  
+  
+  
   
 
 	Objectives:
