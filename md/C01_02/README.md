@@ -262,7 +262,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
   If we follow the 5th column, we should see the temperature steadily approach 500K.
 
-  Visualize this trajectory with `vmd`.
+  Visualize the trajectory with `vmd`.
 
   Using the same approach in the benchmark step, extract the thermodynamic output at each timestep from `log.lammps`. Write to a file (e.g. `heat.dat`) and plot using gnuplot.
 
