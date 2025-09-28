@@ -109,7 +109,7 @@ vim heat.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step (initialisation)? In particular, see sections related to "initialize velocities" and "MD run":
+What are the differences between this input and the input from the last step? In particular, see sections related to "initialize velocities" and "MD run":
 
 ```bash
 # initialize velocities
