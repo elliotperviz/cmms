@@ -88,6 +88,29 @@ Note that, in "mini.lammpstrj", during a minimisation we have positions and velo
   [hint: check the standard output or log.lammps for information about the energy or forces]
            
 ### 2. Heating - initialise velocities at 10K, heat to 500K
+
+Copy the final configuration (**init_final.data**) into [2-heat](2-heat/) and change directory.
+
+e.g. from [1-init](1-init/) to [2-heat](2-heat/):
+```bash
+cp init_final.data ../2-heat/
+cd ../2-heat/
+```
+
+If you inspect the contents of the directory, it should contain:
+```bash
+perviell@postel 2-heat$ ls
+heat.in  init_final.data
+```
+
+Use vim to inspect "heat.in"
+```bash
+vim heat.in
+```
+(remember, :q to quit)
+
+What are the differences between this input and the input from the last step (initialisation)?
+
 	Objectives:
 	I)   Check integration scheme and choice of timestep are appropriate
 	     [hint: integrate Newton's equations in NVE and plot total energy as a
