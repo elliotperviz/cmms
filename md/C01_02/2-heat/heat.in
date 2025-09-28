@@ -56,13 +56,13 @@ timestep	10.0
 
 fix		integ all nve # integrate equation of motion
 
-fix 		thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
+fix 		thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
 
 #fix 		baros all press/berendsen iso 1.0 1.0 10000.0 # Berendsen barostat
 
 #fix		integ all nvt temp 10.0 500.0 1000.0 # integrate equation of motion + Nose-Hoover thermostat
 
-run 		10000
+run 		30000
 ########################
 
 ### write data #########
