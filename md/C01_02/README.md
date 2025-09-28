@@ -79,7 +79,7 @@ vim <filename>
 - mini_final.data - final positions and velocities of each atom
 - mini.lammpstrj - the lammps "trajectory" file, positions and velocities as a function potential minimisation step
 
-Note that, in "mini.lammpstrj", during a minimisation we have positions and velocities as as function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
+Note that, in "mini.lammpstrj", during a minimisation we have positions and velocities as a function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
 
 **Questions**
 - Are the initialized positions physically reasonable, based on the system we wanted to setup? <br>
