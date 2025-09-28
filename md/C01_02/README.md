@@ -33,7 +33,7 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 
 ### 1. Initialisation & potential minimisation
 
-Here, we employ the conjugate gradient algorithm to minimise the potential. 
+In this first step, we employ the conjugate gradient algorithm to minimise the potential. 
 
 Change into [1-init](1-init/):
 ```bash
