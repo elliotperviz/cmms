@@ -71,18 +71,21 @@ Inspect the output files written by LAMMPS, e.g.:
 perviell@postel 1-init$ ls
 log.lammps  mini_final.data  mini.in  mini.lammpstrj
 ```
-
+Open with vim and check their contents:
+```bash
+vim <filename>
+```
 - log.lammps - a copy saved to file (with some more detail) of the standard output
 - mini_final.data - final positions and velocities of each atom
 - mini.lammpstrj - the lammps "trajectory" file, positions and velocities as a function potential minimisation step
 
 Note that, in "mini.lammpstrj", during a minimisation we have positions and velocities as as function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
 
-**Objectives**
-- Check optimised system is physically reasonable with VMD <br>
-  [hint: load output trajectory file into VMD]
-- Ensure maximum forces are less than chosen tolerance (verification of force field) <br>
-	[hint: check standard out or log.lammps for information about the forces]
+**Questions**
+- Are the initialized positions physically reasonable, based on the system we wanted to setup? <br>
+  [hint: Check by visualizing the minimisation with the output trajectory file e.g. with VMD]
+- Was the stopping criterion on the minimisation correctly achieved? <br>
+  [hint: check the standard output or log.lammps for information about the energy or forces]
            
 ### 2. Heating - initialise velocities at 10K, heat to 500K
 	Objectives:
