@@ -161,6 +161,101 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   lmp -in heat.in
   ```
 
+  Follow the output in the terminal. You should see the thermodynamic variables printed at each timestep. We customise the thermodynamic output in the "output definition" section of the input file (check this!). In particular, we chose the different output columns, which correspond to (from left to right): 
+  Time, Total energy, Potential energy, Kinetic energy, Temperature, Pressure
+  
+  Once the simulation is finished, view the output files:
+  ```bash
+  perviell@postel 2-heat$ ls
+  heat_final.data  heat.in  init_final.data  log.lammps  melt.lammpstrj
+  ```
+
+  Inspect the various outputs (e.g. with `vim`) - pay careful attention to the parts of the `log.lammps` where the thermodynamic outputs are printed at each timestep of the numerical integration. You may also wish to visualize the dynamical trajectory using `vmd`.
+
+  We want to verify that the timestep is appropriate to model the dynamics in the NVE ensemble, in particular we want the total energy to be approximately constant (within reasonable tolerance).
+
+  **Let's check this explicitly**. You may have noticed when inspecting the output file that the output is sandwiched between two specific lines, which we can search using `grep`
+  ```bash
+  perviell@postel 2-heat$ grep -n "Time" log.lammps
+  92:Time TotEng PotEng KinEng Temp Press
+  perviell@postel 2-heat$ grep -n "Loop time" log.lammps
+  10094:Loop time of 45.0169 on 1 procs for 10000 steps with 864 atoms
+  ```
+
+  `grep -n "match" $file` returns the line number of the matching string in the file we search (if it exists).
+
+  Now, we extract and write this output to a new file using `sed` (note, the line numbers that you extract may not be exactly the same, replace the numbers with those extracted from your output):
+  ```bash
+  sed -n '92,10093p' log.lammps > heat.dat
+  sed -i '1s/^/#/' heat.dat
+  ```
+  We keep line 92, since it is useful to have the header reminding us what the different columns correspond to, but ignore 10094. The second `sed` command prepends a '#' key, to turn the first line into a comment.
+
+  Now, let's plot the data using gnuplot.
+  ```bash
+  gnuplot
+  gnuplot> plot "heat.dat" using 1:2 with lines
+  ```
+  This command plots the 1st (time) and 2nd (total energy) columns of heat.dat in the x and y axes respectively. You may also wish to check the variation of other thermodynamic variables as a function of time, by plotting 1:NUM (where NUM is the number of any of the other columns).
+
+  Using the right mouse, you can highlight regions on the plot to zoom in. Pressing "a" on your keyboard reverts to the default zoom.
+
+  You should see a fluctuating but roughly constant total energy. But, exactly how "constant" is it?
+
+  In the `gnuplot` terminal, we can use linear regression to find the best fit of a straight line to the data:
+  ```bash
+  gnuplot> f(x) = m*x + c
+  gnuplot> m = 1
+  gnuplot> c = 1
+  gnuplot> fit f(x) "heat.dat" using 1:2 via m,c
+  ```
+  Note, the initial definition of m and c are the starting guesses, gnuplot then finds the optimum values of m and c via linear regression. The output should look something like this:
+  ```bash
+  iter      chisq       delta/lim  lambda   m             c
+   0 9.1918668422e+15   0.00e+00  4.08e+03    1.000000e+00   1.000000e+00
+   1 2.3216295309e+15  -2.96e+05  4.08e+02    1.445174e+02   1.455822e+02
+   2 2.2535036459e+15  -3.02e+03  4.08e+01    1.423883e+02   1.438797e+04
+   3 3.6047408817e+14  -5.25e+05  4.08e+00    5.694850e+01   5.840153e+05
+   4 1.5803295319e+10  -2.28e+09  4.08e-01    3.770677e-01   9.611771e+05
+   5 1.1887682202e+02  -1.33e+13  4.08e-02    2.531404e-05   9.636908e+05
+   6 4.8677390870e+01  -1.44e+05  4.08e-03    1.829237e-07   9.636910e+05
+   * 4.8677390870e+01   4.21e-07  4.08e-02    1.829022e-07   9.636910e+05
+   * 4.8677390870e+01   4.27e-07  4.08e-01    1.829022e-07   9.636910e+05
+   * 4.8677390871e+01   5.97e-07  4.08e+00    1.829022e-07   9.636910e+05
+   * 4.8677390870e+01   3.03e-07  4.08e+01    1.829024e-07   9.636910e+05
+   7 4.8677390869e+01  -2.16e-06  4.08e+00    1.829103e-07   9.636910e+05
+  iter      chisq       delta/lim  lambda   m             c
+
+  After 7 iterations the fit converged.
+  final sum of squares of residuals : 48.6774
+  rel. change during last iteration : -2.15851e-11
+
+  degrees of freedom    (FIT_NDF)                        : 9999
+  rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0697727
+  variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00486823
+
+  Final set of parameters            Asymptotic Standard Error
+  =======================            ==========================
+  m               = 1.8291e-07       +/- 2.417e-07    (132.1%)
+  c               = 963691           +/- 0.001395     (1.448e-07%)
+
+  correlation matrix of the fit parameters:
+                m      c
+  m               1.000
+  c              -0.866  1.000
+  ```
+  Note the "final set of parameters" in the output. The gradient is on the order of 1.8e-07 (the exact value may differ for you). This tells us that the drift of the total energy over the trajectory is small. For this tutorial, it is more than enough. We can also overlay the straight line on top of the data in the gnuplot plot:
+
+  ```bash
+  gnuplot> plot "heat.dat" using 1:2 with lines, f(x)
+  ```
+
+  
+
+  For this purpose, we will introduce and use some new command line tools for post-processing the output files:
+  ```bash
+  
+
 	Objectives:
 	I)   Check integration scheme and choice of timestep are appropriate
 	     [hint: integrate Newton's equations in NVE and plot total energy as a
