@@ -21,7 +21,7 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 4. Equilibration - prepare system for measurement at 94.4K
 5. Production - calculate diffusion coefficient (D) and pair correlation function
 
-## Simulation procedure:
+## Simulation procedure
 ### 0. Initialisation - initialise randomised positions and velocities
 
 **Objectives**
