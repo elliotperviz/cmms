@@ -51,12 +51,12 @@ dump_modify 	traj sort id
 ########################
 
 ### MD run #############
-timestep	10.0
+timestep	1.0
 
-#fix		integ all nve # integrate equation of motion
-#fix 		thermos all temp/berendsen 94.4 94.4 1000.0 # Berendsen thermostat
+fix		integ all nve # integrate equation of motion
+#fix 		thermos all temp/berendsen 94.4 94.4 100.0 # Berendsen thermostat
 
-fix		integ all nvt temp 94.4 94.4 1000.0 # integrate equation of motion + Nose-Hoover thermostat
+#fix		integ all nvt temp 94.4 94.4 100.0 # integrate equation of motion + Nose-Hoover thermostat
 
 run 		100000
 ########################

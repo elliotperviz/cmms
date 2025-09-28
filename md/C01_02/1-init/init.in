@@ -19,7 +19,7 @@ atom_style	atomic # no bonds, angles, charges
 ########################
 
 ### initial conf #######
-lattice		fcc 3.079643333 # define the lattice parameter
+lattice		fcc 5.79643333 # define the lattice parameter
 
 region		box block 0 6 0 6 0 6 # defines a geometric region of space
 

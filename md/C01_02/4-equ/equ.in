@@ -53,6 +53,10 @@ fix		integ all nve # integrate equation of motion
 fix 		thermos all temp/berendsen 94.4 94.4 100.0 # Berendsen thermostat
 
 run 		50000
+
+unfix		thermos
+
+run		50000
 ########################
 
 ### write data #########
