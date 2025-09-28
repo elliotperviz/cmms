@@ -15,11 +15,11 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 [https://docs.lammps.org]
 
 ## Outline
-1. Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
-2. Heating - initialise velocities at 10K, heat to 500K
-3. Cooling - cool system to 94.4K
-4. Equilibration - prepare system for measurement at 94.4K
-5. Production - calculate diffusion coefficient (D) and pair correlation function
+1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
+2. [2-heat](2-heat/) Heating - initialise velocities at 10K, heat to 500K
+3. [3-cool](3-cool/) Cooling - cool system to 94.4K
+4. [4-equ](4-equ/) Equilibration - prepare system for measurement at 94.4K
+5. [5-prod](5-prod/) Production - calculate diffusion coefficient (D) and pair correlation function
 
 ## Simulation procedure
 ### 0. Initialisation - initialise randomised positions and velocities
@@ -31,9 +31,13 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 - Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate<br>
 [hint: plot total energy as a function of time, fit straight line]<br>
 
-### 1. Minimisation - minimise potential energy
+### 1. Initialisation & minimisation
 
 **Objectives**
+```bash
+lmp -in mini.in
+```
+
 
 - I) Check optimised system is physically reasonable with VMD <br>
 	[hint: use output trajectory file ending .lammpstrj] <br>
