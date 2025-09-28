@@ -36,7 +36,7 @@ View the contents of the directory and inspect the input file:
 ls
 vim mini.in
 ```
-Inside vim, use PAGEUP and PAGEDOWN keys to navigate.
+Inside `vim`, use PAGEUP and PAGEDOWN keys to navigate.
 
 Check the section labelled "initial conf" and related keywords against the LAMMPS manual. What system have we setup?
 
@@ -63,7 +63,7 @@ Inspect the output files written by LAMMPS, e.g.:
 perviell@postel 1-init$ ls
 log.lammps  mini_final.data  mini.in  mini.lammpstrj
 ```
-Open with vim and check their contents:
+Open with `vim` and check their contents:
 ```bash
 vim <filename>
 ```
@@ -71,7 +71,7 @@ vim <filename>
 - mini_final.data - final positions and velocities of each atom
 - mini.lammpstrj - the lammps "trajectory" file, positions and velocities as a function potential minimisation step
 
-Note that, in "mini.lammpstrj", during a minimisation we have positions and velocities as a function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
+Note that, in `mini.lammpstrj`, during a minimisation we have positions and velocities as a function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
 
 **Questions**
 - Are the initialized positions physically reasonable, based on the system we wanted to setup? <br>
@@ -81,7 +81,7 @@ Note that, in "mini.lammpstrj", during a minimisation we have positions and velo
            
 ### 2. Heating - initialise velocities at 10K, heat to 500K
 
-Copy the final configuration (**init_final.data**) into [2-heat](2-heat/) and change directory.
+Copy the final configuration (`init_final.data`) into [2-heat](2-heat/) and change directory.
 
 e.g. from [1-init](1-init/) to [2-heat](2-heat/):
 ```bash
@@ -95,7 +95,7 @@ perviell@postel 2-heat$ ls
 heat.in  init_final.data
 ```
 
-Use vim to inspect the new input file
+Use `vim` to inspect the new input file
 ```bash
 vim heat.in
 ```
@@ -135,8 +135,8 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   ```bash
   #fix             thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
   ```
-  When opening the file in vim, if you hit "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
-  Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow once you get used to its usage.<br>
+  When opening the file in `vim`, if you type "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
+  Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow with some practice.<br>
   Now, run LAMMPS (only NVE for velocities initialised at 10K):
   ```bash
   lmp -in heat.in
@@ -179,7 +179,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
   Now, we extract and write this output to a new file using `sed` (note, the line numbers that you extract may not be exactly the same, replace the numbers with those extracted from your output):
   ```bash
-  sed -n '92,10093p' log.lammps > benchmark.dat
+  sed -n '92,25093p' log.lammps > benchmark.dat
   sed -i '1s/^/#/' benchmark.dat
   ```
   We keep line 92, since it is useful to have the header reminding us what the different columns correspond to, but ignore 10094. The second `sed` command prepends a '#' key, to turn the first line into a comment.
@@ -271,7 +271,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   
 **Optional Objectives**
 
-- **Integrate Newton's equations and apply a thermostat to heat to 500K in the NVT ensemble.**
+- **Integrate Newton's equations and apply a Nose-Hoover thermostat to heat to 500K in the NVT ensemble.**
 
   the "MD run" section in `heat.in` should looks as follows:
   ```bash
@@ -297,13 +297,69 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 - Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
 
 ### 3. Cooling - cool system to 94.4 K
-	Objectives:
-	I)   Check T reaches 94.4 K
-	     [hint: Plot T vs t]
-	--- OPTIONAL ---
-	II)  Integration Newton's equations and cool to 94.4K in NVT ensemble
+
+Copy the final configuration (`heat_final.data`) into [3-cool](3-cool/) and change directory.
+
+```bash
+cp heat_final.data ../3-cool/
+cd ../3-cool/
+```
+
+If you inspect the contents of the directory, it should contain:
+```bash
+perviell@postel 3-cool$ ls
+cool.in  heat_final.data
+```
+
+Use `vim` to inspect the input file
+```bash
+vim cool.in
+```
+(remember, :q to quit)
+
+What are the differences between this input and the input from the last step? Here, since velocities are already defined in `heat_final.data`, we should not redefine them. Further, see the "MD run" section: we aim to cool the system from 500K to 94.4K with a Berendsen thermostat, the target temperature at which we want to make equilibrium measurements.
+
+Run LAMMPS:
+```bash
+lmp -in cool.in
+```
+
+Follow the standard output (or check `log.lammps` afterwards) to check that there are no errors during the simulation. Check that the system reaches ~94.4K.
+
+**Objectives**
+
+- Visualize the `cool.lammpstrj` trajectory in `vmd`
+- Extract the thermodynamic output at each timestep using `sed` or `awk`, write to file e.g. `cool.dat`
+- Plot the temperature as a function of time in  `gnuplot`
+- Fit a straight line to temperature vs time in `gnuplot`
+
+**Optional Objectives**
+
+- Replace the NVE ensemble and Berendsen thermostat with an NVT ensemble and thermostat.
 	
 ### 4. Equilibration - prepare system for measurement at 94.4 K
+
+Copy the final configuration (`cool_final.data`) into [4-equ](4-equ/) and change directory.
+
+```bash
+cp cool_final.data ../4-equ/
+cd ../4-equ/
+```
+
+If you inspect the contents of the directory, it should contain:
+```bash
+perviell@postel 4-cool$ ls
+equ.in  cool_final.data
+```
+
+Use `vim` to inspect the input file
+```bash
+vim cool.in
+```
+(remember, :q to quit)
+
+What are the differences between this input and the input from the last step?
+
 	Objectives:
 	I)   Check system is in equilibrium
 	     [hint: Plot T vs t, fit straight line]
