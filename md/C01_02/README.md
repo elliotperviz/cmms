@@ -33,6 +33,8 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 
 ### 1. Initialisation & potential minimisation
 
+Here, we employ the conjugate gradient algorithm to minimise the potential. 
+
 Change into [1-init](1-init/):
 ```bash
 cd 1-init/
@@ -43,14 +45,21 @@ View the contents of the directory and inspect the input file:
 ls
 vim mini.in
 ```
-Inside vim, use PAGEUP and PAGEDOWN keys to navigate, type ":q" (without the "") to return to the terminal.
+Inside vim, use PAGEUP and PAGEDOWN keys to navigate.
+
+Note the line containing the keyword "minimize". Check the syntax of this command:
+https://docs.lammps.org/minimize.html
+
+Do we specify minimisation based on the *energy* or the *forces*? The point of this step is to minimise the potential, why would a stopping criterion based on the forces be useful?
+
+Type ":q" (without the "") to return to the terminal.
 
 Now, run LAMMPS:
 ```bash
 lmp -in mini.in
 ```
 
-Inspect the *standard output* (the lines printed to the terminal after running the above command).
+Inspect the *standard output* (the lines printed to the terminal after running the above command). What information is printed?
 
 Inspect the output files written by LAMMPS, e.g.:
 ```bash
@@ -58,12 +67,17 @@ perviell@postel 1-init$ ls
 log.lammps  mini_final.data  mini.in  mini.lammpstrj
 ```
 
+- log.lammps - a copy saved to file (with some more detail) of the standard output
+- mini_final.data - final positions and velocities of each atom
+- mini.lammpstrj - the lammps "trajectory" file, positions and velocities as a function potential minimisation step
+
+Note that, in "mini.lammpstrj", during a minimisation we have positions and velocities as as function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
 
 **Objectives**
 - Check optimised system is physically reasonable with VMD <br>
-  [hint: load output trajectory file ending .lammpstrj]
+  [hint: load output trajectory file into VMD]
 - Ensure maximum forces are less than chosen tolerance (verification of force field) <br>
-	[hint: check standard out or log.lammps]
+	[hint: check standard out or log.lammps for information about the forces]
            
 ### 2. Heating - initialise velocities at 10K, heat to 500K
 	Objectives:
