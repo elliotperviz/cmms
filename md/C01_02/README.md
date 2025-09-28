@@ -23,14 +23,6 @@ If you enter the name of a command into the search bar, you will usually be able
 5. [5-prod](5-prod/) Production - calculate diffusion coefficient (D) and pair correlation function
 
 ## Simulation procedure
-### 0. Initialisation - initialise randomised positions and velocities
-
-**Objectives**
-
-
---- OPTIONAL ---<br>
-- Initialise Ag gas at 1.374 g cm^{-3} at 10K and equilibrate<br>
-[hint: plot total energy as a function of time, fit straight line]<br>
 
 ### 1. Initialisation & potential minimisation
 
