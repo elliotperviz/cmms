@@ -11,8 +11,9 @@ of Argon gas at density  1.374 g cm<sup>-3</sup> in equilibrium at 94.4 K.
 In this investigation we aim to replicate the results of the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964. <br>
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
-For further resources, we recommend that you check out the LAMMPS manual. It is a complete and well-written resource that you should use to check the proper usage of commands, and how to setup up different types of simulations, and also to find relevant references. It should also be the first port of call if you want to setup your own LAMMPS simulations in the future. See the following link: <br>
+If a first time user, it is recommended that you have the LAMMPS manual open on a separate page during this tutorial. It is a complete and well-written resource that you should use to check description and correct syntax of commands. It is good to get into this habit, as even for experienced users it is impossible to remember the meaning of every command and their associated syntax. See the following link: <br>
 [https://docs.lammps.org]
+If you enter the name of a command into the search bar, you will usually be able to find a dedicated help page.
 
 ## Outline
 1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
@@ -33,8 +34,6 @@ For further resources, we recommend that you check out the LAMMPS manual. It is 
 
 ### 1. Initialisation & potential minimisation
 
-In this first step, we employ the conjugate gradient algorithm to minimise the potential. 
-
 Change into [1-init](1-init/):
 ```bash
 cd 1-init/
@@ -47,10 +46,16 @@ vim mini.in
 ```
 Inside vim, use PAGEUP and PAGEDOWN keys to navigate.
 
-Note the line containing the keyword "minimize". Check the syntax of this command:
-https://docs.lammps.org/minimize.html
+Check the section labelled "initial conf" and related keywords against the LAMMPS manual. What system have we setup?
 
-Do we specify minimisation based on the *energy* or the *forces*? The point of this step is to minimise the potential, why would a stopping criterion based on the forces be useful?
+Aside from initialising the atomic positions, we also want to minimise the potential. For this purpose, we employ the conjugate gradient algorithm. Note the section "minimization", and the in particular the keywords "min_style" and "minimize". Check the syntax of these commands in the LAMMPS manual.
+
+Do we specify minimisation based on the *energy* or the *forces*? Although the goal is to reduce the potential energy, why might a stopping criterion based on forces be more physically meaningful?
+
+<details>
+<summary>Click here for the answer</summary>
+The forces are obtained from the gradient of the potential energy and vanish at a **stationary point**. A force-based stopping criterion ensures that the system is in mechanical equilibrium. By contrast, an energy-based criterion only checks for small changes in energy and provides no information about the local shape of the energy surface.
+</details>
 
 Type ":q" (without the "") to return to the terminal.
 
