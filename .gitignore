@@ -12,6 +12,8 @@ ab.abo
 # -------------------------
 # Executables and build artefacts
 # -------------------------
+movavg
+rdf
 *.out
 *.exe
 *.o
