@@ -354,7 +354,7 @@ equ.in  cool_final.data
 
 Use `vim` to inspect the input file
 ```bash
-vim cool.in
+vim equ.in
 ```
 (remember, :q to quit)
 
