@@ -137,7 +137,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
 **Objectives**
 
-- Check the choice of timestep is appropriate <br>
+- **Check the choice of timestep is appropriate** <br>
   Remove the Berendsen thermostat, by "commenting" the line in `heat.in`.
   ```bash
   #fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
