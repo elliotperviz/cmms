@@ -103,7 +103,7 @@ perviell@postel 2-heat$ ls
 heat.in  init_final.data
 ```
 
-Use vim to inspect "heat.in"
+Use vim to inspect the new input file
 ```bash
 vim heat.in
 ```
@@ -119,7 +119,7 @@ What are the differences between this input and the input from the last step (in
 	     during NVE integration. Plot T vs t, and check T reaches 500K.
 	--- OPTIONAL ---
 	III) Apply Berendsen barostat during NVE integration
-	IV)  Integrate Newton's equations and heat to 5000K in NVT ensemble
+	IV)  Integrate Newton's equations and heat to 500K in NVT ensemble
 	     [hint: you must first disable NVE integration]
 
 ### 3. Cooling - cool system to 94.4 K
