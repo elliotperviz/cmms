@@ -121,13 +121,13 @@ timestep        10.0
 
 fix             integ all nve # integrate equation of motion
 
-fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
+fix             thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
 
-#fix            baros all press/berendsen iso 1.0 1.0 10000.0 # Berendsen barostat
+#fix            baros all press/berendsen iso 1.0 1.0 100.0 # Berendsen barostat
 
 #fix            integ all nvt temp 10.0 500.0 1000.0 # integrate equation of motion + Nose-Hoover thermostat
 
-run             10000
+run             25000
 ########################
 ```
 
@@ -141,7 +141,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   
   Remove the Berendsen thermostat, by "commenting" i.e. adding a hashtag to the beginning of the appropriate line in `heat.in`.
   ```bash
-  #fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
+  #fix             thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
   ```
   When opening the file in vim, if you hit "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
   Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow once you get used to its usage.<br>
@@ -180,7 +180,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   perviell@postel 2-heat$ grep -n "Time" log.lammps
   92:Time TotEng PotEng KinEng Temp Press
   perviell@postel 2-heat$ grep -n "Loop time" log.lammps
-  10094:Loop time of 45.0169 on 1 procs for 10000 steps with 864 atoms
+  25094:Loop time of 110.537 on 1 procs for 25000 steps with 864 atoms
   ```
 
   `grep -n "match" $file` returns the line number of the matching string in the file we search (if it exists).
@@ -191,6 +191,15 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   sed -i '1s/^/#/' benchmark.dat
   ```
   We keep line 92, since it is useful to have the header reminding us what the different columns correspond to, but ignore 10094. The second `sed` command prepends a '#' key, to turn the first line into a comment.
+
+  Note: another useful tool to know, aside from `sed`, for extracting output data is `awk`. It has slightly different syntax, but can serve the same purpose (and has much more uses aside from this):
+
+  ```bash
+  awk 'NR>=92 && NR<25093' log.lammps > benchmark.dat
+  awk -i inplace 'NR==1{$0="#" $0} {print $0}' benchmark.dat
+  ```
+
+  When extracting data, using the tool/syntax you feel most comfortable working in.
 
   Now, let's plot the data using gnuplot.
   ```bash
@@ -251,7 +260,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   gnuplot> plot "benchmark.dat" using 1:2 with lines, f(x)
   ```
 
-- Reapply the Berendsen thermostat (still within the NVE ensemble) and heat to 500K.
+- **Reapply the Berendsen thermostat (still within the NVE ensemble) and heat to 500K.**
 
   Modify heat.in (e.g. with vim) to uncomment the Berendsen thermostat.
 
@@ -264,24 +273,34 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
   Visualize the trajectory with `vmd`.
 
-  Using the same approach in the benchmark step, extract the thermodynamic output at each timestep from `log.lammps`. Write to a file (e.g. `heat.dat`) and plot using gnuplot.
+  Using the same approach in the benchmark step, extract the thermodynamic output at each timestep from `log.lammps` using `sed` or `awk`. Write to a file (e.g. `heat.dat`) and plot using `gnuplot`. Note: Be careful to use the correct line numbers when extracting the data.
 
-  Try fitting another straight line, what is the gradient this time?
+  Try fitting another straight line in `gnuplot`, what is the gradient this time?
   
-  
-  
-  
+**Optional Objectives**
 
-	Objectives:
-	I)   Check integration scheme and choice of timestep are appropriate
-	     [hint: integrate Newton's equations in NVE and plot total energy as a
-	     function of time, fit straight line]
-	II)  Apply Berendsen thermostat (note: part of NVE ensemble) and heat to 500K 
-	     during NVE integration. Plot T vs t, and check T reaches 500K.
-	--- OPTIONAL ---
-	III) Apply Berendsen barostat during NVE integration
-	IV)  Integrate Newton's equations and heat to 500K in NVT ensemble
-	     [hint: you must first disable NVE integration]
+- **Integrate Newton's equations and apply a thermostat to heat to 500K in the NVT ensemble.**
+
+  the "MD run" section in `heat.in` should looks as follows:
+  ```bash
+  ### MD run #############
+  timestep        1.0
+
+  #fix            integ all nve # integrate equation of motion
+
+  #fix            thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
+
+  #fix            baros all press/berendsen iso 1.0 1.0 100.0 # Berendsen barostat
+
+  fix             integ all nvt temp 10.0 500.0 100.0 # integrate equation of motion + Nose-Hoover thermostat
+
+  run             25000
+  ########################
+  ```
+
+  Is the heating behaviour different?
+
+  Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
 
 ### 3. Cooling - cool system to 94.4 K
 	Objectives:
