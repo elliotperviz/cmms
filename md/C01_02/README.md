@@ -360,6 +360,25 @@ vim equ.in
 
 What are the differences between this input and the input from the last step?
 
+perviell@postel 4-equ$ grep -n "Time" log.lammps
+82:Time TotEng PotEng KinEng Temp Press
+50115:Time TotEng PotEng KinEng Temp Press
+perviell@postel 4-equ$ grep -n "Loop" log.lammps
+50084:Loop time of 43.3201 on 1 procs for 50000 steps with 864 atoms
+100117:Loop time of 42.4362 on 1 procs for 50000 steps with 864 atoms
+
+perviell@postel 4-equ$ sed -n '82,50083p' log.lammps > equ.dat
+perviell@postel 4-equ$ sed -n '50115,100116p' log.lammps > equ2.dat
+perviell@postel 4-equ$ sed -i '1s/^/#/' equ.dat
+perviell@postel 4-equ$ sed -i '1s/^/#/' equ2.dat
+
+
+perviell@postel 4-equ$ movavg equ.dat equ_avg.dat 10000 1 5
+perviell@postel 4-equ$ movavg equ2.dat equ2_avg.dat 10000 1 5
+
+
+[check drift on second stage with gnuplot]
+
 	Objectives:
 	I)   Check system is in equilibrium
 	     [hint: Plot T vs t, fit straight line]
@@ -368,7 +387,12 @@ What are the differences between this input and the input from the last step?
 	     as a function of time, should observe reduction in stddev as t increases
 	     [hint: using moving_avg_stddev.c code (must be compiled first)]
 	     
-### 5. Production - calculate diffusion coefficient (D) and pair correlation function 
+### 5. Production - calculate diffusion coefficient (D) and pair correlation function
+
+[copy final configuration to 5-prod and run production to extract MSD, gnuplot fit to extract diffusion coefficient]
+
+what about RDF/pair correlation function?
+
 	Objectives:
 	I)   Calculate D
 	     [hint: plot mean square displacement vs time, D is proportional to
