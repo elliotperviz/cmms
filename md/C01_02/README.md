@@ -297,11 +297,10 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   run             25000
   ########################
   ```
-  **Questions**
+**Questions**
 
-  Is the heating behaviour in NVT the same as in NVE? (compare the gradients in `gnuplot`) 
-
-  Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
+- Is the heating behaviour in NVT the same as in NVE? (compare the gradients in `gnuplot`) 
+- Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
 
 ### 3. Cooling - cool system to 94.4 K
 	Objectives:
