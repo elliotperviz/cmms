@@ -142,7 +142,24 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   ```bash
   #fix             thermos all temp/berendsen 10.0 500.0 1000.0 # Berendsen thermostat
   ```
-  When opening the file in vim, if you hit "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exist edit mode, and type ":w" to save changes (and :q to quit).
+  When opening the file in vim, if you hit "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
+  Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow once you get used to the terminal.<br>
+  Now, run LAMMPS (only NVE for system at 10K):
+  ```bash
+  lmp -in heat.in
+  ```
+  Check the standard output, did the simulation finish correctly?
+
+  You should see an "ERROR" message, related to lost atoms. This means that the timestep is too large to properly capture the dynamics. We should therefore reduce the size of the timestep by editing `heat.in` and setting
+  ```bash
+  ### MD run #############
+  timestep        1.0
+  ```
+
+  And run LAMMPS again:
+  ```bash
+  lmp -in heat.in
+  ```
 
 	Objectives:
 	I)   Check integration scheme and choice of timestep are appropriate
