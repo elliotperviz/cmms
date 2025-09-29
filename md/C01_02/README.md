@@ -429,7 +429,7 @@ Now, we want to check that the system is equilibrated at the correct temperature
 - Calculate the moving average and standard deviation of the temperature during the pure NVE run<br>
   To do this by hand is not practical, so we have prepared a script called `movavg`.
 
-  When downloading the tutorial files, you should have already ran the install script in the [scripts](../../scripts/) folder. If not, you should do this now.
+  When downloading the tutorial files, you should have already ran the install script for the [scripts](../../scripts/) folder, as outlined on the [homepage](../../). If not, you should do this now.
 
   The syntax to use `movavg` is as follows:
   ```bash
@@ -466,49 +466,39 @@ equ_final.data prod.in  rdf.gp
 ```
 (Note: `rdf.gp` is a gnuplot script we will use later to plot the radial distribution function)
 
-
 Use `vim` to inspect the input file
 ```bash
-vim equ.in
+vim prod.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step? In particular, see the "MD run" section:
+What are the differences between this input and the input from the last step? In particular, see the "compute" and "MD run" sections:
+
+```bash
+### compute ############
+compute		msd all msd com yes
+compute		rdf all rdf 1000
+########################
+```
+
+We have defined two LAMMPS 'computes': one for the mean square displacement (MSD), which we need to derive the diffusion coefficient; and another for the radial distribution function (RDF) (with a bin size of 1000).
+
 ```bash
 ### MD run #############
 timestep	10.0
 
-fix			integ all nve # integrate equation of motion
-fix 		thermos all temp/berendsen 94.4 94.4 1000.0 # Berendsen thermostat
+fix		integ all nve # integrate equation of motion
+#fix 		thermos all temp/berendsen 94.4 94.4 100.0 # Berendsen thermostat
 
-run 		50000
+#fix		integ all nvt temp 94.4 94.4 100.0 # integrate equation of motion + Nose-Hoover thermostat
 
-unfix		thermos
+fix		rdf_ave all ave/time 5 200 1000 c_rdf[*] file tmp.rdf mode vector ave one
 
-run		50000
+run 		100000
 ########################
 ```
-We specify two different integrations in the same input file:<br>
-a) First, we integrate for 50,000 steps in the NVE ensemble while applying a Berendsen thermostat.<br>
-b) Then, we remove the Berendsen thermostat and perform a **pure NVE** run for another 50,000 steps.<br>
 
-Why? 
-<details>
-<summary>Click for the answer</summary>
-During the previous (cooling) step, the system arrives at 94.4K only in the last few steps of the trajectory. If we immediately perform a pure NVE simulation, residual momentum can cause large fluctuations in the temperature, and the system may settle at a temperature we do not want. 
-
-By using a Berendsen thermostat first, we gently hold the system at 94.4K, reducing fluctuations and preparing a smoother starting point. Once the system is closer to equilibrium, we remove the thermostat and allow it to evolve under pure NVE, maintaining the target temperature more reliably.
-</details>
-
-We also use a relatively weak coupling bewteen the Berendsen thermostat and system as compared to the previous heating/cooling steps.
-
-Why?
-<details>
-<summary>Click for the answer</summary>
-Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as sudden temperature fluctuations.
-
-A weaker coulping avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gruadually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
-</details>
+We run 100,000 timesteps in a pure NVE ensemble, and introduce a new 'fix' to calculate the average RDF every 1000 timesteps. The syntax `5 200 1000` means that the RDF average is calculated every 1000 timesteps - within this 1000 timesteps, the average is calculated from the RDF collect 5 timesteps (in total 200 times 5 * 200 = 1000).
 
 Now run LAMMPS:
 ```bash
@@ -516,18 +506,32 @@ lmp -in equ.in
 ```
 And follow the thermodynamic output per timestep as it is printed to standard output (i.e. in the terminal window).
 
+Check that the following output files exist after the simulation completes:
+```bash
+perviell@postel 5-prod$ ls
+equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tmp.rdf
+```
 
+** Objectives **
 
+- Visualize the LAMMPS trajectory file `prod.lammpstrj` with `vmd`.
 
-[copy final configuration to 5-prod and run production to extract MSD, gnuplot fit to extract diffusion coefficient]
+- Check that the system stays in equilibrium
+  Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from `log.lammps`, and `gnuplot` to plot and fit a straight line, or `movavg` to calculate the moving average and standard deviation.
 
-what about RDF/pair correlation function?
+- Calculate the diffusion coefficient (D)
+  Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, the gradient is not the final value - use the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
 
-	Objectives:
-	I)   Calculate D
-	     [hint: plot mean square displacement vs time, D is proportional to
-	     gradient. Recall definition of D from lecture notes]
-	II)  Calculate pair correlation function [NOT WORKING]
+- Plot the RDF
+  If everything ran correctly, LAMMPS will have written `tmp.rdf`. This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template `rdf.gp`. <br>
+  When downloading the tutorial files, you should have already ran the install script for the [scripts](../../scripts/) folder, as outlined on the [homepage](../../). If not, you should do this now.
+  ```bash
+  rdf_pp.sh tmp.rdf
+  gnuplot rdf.gp
+  ```
+
+** Questions **
+- How similar is our value of the diffusion coefficient (D) to the one calculated by Rahman in the reference paper?
 
 ## Post-processing and analysis summary
 Observe trajectories:
