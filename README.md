@@ -68,10 +68,14 @@ For installation on your home computer, please see the above links, where you ca
 
 ### Molecular Dynamics
 
-Demonstrating the calculation of equilibrium properties via molecular dynamics with various examples
+Demonstrating the calculation of equilibrium properties via molecular dynamics, implemented in the LAMMPS software package, through various examples
 - a) Diffusion coefficient and radial distribution function of Argon
 - b) Silicon (**TBA**)
 
-### Abinit
+### Quantum Mechanics
+
+**TBA**
+
+### Phonons
 
 **TBA**
