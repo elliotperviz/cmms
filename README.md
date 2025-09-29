@@ -35,7 +35,9 @@ README.md  exam  md  ph  qm  scripts
 ```
 
 ### 2. Compile scripts for post-processing and analysis
-For your convenience, we have prepared scripts to simplify some aspects of post-processing and analysis. To be able to use the scripts, you should add the folder to the Linux ```$PATH``` variable and build the relevant executables from source. Enter (or copy) the following commands into your terminal (assuming you are inside the "cmms" folder):
+The majority of the time, we will be use command line tools to process inputs/outputs manually. The aim is to use the files and the simulation sofware as a "black box", but to *understand* what we write in the input files and what is reported in the outputs.
+
+However, in some cases additional post-processing or analysis is required that is not practical to do by hand. For this reason, we provide a few scripts that you should first compile. Enter (or copy) the following commands into your terminal (assuming you are inside the "cmms" folder):
 ```bash
 cd scripts
 chmod +x compile.sh
@@ -43,7 +45,7 @@ chmod +x compile.sh
 source ~/.bashrc
 ```
 
-To understand the purpose of the different scripts, more context is provided in the README file in the [scripts](scripts/) folder.
+To understand the purpose of the different scripts, more context is provided in the README file in the [scripts](scripts/) folder. Moreover, as we progress through the tutorials you will likely find some of these scripts in use, in such cases the proper syntax is explained.
 
 ### 3. Additional information
 
