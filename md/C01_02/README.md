@@ -533,7 +533,7 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 
 **Optional Objectives**
 
-- Calculate the average value of the RDF over the equilibrium trajectory (this corresponds to the ensemble average RDF distribution)
+- Calculate the average value of the RDF over the equilibrium trajectory (this corresponds to the ensemble average RDF distribution)<br>
   [Hint: check the syntax of fix ave/time in the LAMMPS documentation.]
 
 **Questions**
