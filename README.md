@@ -1,7 +1,8 @@
 # Computational Methods for Materials Science
 Here you will find lecture and tutorial material for the course **Computational Methods for Materials Science**.
 
-"Some words of an introduction to the course here"
+
+<!--"Some words of an introduction to the course here"-->
 
 Written and maintained by<br>
 - Assoc. Prof. Antonio Cammarata (cammaant@fel.cvut.cz)<br>
