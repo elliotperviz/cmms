@@ -303,7 +303,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 - Is the heating behaviour in NVT the same as in NVE? (compare the gradients in `gnuplot`)
 - Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
 - Plot the total energy of the system in NVT, is it constant? What should the conserved quantity be?
-  Hint: Modify the 'output definition' section in `heat.in`:
+  Hint, Modify the 'output definition' section in `heat.in`:
   ```bash
   ### output definition ##
   thermo          1 # every many steps output is printed
@@ -311,7 +311,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   ```
   We have introduced two additional keywords 'ecouple' and 'econserve' to `thermo_style`, check the meaning of these keywords in the LAMMPS manual to understand why they are important!
 - Replace the Berendsen thermostat with a Berendesen *barostat*. Extract the thermodynamic output with `grep` and `sed`/`awk`, plot the different properties with respect to time. What happens to the pressure? What about the other thermodynamic properties?
-  Hint: The 'MD run' section should look something like this (e.g. modify with `vim`)
+  Hint, The 'MD run' section should look something like this (e.g. modify with `vim`):
   ```bash
   ### MD run #############
   timestep        10.0
