@@ -464,7 +464,7 @@ If you inspect the contents of the directory, it should contain:
 perviell@postel 5-prod$ ls
 equ_final.data prod.in  rdf.gp
 ```
-(Note: `rdf.gp` is a gnuplot script we will use later to plot the radial distribution function)
+(Note: `rdf.gp` is a gnuplot template we will use later to plot the radial distribution function - you can open it with `vim` to see what is happening.)
 
 Use `vim` to inspect the input file
 ```bash
@@ -472,7 +472,7 @@ vim prod.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step? In particular, see the "compute" and "MD run" sections:
+What are the differences between this input and the last equilibration step? In particular, see the "compute" and "MD run" sections:
 
 ```bash
 ### compute ############
@@ -498,13 +498,13 @@ run 		100000
 ########################
 ```
 
-We run 100,000 timesteps in a pure NVE ensemble, and introduce a new 'fix' to calculate the average RDF every 1000 timesteps. The syntax `5 200 1000` means that the RDF average is calculated every 1000 timesteps - within this 1000 timesteps, the average is calculated from the RDF collect 5 timesteps (in total 200 times 5 * 200 = 1000).
+We run 100,000 timesteps in a pure NVE ensemble, and introduce a new 'fix' to calculate the average RDF every 1000 timesteps. The syntax `5 200 1000` means that the RDF is collected every 5 timesteps, 200 times (5*200 = 1000), in a 1000 timestep long window. Thus, the average is calculated from 200 samples every 1000 timesteps.
 
 Now run LAMMPS:
 ```bash
 lmp -in equ.in
 ```
-And follow the thermodynamic output per timestep as it is printed to standard output (i.e. in the terminal window).
+And follow the thermodynamic output per timestep as it is printed to standard output (i.e. in the terminal window). As compared to the previous example, we now have an additional column which prints the MSD.
 
 Check that the following output files exist after the simulation completes:
 ```bash
@@ -512,14 +512,14 @@ perviell@postel 5-prod$ ls
 equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tmp.rdf
 ```
 
-** Objectives **
+**Objectives**
 
 - Visualize the LAMMPS trajectory file `prod.lammpstrj` with `vmd`.
 
-- Check that the system stays in equilibrium
+- Check that the system stays in equilibrium<br>
   Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from `log.lammps`, and `gnuplot` to plot and fit a straight line, or `movavg` to calculate the moving average and standard deviation.
 
-- Calculate the diffusion coefficient (D)
+- Calculate the diffusion coefficient (D)<br>
   Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, the gradient is not the final value - use the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
 
 - Plot the RDF
@@ -530,7 +530,7 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
   gnuplot rdf.gp
   ```
 
-** Questions **
+**Questions**
 - How similar is our value of the diffusion coefficient (D) to the one calculated by Rahman in the reference paper?
 
 ## Post-processing and analysis summary
