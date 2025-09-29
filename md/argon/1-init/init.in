@@ -1,0 +1,68 @@
+
+### begin ##############
+clear                  # just for fun
+
+units           real   # mass = grams/mole					      
+		       # distance = Angstroms				     
+		       # time = femtoseconds				     
+		       # energy = Kcal/mole					     
+		       # velocity = Angstroms/femtosecond			     
+		       # force = Kcal/mole-Angstrom				     
+		       # temperature = Kelvin				     
+		       # pressure = atmospheres				     
+		       # charge = multiple of electron charge (1.0 is a proton)  
+		       # density = gram/cm^3                                   
+
+boundary        p p p  # periodic in all directions
+
+atom_style	atomic # no bonds, angles, charges
+########################
+
+### initial conf #######
+lattice		fcc 5.79643333 # define the lattice parameter
+
+region		box block 0 6 0 6 0 6 # defines a geometric region of space
+
+create_box	1 box # create the box
+
+create_atoms	1 box # fill the box with atoms
+
+mass		1 39.95 # set the mass for atom_type 1
+########################
+
+### force field part ###
+pair_style	lj/cut 7.65 # pairwise interaction
+
+pair_coeff	1 1 0.238464804 3.4 7.65 # define the force field parameters
+########################
+
+### neighbor list ######
+neighbor	2.0 bin # define the skin
+
+neigh_modify	every 20 delay 0 check no # options of the neighbor list
+########################
+
+### output definition ##
+thermo		1 # every many steps output is printed
+
+thermo_style    custom time pe fmax # print energy and forcemax
+#thermo_style    custom time lx enthalpy pe press fmax # print more stuff
+########################
+
+# print the trajectory
+dump		traj all custom 1 init.lammpstrj element xu yu zu
+dump_modify 	traj element Ar
+dump_modify 	traj sort id
+########################
+
+### minimization #######
+min_style       cg # conjugate gradient method, possible values: cg, hftn, sd, quickmin, fire
+
+#fix             relax all box/relax x 0.0 y 0.0 z 0.0 nreset 1 couple xyz # allow the box to vary
+
+minimize        0.0 1.0e-10 1000000 1000000 # criteria for terminating the minimization
+########################
+
+### write data #########
+write_data     init_final.data
+########################

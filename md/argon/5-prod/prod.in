@@ -1,0 +1,70 @@
+
+### begin ##############
+clear                  # just for fun
+
+units           real   # mass = grams/mole					      
+		       # distance = Angstroms				     
+		       # time = femtoseconds				     
+		       # energy = Kcal/mole					     
+		       # velocity = Angstroms/femtosecond			     
+		       # force = Kcal/mole-Angstrom				     
+		       # temperature = Kelvin				     
+		       # pressure = atmospheres				     
+		       # charge = multiple of electron charge (1.0 is a proton)  
+		       # density = gram/cm^3                                   
+
+boundary        p p p  # periodic in all directions
+
+atom_style	atomic # no bonds, angles, charges
+
+pair_style	lj/cut 7.65 # pairwise interaction
+########################
+
+### initial conf #######
+read_data       equ_final.data # read a data file
+########################
+
+### force field part ###
+pair_coeff	1 1 0.238464804 3.4 7.65 # define the force field parameters
+########################
+
+### neighbor list ######
+neighbor	5.0 bin # define the skin
+
+neigh_modify	every 1 delay 10 check yes # options of the neighbor list
+########################
+
+### compute ############
+compute		msd all msd com yes
+compute		rdf all rdf 1000
+########################
+
+### output definition ##
+thermo		1 # every many steps output is printed
+
+thermo_style    custom time etotal pe ke temp press c_msd[4] # print thermodynamic variables + msd
+########################
+
+# print the trajectory
+dump		traj all custom 100 prod.lammpstrj element x y z #vx vy vz fx fy fz
+dump_modify 	traj element Ar
+dump_modify 	traj sort id
+########################
+
+### MD run #############
+timestep	10.0
+
+fix		integ all nve # integrate equation of motion
+#fix 		thermos all temp/berendsen 94.4 94.4 100.0 # Berendsen thermostat
+
+#fix		integ all nvt temp 94.4 94.4 100.0 # integrate equation of motion + Nose-Hoover thermostat
+
+fix		rdf_ave all ave/time 5 200 1000 c_rdf[*] file tmp.rdf mode vector ave one
+
+run 		100000
+########################
+
+### write data #########
+write_data      prod_final.data
+########################
+
