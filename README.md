@@ -25,13 +25,22 @@ The aim of this course is not to teach users how to use the Linux terminal. Neve
 First, clone this github repository to download the tutorial files. In the Linux terminal copy the following command in the location where you would like to download the files (note: the files download into a single folder, you don't need to make one yourself):
 ```bash
 git clone https://github.com/elliotperviz/cmms.git
+cd cmms/
+```
+
+You should see the following files/folders, e.g.
+```bash
+perviell@postel cmms$ ls
+README.md  exam  md  ph  qm  scripts
 ```
 
 ### 2. Compile scripts for post-processing and analysis
-For your convenience, we have prepared scripts to simplify some aspects of post-processing and analysis. To be able to use the scripts, you should add the folder to the Linux ```$PATH``` variable and build the relevant executables from source. Enter (or copy) the following commands into your terminal:
-
+For your convenience, we have prepared scripts to simplify some aspects of post-processing and analysis. To be able to use the scripts, you should add the folder to the Linux ```$PATH``` variable and build the relevant executables from source. Enter (or copy) the following commands into your terminal (assuming you are inside the "cmms" folder):
 ```bash
-commands here
+cd scripts
+chmod +x compile.sh
+./compile.sh
+source ~/.bashrc
 ```
 
 To understand the purpose of the different scripts, more context is provided in the README file in the [scripts](scripts/) folder.
