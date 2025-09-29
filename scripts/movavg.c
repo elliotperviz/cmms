@@ -12,23 +12,24 @@ int is_number(const char *str);
 
 int main(int argc, char *argv[]) {
 
-	if (argc != 6) {
-		fprintf(stderr, "Usage: %s <input_file> <output_file> <window_size> <step_col_id> <col_to_avg_id>\n", argv[0]);
+	if (argc != 7) {
+		fprintf(stderr, "Usage: %s <input_file> <output_file> <dt> <step_window> <step_col_id> <col_to_avg_id>\n", argv[0]);
 		return 1;
 	}
 
 	char *input_filename = argv[1];
 	char *output_filename = argv[2];
-	int window_size = atoi(argv[3]);
-	int step_col_id = atoi(argv[4]);
-	int temp_col_id = atoi(argv[5]);
+	double dt = atof(argv[3]);
+	int window_size = atoi(argv[4]);
+	int step_col_id = atoi(argv[5]);
+	int temp_col_id = atoi(argv[6]);
 
 	step_col_id -= 1;
 	temp_col_id -= 1;
 
 	FILE *input_file, *output_file;
     	int i = 0, count = 0, column_count = 0, step;
-    	double sum = 0.0, sum_sq = 0.0, temperature, moving_avg, stddev;
+    	double sum = 0.0, sum_sq = 0.0, step_time, temperature, moving_avg, stddev;
     	double *temp_window;
     	char line[MAX_LINE_LENGTH];
     
@@ -137,7 +138,7 @@ int main(int argc, char *argv[]) {
             		continue;
         	}
 
-		step = atoi(values[step_col_id]);
+		step = atof(values[step_col_id]);
         	temperature = atof(values[temp_col_id]);
 
         	// Update window and calculate sum and sum_sq
@@ -161,12 +162,15 @@ int main(int argc, char *argv[]) {
             		stddev = sqrt((sum_sq / window_size) - moving_avg * moving_avg);
 
 	    		// Write step, moving average, and stddev to output_file
-			fprintf(output_file, "%d %.5lf %.5lf\n", step, moving_avg, stddev);
+			step_time = step * dt;
+			fprintf(output_file, "%.5lf %.5lf %.5lf\n", step_time, moving_avg, stddev);
 		}
 	}	
 
     	fclose(input_file);
     	fclose(output_file);
+
+	printf("INFO: Moving average computed over a time window of %.5lf (step_window = %d, dt = %.5lf)\n", window_size * dt, window_size, dt);
 
     	return 0;
 }
