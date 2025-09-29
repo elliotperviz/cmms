@@ -38,6 +38,10 @@ neigh_modify	every 1 delay 10 check yes # options of the neighbor list
 compute		msd all msd com yes
 ########################
 
+### rdf ################
+compute 	rdf all rdf 1000
+########################
+
 ### output definition ##
 thermo		1 # every many steps output is printed
 
@@ -57,6 +61,8 @@ fix		integ all nve # integrate equation of motion
 #fix 		thermos all temp/berendsen 94.4 94.4 100.0 # Berendsen thermostat
 
 #fix		integ all nvt temp 94.4 94.4 100.0 # integrate equation of motion + Nose-Hoover thermostat
+
+fix		rdf_ave all ave/time 5 200 1000 c_rdf[*] file tmp.rdf mode vector ave one
 
 run 		100000
 ########################

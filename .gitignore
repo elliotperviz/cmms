@@ -4,6 +4,8 @@
 *.lammpstrj
 *.lammps
 *.log
+*.data
+*.dat
 
 # Abinit output files
 abo_*
