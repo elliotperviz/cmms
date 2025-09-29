@@ -58,6 +58,7 @@ For your reference, we provide a list of the relevant simulation packages and li
 As well as visualisation tools that we utilise extensively:
 - VMD - https://www.ks.uiuc.edu/Research/vmd/
 - VESTA - https://jp-minerals.org/vesta/en/
+- v_sim - https://l_sim.gitlab.io/v_sim/
 
 And plotting software:
 - Gnuplot - http://www.gnuplot.info/
