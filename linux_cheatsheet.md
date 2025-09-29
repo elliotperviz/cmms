@@ -1,7 +1,5 @@
 # Linux Cheat Sheet for Beginners
 
----
-
 ## File & Directory Commands
 | Command | Explanation |
 |---------|-------------|
