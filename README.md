@@ -20,7 +20,7 @@ Why?
 - Whilst to the new user the terminal may seem daunting, working directly in such a command line interface (CLI) allows us to directly interface with the simulation codes to perform post-processing and analysis.
 - Over the duration of the course, you will learn both how to use the simulation software, and the manipulation of input and output data through the guided tutorials that we have prepared.
 
-The aim of this course is not to teach users how to use the Linux terminal. Nevertheless, we have prepared a small "cheat sheet" **TO DO!!!** for common commands that we will use regularly.
+The aim of this course is not to teach users how to use the Linux terminal. Nevertheless, we have prepared a small "cheat sheet" [cheat sheet](linux_cheatsheet.md) for common commands that we will use regularly.
 
 ### 1. Download the tutorial files
 First, clone this github repository to download the tutorial files. In the Linux terminal copy the following command in the location where you would like to download the files (note: the files download into a single folder, you don't need to make one yourself):
