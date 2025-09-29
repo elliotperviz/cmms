@@ -35,7 +35,7 @@ README.md  exam  md  ph  qm  scripts
 ```
 
 ### 2. Compile scripts for post-processing and analysis
-The majority of the time, we will be use command line tools to process inputs/outputs manually. The aim is to use the files and the simulation sofware as a "black box", but to *understand* what we write in the input files and what is reported in the outputs.
+The majority of the time, we will be directly using the terminal to process inputs/outputs manually. The aim is to use the files and the simulation sofware as a "black box", but to *understand* what we write in the input files and what is reported in the outputs.
 
 However, in some cases additional post-processing or analysis is required that is not practical to do by hand. For this reason, we provide a few scripts that you should first compile. Enter (or copy) the following commands into your terminal (assuming you are inside the "cmms" folder):
 ```bash
