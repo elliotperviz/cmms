@@ -40,7 +40,7 @@ Inside `vim`, use PAGEUP and PAGEDOWN keys to navigate.
 
 Check the section labelled "initial conf" and related keywords against the LAMMPS manual. What system have we setup?
 
-Aside from initialising the atomic positions, we also want to minimise the potential. For this purpose, we employ the conjugate gradient algorithm. Note the section "minimization", and in particular the keywords "min_style" and "minimize". Check the syntax of these commands in the LAMMPS manual.
+Aside from initialising the atomic positions, we also want to minimise the potential. For this purpose, we employ the conjugate gradient algorithm. Note the section 'minimization', and in particular the keywords 'min_style' and 'minimize'. Check the syntax of these commands in the LAMMPS manual.
 
 Do we specify minimisation based on the *energy* or the *forces*? Although the goal is to reduce the potential energy, why might a stopping criterion based on forces be more physically meaningful?
 
@@ -65,13 +65,14 @@ log.lammps  mini_final.data  mini.in  mini.lammpstrj
 ```
 Open with `vim` and check their contents:
 ```bash
-vim <filename>
+vim $filename
 ```
-- log.lammps - a copy saved to file (with some more detail) of the standard output
-- mini_final.data - final positions and velocities of each atom
-- mini.lammpstrj - the lammps "trajectory" file, positions and velocities as a function potential minimisation step
+[Note: $filename is a placeholder, write the name of the file you want to open!]
+- "log.lammps" - a copy saved to file (with some more detail) of the standard output
+- "mini_final.data" - final positions and velocities of each atom
+- "mini.lammpstrj" - the lammps trajectory file, positions and velocities as a function potential minimisation step
 
-Note that, in `mini.lammpstrj`, during a minimisation we have positions and velocities as a function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
+Note that, in "mini.lammpstrj", during a minimisation we have positions and velocities as a function of potential minimisation step, during integration of Newton's equation's of motion this file gives positions and velocities as a function of **time**.
 
 **Questions**
 - Are the initialized positions physically reasonable, based on the system we wanted to setup? <br>
@@ -101,7 +102,7 @@ vim heat.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the initialisation/minimisation input? In particular, see sections related to "initialize velocities" and "MD run":
+What are the differences between this input and the initialisation/minimisation input? In particular, see sections related to 'initialize velocities' and 'MD run':
 
 ```bash
 # initialize velocities
@@ -131,7 +132,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
 - **Check the choice of timestep is appropriate**
   
-  Remove the Berendsen thermostat, by "commenting" i.e. adding a hashtag to the beginning of the appropriate line in `heat.in`.
+  Remove the Berendsen thermostat, by 'commenting' i.e. adding a hashtag to the beginning of the appropriate line in "heat.in".
   ```bash
   #fix             thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
   ```
@@ -148,7 +149,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   ```
   Check the standard output, did the simulation finish correctly?
 
-  You should see an "ERROR" message, related to lost atoms. This means that the timestep is too large to properly capture the dynamics. We should therefore reduce the timestep back to its previous setting by editing `heat.in` (e.g. with `vim`) and setting
+  You should see an 'ERROR' message, related to lost atoms. This means that the timestep is too large to properly capture the dynamics. We should therefore reduce the timestep back to its previous setting by editing "heat.in" (e.g. with `vim`) and setting
   ```bash
   ### MD run #############
   timestep        1.0
@@ -168,7 +169,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   heat_final.data  heat.in  init_final.data  log.lammps  melt.lammpstrj
   ```
 
-  Inspect the various outputs (e.g. with `vim`) - pay careful attention to the parts of `log.lammps` where the thermodynamic outputs are printed at each timestep of the numerical integration. You may also wish to visualize the dynamical trajectory using `vmd`.
+  Inspect the various outputs (e.g. with `vim`) - pay careful attention to the parts of "log.lammps" where the thermodynamic outputs are printed at each timestep of the numerical integration. You may also wish to visualize the dynamical trajectory using `vmd`.
 
   We want to verify that the timestep is appropriate to model the dynamics in the NVE ensemble, in particular we want the total energy to be approximately constant (within reasonable tolerance).
 
@@ -258,9 +259,9 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   gnuplot> plot "benchmark.dat" using 1:2 with lines, f(x)
   ```
 
-- **Reapply the Berendsen thermostat (still within the NVE ensemble) and heat to 500K.**
+- **Reapply the Berendsen thermostat (still within the NVE ensemble) and heat to 500K**
 
-  Modify heat.in (e.g. with vim) to uncomment the Berendsen thermostat.
+  Modify heat.in (e.g. with `vim`) to uncomment the Berendsen thermostat.
 
   Run lammps again:
   ```bash
@@ -271,7 +272,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
   Visualize the trajectory with `vmd`.
 
-  Using the same approach in the benchmark step, extract the thermodynamic output at each timestep from `log.lammps` using `sed` or `awk`. Write to a file (e.g. `heat.dat`) and plot using `gnuplot`. Note: Be careful to use the correct line numbers when extracting the data.
+  Using the same approach in the benchmark step, extract the thermodynamic output at each timestep from `log.lammps` using `sed` or `awk`. Write to a file (e.g. "heat.dat") and plot using `gnuplot`. Note: Be careful to use the correct line numbers when extracting the data.
 
   Try fitting another straight line in `gnuplot`, what is the gradient this time?
   
@@ -279,7 +280,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
 - **Integrate Newton's equations and apply a Nose-Hoover thermostat to heat to 500K in the NVT ensemble.**
 
-  the "MD run" section in `heat.in` should looks as follows:
+  the 'MD run' section in "heat.in" should looks as follows:
   ```bash
   ### MD run #############
   timestep        10.0
@@ -295,7 +296,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   run             10000
   ########################
   ```
-  Extract the thermodynamic output from `log.lammps` using your preferred approach (`sed`/`awk`). You may want to visualize the trajectory in `vmd`, or plot the variation of thermodynamic variables as a function of time in `gnuplot`.
+  Extract the thermodynamic output from "log.lammps" using your preferred approach (`sed`/`awk`). You may want to visualize the trajectory in `vmd`, or plot the variation of thermodynamic variables as a function of time in `gnuplot`.
   
 **Questions**
 
@@ -305,7 +306,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
 ### 3. Cooling - cool system to 94.4 K
 
-Copy the final configuration (`heat_final.data`) into [3-cool](3-cool/) and change directory.
+Copy the final configuration ("heat_final.data") into [3-cool](3-cool/) and change directory.
 
 ```bash
 cp heat_final.data ../3-cool/
@@ -324,19 +325,19 @@ vim cool.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step? Here, since velocities are already defined in `heat_final.data`, we should not redefine them. Further, see the "MD run" section: we aim to cool the system from 500K to 94.4K with a Berendsen thermostat, the target temperature at which we want to make equilibrium measurements.
+What are the differences between this input and the input from the last step? Here, since velocities are already defined in "heat_final.data", we should not redefine them. Further, see the 'MD run' section: we aim to cool the system from 500K to 94.4K with a Berendsen thermostat, the target temperature at which we want to make equilibrium measurements.
 
 Run LAMMPS:
 ```bash
 lmp -in cool.in
 ```
 
-Follow the standard output (or check `log.lammps` afterwards) to check that there are no errors during the simulation. Check that the system reaches ~94.4K.
+Follow the standard output (or check "log.lammps" afterwards) to check that there are no errors during the simulation, and to ensure that the system reached 94.4K.
 
 **Objectives**
 
-- Visualize the `cool.lammpstrj` trajectory in `vmd`
-- Extract the thermodynamic output at each timestep using `sed` or `awk`, write to file e.g. `cool.dat`
+- Visualize the trajectory ("cool.lammpstrj") in `vmd`
+- Extract the thermodynamic output at each timestep using `grep` and `sed`/`awk`, write to file e.g. `cool.dat`
 - Plot the temperature as a function of time in  `gnuplot`
 - Fit a straight line to temperature vs time in `gnuplot`
 
@@ -346,7 +347,7 @@ Follow the standard output (or check `log.lammps` afterwards) to check that ther
 	
 ### 4. Equilibration - prepare system for measurement at 94.4 K
 
-Copy the final configuration (`cool_final.data`) into [4-equ](4-equ/) and change directory.
+Copy the final configuration ("cool_final.data") into [4-equ](4-equ/) and change directory.
 
 ```bash
 cp cool_final.data ../4-equ/
@@ -418,7 +419,7 @@ Now, we want to check that the system is equilibrated at the correct temperature
 
 **Objectives**
 
-- Extract the thermodynamic data for the pure NVE run to a file e.g. `equ.dat`. <br>
+- Extract the thermodynamic data for the pure NVE run to a file e.g. "equ.dat". <br>
   Using `grep` and `sed`/`awk`, extract the start and end points of the two MD runs. Note that, `grep` will return all matches of a string, so you can use a single `grep` command to search for the start or end lines of both MD runs at the same time. 
 
 - Using `gnuplot`, plot the temperature as a function of time, and fit a straight line. <br>
@@ -437,14 +438,14 @@ Now, we want to check that the system is equilibrated at the correct temperature
   Usage: movavg <input_file> <output_file> <dt> <step_window> <step_col_id> <col_to_avg_id>
   ```
 
-  For example, if we extracted the thermodynamic data from the pure NVE run to `equ.dat`:
+  For example, if we extracted the thermodynamic data from the pure NVE run to "equ.dat":
   ```bash
   perviell@postel 4-equ$ movavg equ.dat equ_avg.dat 10 1000 1 5
   Detected a header line. Reading the next line.
   INFO: Moving average and standard deviation written to 'equ_avg.dat'
   INFO: Moving average computed over a time window of 10000.00000 (step_window = 1000, dt = 10.00000)
   ```
-  where we specify `equ.dat` as the input file, `equ_avg.dat` as the output file, `timestep=10` (we read this value from `equ.in`), `step_window=1000` (one possible choice), and specify `step_col_id=1` and `col_to_avg_id=5` which corresponds to the column IDs of the timestep and temperature respectively in the thermodynamic output.
+  where we specify "equ.dat" as the input file, "equ_avg.dat" as the output file, `timestep=10` (we read this value from "equ.in"), `step_window=1000` (one possible choice), and specify `step_col_id=1` and `col_to_avg_id=5` which corresponds to the column IDs of the timestep and temperature respectively in the thermodynamic output.
 
   Note, the total time window of the moving average is equal to `step_window * dt`.
 
@@ -452,7 +453,7 @@ Now, we want to check that the system is equilibrated at the correct temperature
 	     
 ### 5. Production - calculate diffusion coefficient (D) and pair correlation function
 
-Copy the final configuration (`equ_final.data`) into [5-prod](5-prod/) and change directory.
+Copy the final configuration ("equ_final.data") into [5-prod](5-prod/) and change directory.
 
 ```bash
 cp equ_final.data ../5-prod/
@@ -464,7 +465,7 @@ If you inspect the contents of the directory, it should contain:
 perviell@postel 5-prod$ ls
 equ_final.data prod.in  rdf.gp
 ```
-(Note: `'rdf.gp'` is a gnuplot template we will use later to plot the radial distribution function - you can open it with `vim` to see what is happening.)
+(Note: "rdf.gp" is a gnuplot template we will use later to plot the radial distribution function - you can open it with `vim` to see what is happening.)
 
 Use `vim` to inspect the input file
 ```bash
@@ -472,7 +473,7 @@ vim prod.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the last equilibration step? In particular, see the "compute" and "MD run" sections:
+What are the differences between this input and the last equilibration step? In particular, see the 'compute' and 'MD run' sections:
 
 ```bash
 ### compute ############
@@ -514,16 +515,16 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 
 **Objectives**
 
-- Visualize the LAMMPS trajectory file `'prod.lammpstrj'` with `vmd`.
+- Visualize the LAMMPS trajectory file "prod.lammpstrj" with `vmd`.
 
 - Check that the system stays in equilibrium<br>
-  Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from `'log.lammps'`, and `gnuplot` to plot and fit a straight line, or `movavg` to calculate the moving average and standard deviation.
+  Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from "log.lammps", then `gnuplot` to plot and fit a straight line, and/or `movavg` to calculate the moving average and standard deviation.
 
 - Calculate the diffusion coefficient (D)<br>
-  Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, the gradient is not the final value - use the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
+  Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, **the gradient is not the final value** - you must utilise the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
 
 - Plot the RDF
-  If everything ran correctly, LAMMPS will have written `'tmp.rdf'`. This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template `'rdf.gp'`. <br>
+  If everything ran correctly, LAMMPS will have written "tmp.rdf". This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template "rdf.gp". <br>
   When downloading the tutorial files, you should have already ran the install script for the [scripts](../../scripts/) folder, as outlined on the [homepage](../../). If not, you should do this now.
   ```bash
   rdf_pp.sh tmp.rdf
