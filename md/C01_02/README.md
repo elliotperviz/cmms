@@ -534,7 +534,7 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 **Optional Objectives**
 
 - Calculate the average value of the RDF over the equilibrium trajectory (this corresponds to the ensemble average RDF distribution)<br>
-  [Hint: check the syntax of fix ave/time in the LAMMPS documentation.]
+  [Hint: check the syntax of `fix ave/time` in the LAMMPS documentation.]
 
 **Questions**
 - How similar is our value of the diffusion coefficient (D) to the one calculated by Rahman in the reference paper?
