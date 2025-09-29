@@ -303,6 +303,13 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 - Is the heating behaviour in NVT the same as in NVE? (compare the gradients in `gnuplot`)
 - Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
 - Plot the total energy of the system in NVT, is it constant? What should the conserved quantity be?
+  Hint: Modify the 'output definition' section in `heat.in`:
+  ```bash
+  ### output definition ##
+  thermo          1 # every many steps output is printed
+  thermo_style    custom time etotal pe ke temp press ecouple econserve # print thermodynamic variables
+  ```
+  We have introduced two additional keywords 'ecouple' and 'econserve' to `thermo_style`, check the meaning of these keywords in the LAMMPS manual to understand why they are important!
 
 ### 3. Cooling - cool system to 94.4 K
 
