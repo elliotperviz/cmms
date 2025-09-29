@@ -4,7 +4,7 @@ Here you will find lecture and tutorial material for the course **Computational 
 "Some words of an introduction to the course here"
 
 Written and maintained by<br>
-- Prof. Antonio Cammarata (cammaant@fel.cvut.cz)<br>
+- Assoc. Prof. Antonio Cammarata (cammaant@fel.cvut.cz)<br>
 - MSc. Elliot Perviz (perviell@fel.cvut.cz)<br>
 
 ## Installation (software and tutorial material)
