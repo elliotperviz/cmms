@@ -6,6 +6,8 @@
 *.log
 *.data
 *.dat
+*.tmp
+tmp
 
 # Abinit output files
 abo_*
