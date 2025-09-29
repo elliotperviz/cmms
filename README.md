@@ -32,7 +32,7 @@ cd cmms/
 You should see the following files/folders, e.g.
 ```bash
 perviell@postel cmms$ ls
-README.md  exam linux_cheatsheet.md md  ph  qm  scripts
+README.md  exam  linux_cheatsheet.md  md  ph  qm  scripts
 ```
 
 ### 2. Compile scripts for post-processing and analysis
