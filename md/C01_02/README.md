@@ -310,6 +310,23 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   thermo_style    custom time etotal pe ke temp press ecouple econserve # print thermodynamic variables
   ```
   We have introduced two additional keywords 'ecouple' and 'econserve' to `thermo_style`, check the meaning of these keywords in the LAMMPS manual to understand why they are important!
+- Replace the Berendsen thermostat with a Berendesen *barostat*. Extract the thermodynamic output with `grep` and `sed`/`awk`, plot the different properties with respect to time. What happens to the pressure? What about the other thermodynamic properties?
+  Hint: The 'MD run' section should look something like this (e.g. modify with `vim`)
+  ```bash
+  ### MD run #############
+  timestep        10.0
+  
+  fix             integ all nve # integrate equation of motion
+  
+  #fix            thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
+  
+  fix             baros all press/berendsen iso 1.0 1.0 100.0 # Berendsen barostat
+ 
+  #fix            integ all nvt temp 10.0 500.0 100.0 # integrate equation of motion + Nose-Hoover thermostat
+ 
+  run             10000
+  ########################
+  ```
 
 ### 3. Cooling - cool system to 94.4 K
 
@@ -351,6 +368,7 @@ Follow the standard output (or check "log.lammps" afterwards) to check that ther
 **Optional Objectives**
 
 - Replace the NVE ensemble and Berendsen thermostat with an NVT ensemble and thermostat, visualize/plot the trajectory
+- 
 	
 ### 4. Equilibration - prepare system for measurement at 94.4 K
 
