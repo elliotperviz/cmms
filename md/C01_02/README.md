@@ -101,7 +101,7 @@ vim heat.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step? In particular, see sections related to "initialize velocities" and "MD run":
+What are the differences between this input and the initialisation/minimisation input? In particular, see sections related to "initialize velocities" and "MD run":
 
 ```bash
 # initialize velocities
@@ -135,7 +135,12 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   ```bash
   #fix             thermos all temp/berendsen 10.0 500.0 100.0 # Berendsen thermostat
   ```
-  When opening the file in `vim`, if you type "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
+  And increase the size of the timestep from 10.0 to 100.0.
+  ```bash
+  ### MD run #############
+  timestep        100.0
+  ```
+  To edit the file in the terminal, one option is `vim`: if you type "i" (without the ""), you enter insert mode, and can edit the file. Press "esc" to exit edit mode, and type ":w" to save changes (and :q to quit).<br>
   Alternatively, you may edit the file via a graphical text editor, but in principle all actions can be performed within the terminal, which you will find much more convenient to your work flow with some practice.<br>
   Now, run LAMMPS (only NVE for velocities initialised at 10K):
   ```bash
@@ -143,18 +148,18 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   ```
   Check the standard output, did the simulation finish correctly?
 
-  You should see an "ERROR" message, related to lost atoms. This means that the timestep is too large to properly capture the dynamics. We should therefore reduce the size of the timestep by editing `heat.in` and setting
+  You should see an "ERROR" message, related to lost atoms. This means that the timestep is too large to properly capture the dynamics. We should therefore reduce the timestep back to its previous setting by editing `heat.in` (e.g. with `vim`) and setting
   ```bash
   ### MD run #############
   timestep        1.0
   ```
 
-  And run LAMMPS again:
+  Then run LAMMPS again:
   ```bash
   lmp -in heat.in
   ```
 
-  Follow the output in the terminal. You should see the thermodynamic variables printed at each timestep. We customise the thermodynamic output in the "output definition" section of the input file (check this!). In particular, we chose the different output columns, which correspond to (from left to right): 
+  Follow the output in the terminal, and check to see that the simulation completes properly withour errors. You should see the thermodynamic variables printed at each timestep. We customise the thermodynamic output in the "output definition" section of the input file (check this!). In particular, we chose the different output columns, which correspond to (from left to right): 
   Time, Total energy, Potential energy, Kinetic energy, Temperature, Pressure
   
   Once the simulation is finished, view the output files:
@@ -163,35 +168,36 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   heat_final.data  heat.in  init_final.data  log.lammps  melt.lammpstrj
   ```
 
-  Inspect the various outputs (e.g. with `vim`) - pay careful attention to the parts of the `log.lammps` where the thermodynamic outputs are printed at each timestep of the numerical integration. You may also wish to visualize the dynamical trajectory using `vmd`.
+  Inspect the various outputs (e.g. with `vim`) - pay careful attention to the parts of `log.lammps` where the thermodynamic outputs are printed at each timestep of the numerical integration. You may also wish to visualize the dynamical trajectory using `vmd`.
 
   We want to verify that the timestep is appropriate to model the dynamics in the NVE ensemble, in particular we want the total energy to be approximately constant (within reasonable tolerance).
 
-  **Let's check this explicitly**. You may have noticed when inspecting the output file that the output is sandwiched between two specific lines, which we can search using `grep`
+  **Let's check this explicitly**. You may have noticed when inspecting the output file that the output is sandwiched between two specific lines, which we can search using `grep`.
+  ```
   ```bash
   perviell@postel 2-heat$ grep -n "Time" log.lammps
-  92:Time TotEng PotEng KinEng Temp Press
-  perviell@postel 2-heat$ grep -n "Loop time" log.lammps
-  25094:Loop time of 110.537 on 1 procs for 25000 steps with 864 atoms
+  92:Time TotEng PotEng KinEng Temp Press 
+  perviell@postel 2-heat$ grep -n "Loop" log.lammps
+  10094:Loop time of 9.38265 on 1 procs for 10000 steps with 864 atoms
   ```
 
-  `grep -n "match" $file` returns the line number of the matching string in the file we search (if it exists).
+  `grep -n "STRING" $file` returns the line number of the matching string in the file we search (if it exists).
 
   Now, we extract and write this output to a new file using `sed` (note, the line numbers that you extract may not be exactly the same, replace the numbers with those extracted from your output):
   ```bash
-  sed -n '92,25093p' log.lammps > benchmark.dat
+  sed -n '92,10093p' log.lammps > benchmark.dat
   sed -i '1s/^/#/' benchmark.dat
   ```
-  We keep line 92, since it is useful to have the header reminding us what the different columns correspond to, but ignore 10094. The second `sed` command prepends a '#' key, to turn the first line into a comment.
+  We keep line 92, since it is useful to have the header reminding us what the different columns correspond to, but ignore 10094 as this is the line *after* the last timestep. The second `sed` command prepends a '#' key, to turn the first line into a comment.
 
   Note: another useful tool to know, aside from `sed`, for extracting output data is `awk`. It has slightly different syntax, but can serve the same purpose (and has much more uses aside from this):
 
   ```bash
-  awk 'NR>=92 && NR<25093' log.lammps > benchmark.dat
+  awk 'NR>=92 && NR<=10093' log.lammps > benchmark.dat
   awk -i inplace 'NR==1{$0="#" $0} {print $0}' benchmark.dat
   ```
 
-  When extracting data, using the tool/syntax you feel most comfortable working in.
+  When extracting data, use the tool/syntax you feel most comfortable working in.
 
   Now, let's plot the data using gnuplot.
   ```bash
@@ -276,7 +282,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   the "MD run" section in `heat.in` should looks as follows:
   ```bash
   ### MD run #############
-  timestep        1.0
+  timestep        10.0
 
   #fix            integ all nve # integrate equation of motion
 
@@ -286,7 +292,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
   fix             integ all nvt temp 10.0 500.0 100.0 # integrate equation of motion + Nose-Hoover thermostat
 
-  run             25000
+  run             10000
   ########################
   ```
   Extract the thermodynamic output from `log.lammps` using your preferred approach (`sed`/`awk`). You may want to visualize the trajectory in `vmd`, or plot the variation of thermodynamic variables as a function of time in `gnuplot`.
@@ -295,7 +301,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
 
 - Is the heating behaviour in NVT the same as in NVE? (compare the gradients in `gnuplot`)
 - Is there a difference in computational time to perform the numerical integration in the NVT ensemble vs NVE?
-- Plot the total energy of the system, is it constant? What should the conserved quantity be?
+- Plot the total energy of the system in NVT, is it constant? What should the conserved quantity be?
 
 ### 3. Cooling - cool system to 94.4 K
 
@@ -336,7 +342,7 @@ Follow the standard output (or check `log.lammps` afterwards) to check that ther
 
 **Optional Objectives**
 
-- Replace the NVE ensemble and Berendsen thermostat with an NVT ensemble and thermostat.
+- Replace the NVE ensemble and Berendsen thermostat with an NVT ensemble and thermostat, visualize/plot the trajectory
 	
 ### 4. Equilibration - prepare system for measurement at 94.4 K
 
@@ -359,36 +365,92 @@ vim equ.in
 ```
 (remember, :q to quit)
 
-What are the differences between this input and the input from the last step?
-
+What are the differences between this input and the input from the last step? In particular, see the "MD run" section:
 ```bash
-perviell@postel 4-equ$ grep -n "Time" log.lammps
-82:Time TotEng PotEng KinEng Temp Press
-50115:Time TotEng PotEng KinEng Temp Press
-perviell@postel 4-equ$ grep -n "Loop" log.lammps
-50084:Loop time of 43.3201 on 1 procs for 50000 steps with 864 atoms
-100117:Loop time of 42.4362 on 1 procs for 50000 steps with 864 atoms
+### MD run #############
+timestep	10.0
 
-perviell@postel 4-equ$ sed -n '82,50083p' log.lammps > equ.dat
-perviell@postel 4-equ$ sed -n '50115,100116p' log.lammps > equ2.dat
-perviell@postel 4-equ$ sed -i '1s/^/#/' equ.dat
-perviell@postel 4-equ$ sed -i '1s/^/#/' equ2.dat
+fix			integ all nve # integrate equation of motion
+fix 		thermos all temp/berendsen 94.4 94.4 1000.0 # Berendsen thermostat
 
+run 		50000
 
-perviell@postel 4-equ$ movavg equ.dat equ_avg.dat 10000 1 5
-perviell@postel 4-equ$ movavg equ2.dat equ2_avg.dat 10000 1 5
+unfix		thermos
+
+run		50000
+########################
+```
+We specify two different integrations in the same input file:
+a) First, we integrate for 50,000 steps in the NVE ensemble while applying a Berendsen thermostat. 
+b) Then, we remove the Berendsen thermostat and perform a **pure NVE** run for another 50,000 steps
+
+First, we integrate for 50,000 steps in the NVE ensemble with a Berendsen thermostat. Then, we remove the Berendesen thermostat and perform a pure NVE run for another 50,000 steps.
+
+Why? 
+<details>
+<summary>Click for the answer</summary>
+During the previous (cooling) step, the system arrives at 94.4K only in the last few steps of the trajectory. If we immediately perform a pure NVE simulation, residual momentum can cause large fluctuations in the temperature, and the system may settle at a temperature we do not want. 
+
+By using a Berendsen thermostat first, we gently hold the system at 94.4K, reducing fluctuations and preparing a smoother starting point. Once the system is closer to equilibrium, we remove the thermostat and allow it to evolve under pure NVE, maintaining the target temperature more reliably.
+</details>
+
+Note also that we use a relatively weak coupling bewteen the Berendsen thermostat and system as compared to the previous heating/cooling steps.
+
+Why?
+<details>
+<summary>Click for the answer</summary>
+Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as suddent temperature fluctuations.
+
+A weaker coulping avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gruadually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
+</details>
+
+Now run LAMMPS:
+```bash
+lmp -in equ.in
+```
+And follow the thermodynamic output per timestep as it is printed to standard output (i.e. in the terminal window).
+
+Once the simulation is finished, check that the output files have been generated correctly (e.g. open with `vim`):
+```bash
+perviell@postel 4-equ$ ls
+cool_final.data  equ.in  equ.lammpstrj  equ_final.data  log.lammps
 ```
 
+Now, we want to check that the system is equilibrated at the correct temperature. 
 
-[check drift on second stage with gnuplot]
+**Objectives**
 
-	Objectives:
-	I)   Check system is in equilibrium
-	     [hint: Plot T vs t, fit straight line]
-	--- OPTIONAL ---
-	II)  Calculate moving average and standard deviation, plot average or stddev
-	     as a function of time, should observe reduction in stddev as t increases
-	     [hint: using moving_avg_stddev.c code (must be compiled first)]
+- Extract the thermodynamic data for the pure NVE run to a file e.g. `equ.dat` <br>
+  Using `grep` and `sed`/`awk`, extract the start and end points of the two MD runs. Note that, `grep` will return all matches of a string, so you can use a single `grep` command to search for the start or end of both MD runs at the same time. 
+
+- Using `gnuplot`, plot temperature as a function of time, and fit a straight line. <br>
+  If the gradient is small, then the drift in temperature is negligible over the duration of the simulation.
+
+  Note: a small drift in temperature is not sufficient on its own to prove that we are at equilbrium. We are also concerned with the **magnitude of fluctuations** around the average temperature.
+
+- Calculate the moving average and standard deviation of the temperature during the pure NVE run<br>
+  To do this by hand is not practical, so we have prepared a script called `movavg`.
+
+  When downloading the tutorial files, you should have already ran the install script in the [scripts](../../scripts/). If not, you should do this now.
+
+  The syntax to use `movavg` is as follows:
+  ```bash
+  perviell@postel 4-equ$ movavg
+  Usage: movavg <input_file> <output_file> <dt> <step_window> <step_col_id> <col_to_avg_id>
+  ```
+
+  For example, if we extracted the thermodynamic data from the pure NVE run to `equ.dat`:
+  ```bash
+  perviell@postel 4-equ$ movavg equ.dat equ_avg.dat 10 1000 1 5
+  Detected a header line. Reading the next line.
+  INFO: Moving average and standard deviation written to 'equ_avg.dat'
+  INFO: Moving average computed over a time window of 10000.00000 (step_window = 1000, dt = 10.00000)
+  ```
+  where we specify `equ.dat` as the input file, `equ_avg.dat` as the output file, `timestep=10` (we read this value from `equ.in`), `step_window=1000` (one possible choice), and specify `step_col_id=1` and `col_to_avg_id=5` which corresponds to the column IDs of the timestep and temperature respectively in the thermodynamic output.
+
+  Note, the total time window of the moving average is equal to `step_window * dt`.
+
+  We should find that the standard deviation of the fluctations is < 2% of the moving average over the duration of the trajectory. It may be that the moving average is not exactly 94.K, however for the precision that we are aiming for in this tutorial, temperature fluctuations of +/- 1K are okay.
 	     
 ### 5. Production - calculate diffusion coefficient (D) and pair correlation function
 
