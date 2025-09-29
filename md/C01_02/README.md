@@ -4,7 +4,7 @@ In this tutorial, we focus on using Molecular Dynamics (MD) to measure observabl
 
 We will demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software to calculate
 - a) the diffusion coefficient, and
-- b) the pair correlation function
+- b) the radial distribution function
 
 of Argon gas at density  1.374 g cm<sup>-3</sup> in equilibrium at 94.4 K.
 
@@ -380,11 +380,9 @@ unfix		thermos
 run		50000
 ########################
 ```
-We specify two different integrations in the same input file:
-a) First, we integrate for 50,000 steps in the NVE ensemble while applying a Berendsen thermostat. 
-b) Then, we remove the Berendsen thermostat and perform a **pure NVE** run for another 50,000 steps
-
-First, we integrate for 50,000 steps in the NVE ensemble with a Berendsen thermostat. Then, we remove the Berendesen thermostat and perform a pure NVE run for another 50,000 steps.
+We specify two different integrations in the same input file:<br>
+a) First, we integrate for 50,000 steps in the NVE ensemble while applying a Berendsen thermostat.<br>
+b) Then, we remove the Berendsen thermostat and perform a **pure NVE** run for another 50,000 steps.<br>
 
 Why? 
 <details>
@@ -394,12 +392,12 @@ During the previous (cooling) step, the system arrives at 94.4K only in the last
 By using a Berendsen thermostat first, we gently hold the system at 94.4K, reducing fluctuations and preparing a smoother starting point. Once the system is closer to equilibrium, we remove the thermostat and allow it to evolve under pure NVE, maintaining the target temperature more reliably.
 </details>
 
-Note also that we use a relatively weak coupling bewteen the Berendsen thermostat and system as compared to the previous heating/cooling steps.
+We also use a relatively weak coupling bewteen the Berendsen thermostat and system as compared to the previous heating/cooling steps.
 
 Why?
 <details>
 <summary>Click for the answer</summary>
-Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as suddent temperature fluctuations.
+Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as sudden temperature fluctuations.
 
 A weaker coulping avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gruadually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
 </details>
@@ -420,10 +418,10 @@ Now, we want to check that the system is equilibrated at the correct temperature
 
 **Objectives**
 
-- Extract the thermodynamic data for the pure NVE run to a file e.g. `equ.dat` <br>
-  Using `grep` and `sed`/`awk`, extract the start and end points of the two MD runs. Note that, `grep` will return all matches of a string, so you can use a single `grep` command to search for the start or end of both MD runs at the same time. 
+- Extract the thermodynamic data for the pure NVE run to a file e.g. `equ.dat`. <br>
+  Using `grep` and `sed`/`awk`, extract the start and end points of the two MD runs. Note that, `grep` will return all matches of a string, so you can use a single `grep` command to search for the start or end lines of both MD runs at the same time. 
 
-- Using `gnuplot`, plot temperature as a function of time, and fit a straight line. <br>
+- Using `gnuplot`, plot the temperature as a function of time, and fit a straight line. <br>
   If the gradient is small, then the drift in temperature is negligible over the duration of the simulation.
 
   Note: a small drift in temperature is not sufficient on its own to prove that we are at equilbrium. We are also concerned with the **magnitude of fluctuations** around the average temperature.
@@ -431,7 +429,7 @@ Now, we want to check that the system is equilibrated at the correct temperature
 - Calculate the moving average and standard deviation of the temperature during the pure NVE run<br>
   To do this by hand is not practical, so we have prepared a script called `movavg`.
 
-  When downloading the tutorial files, you should have already ran the install script in the [scripts](../../scripts/). If not, you should do this now.
+  When downloading the tutorial files, you should have already ran the install script in the [scripts](../../scripts/) folder. If not, you should do this now.
 
   The syntax to use `movavg` is as follows:
   ```bash
@@ -454,6 +452,73 @@ Now, we want to check that the system is equilibrated at the correct temperature
 	     
 ### 5. Production - calculate diffusion coefficient (D) and pair correlation function
 
+Copy the final configuration (`equ_final.data`) into [5-prod](5-prod/) and change directory.
+
+```bash
+cp equ_final.data ../5-prod/
+cd ../5-prod/
+```
+
+If you inspect the contents of the directory, it should contain:
+```bash
+perviell@postel 5-prod$ ls
+equ_final.data prod.in  rdf.gp
+```
+(Note: `rdf.gp` is a gnuplot script we will use later to plot the radial distribution function)
+
+
+Use `vim` to inspect the input file
+```bash
+vim equ.in
+```
+(remember, :q to quit)
+
+What are the differences between this input and the input from the last step? In particular, see the "MD run" section:
+```bash
+### MD run #############
+timestep	10.0
+
+fix			integ all nve # integrate equation of motion
+fix 		thermos all temp/berendsen 94.4 94.4 1000.0 # Berendsen thermostat
+
+run 		50000
+
+unfix		thermos
+
+run		50000
+########################
+```
+We specify two different integrations in the same input file:<br>
+a) First, we integrate for 50,000 steps in the NVE ensemble while applying a Berendsen thermostat.<br>
+b) Then, we remove the Berendsen thermostat and perform a **pure NVE** run for another 50,000 steps.<br>
+
+Why? 
+<details>
+<summary>Click for the answer</summary>
+During the previous (cooling) step, the system arrives at 94.4K only in the last few steps of the trajectory. If we immediately perform a pure NVE simulation, residual momentum can cause large fluctuations in the temperature, and the system may settle at a temperature we do not want. 
+
+By using a Berendsen thermostat first, we gently hold the system at 94.4K, reducing fluctuations and preparing a smoother starting point. Once the system is closer to equilibrium, we remove the thermostat and allow it to evolve under pure NVE, maintaining the target temperature more reliably.
+</details>
+
+We also use a relatively weak coupling bewteen the Berendsen thermostat and system as compared to the previous heating/cooling steps.
+
+Why?
+<details>
+<summary>Click for the answer</summary>
+Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as sudden temperature fluctuations.
+
+A weaker coulping avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gruadually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
+</details>
+
+Now run LAMMPS:
+```bash
+lmp -in equ.in
+```
+And follow the thermodynamic output per timestep as it is printed to standard output (i.e. in the terminal window).
+
+
+
+
 [copy final configuration to 5-prod and run production to extract MSD, gnuplot fit to extract diffusion coefficient]
 
 what about RDF/pair correlation function?
@@ -464,7 +529,7 @@ what about RDF/pair correlation function?
 	     gradient. Recall definition of D from lecture notes]
 	II)  Calculate pair correlation function [NOT WORKING]
 
-### 6. Post-processing and analysis
+## Post-processing and analysis summary
 Observe trajectories:
 ---> Use VMD
 
