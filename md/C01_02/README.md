@@ -464,7 +464,7 @@ If you inspect the contents of the directory, it should contain:
 perviell@postel 5-prod$ ls
 equ_final.data prod.in  rdf.gp
 ```
-(Note: `rdf.gp` is a gnuplot template we will use later to plot the radial distribution function - you can open it with `vim` to see what is happening.)
+(Note: `'rdf.gp'` is a gnuplot template we will use later to plot the radial distribution function - you can open it with `vim` to see what is happening.)
 
 Use `vim` to inspect the input file
 ```bash
@@ -514,16 +514,16 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 
 **Objectives**
 
-- Visualize the LAMMPS trajectory file `prod.lammpstrj` with `vmd`.
+- Visualize the LAMMPS trajectory file `'prod.lammpstrj'` with `vmd`.
 
 - Check that the system stays in equilibrium<br>
-  Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from `log.lammps`, and `gnuplot` to plot and fit a straight line, or `movavg` to calculate the moving average and standard deviation.
+  Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from `'log.lammps'`, and `gnuplot` to plot and fit a straight line, or `movavg` to calculate the moving average and standard deviation.
 
 - Calculate the diffusion coefficient (D)<br>
   Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, the gradient is not the final value - use the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
 
 - Plot the RDF
-  If everything ran correctly, LAMMPS will have written `tmp.rdf`. This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template `rdf.gp`. <br>
+  If everything ran correctly, LAMMPS will have written `'tmp.rdf'`. This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template `'rdf.gp'`. <br>
   When downloading the tutorial files, you should have already ran the install script for the [scripts](../../scripts/) folder, as outlined on the [homepage](../../). If not, you should do this now.
   ```bash
   rdf_pp.sh tmp.rdf
@@ -532,15 +532,4 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 
 **Questions**
 - How similar is our value of the diffusion coefficient (D) to the one calculated by Rahman in the reference paper?
-
-## Post-processing and analysis summary
-Observe trajectories:
----> Use VMD
-
-Extract data:
----> Use awk/sed and grep, or vim visual mode
-
-Plotting/fitting:
----> Use gnuplot
-	     [hint: Compile rdf.f90 and run on output...this script is not working right now]
-		
+- What might we do to improve the setup, in order to obtain a more accurate estimate of D?
