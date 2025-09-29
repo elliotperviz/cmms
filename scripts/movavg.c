@@ -170,6 +170,7 @@ int main(int argc, char *argv[]) {
     	fclose(input_file);
     	fclose(output_file);
 
+	printf("INFO: Moving average and standard deviation written to '%s'\n", output_filename);
 	printf("INFO: Moving average computed over a time window of %.5lf (step_window = %d, dt = %.5lf)\n", window_size * dt, window_size, dt);
 
     	return 0;
