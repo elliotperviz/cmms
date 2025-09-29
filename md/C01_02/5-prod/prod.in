@@ -34,12 +34,9 @@ neighbor	5.0 bin # define the skin
 neigh_modify	every 1 delay 10 check yes # options of the neighbor list
 ########################
 
-### msd ################
+### compute ############
 compute		msd all msd com yes
-########################
-
-### rdf ################
-compute 	rdf all rdf 1000
+compute		rdf all rdf 1000
 ########################
 
 ### output definition ##
