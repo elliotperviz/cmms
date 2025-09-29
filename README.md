@@ -65,13 +65,13 @@ And plotting software:
 For installation on your home computer, please see the above links, where you can navigate to find invididual installation guides.
 
 ## Tutorial Outline
-Add to this section as the tutorial material is checked
+
 ### Molecular Dynamics
+
 Demonstrating the calculation of equilibrium properties via molecular dynamics with various examples
-a) Diffusion coefficient and radial distribution function of Argon
-b) Silicon (**TBA**)
+- a) Diffusion coefficient and radial distribution function of Argon
+- b) Silicon (**TBA**)
 
 ### Abinit
+
 **TBA**
-
-
