@@ -523,13 +523,18 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 - Calculate the diffusion coefficient (D)<br>
   Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, **the gradient is not the final value** - you must utilise the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
 
-- Plot the RDF
+- Plot the RDF as a function of time
   If everything ran correctly, LAMMPS will have written "tmp.rdf". This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template "rdf.gp". <br>
   When downloading the tutorial files, you should have already ran the install script for the [scripts](../../scripts/) folder, as outlined on the [homepage](../../). If not, you should do this now.
   ```bash
   rdf_pp.sh tmp.rdf
   gnuplot rdf.gp
   ```
+
+**Optional Objectives**
+
+- Calculate the average value of the RDF over the equilibrium trajectory (this corresponds to the ensemble average RDF distribution)
+  [Hint: check the syntax of fix ave/time in the LAMMPS documentation.]
 
 **Questions**
 - How similar is our value of the diffusion coefficient (D) to the one calculated by Rahman in the reference paper?
