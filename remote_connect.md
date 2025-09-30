@@ -102,7 +102,7 @@ You should now be able to log in without a password (or only with the local key 
 
 ## Remote connection with X-forwarding
 
-Some extra setup is required in order to visualise plots or use GUI programs when connecting to the laboratory remotely. Specifically, you need to setup "X-forwarding", which forwards the graphical windows from the remote machine to your local computer.
+Some extra setup is required in order to visualise plots or use GUI programs when connecting to the laboratory machines remotely. Specifically, you need to setup "X-forwarding", which forwards the graphical windows from the remote machine to your local computer.
 
 ### Step 6: Install an X server (if needed)
 
