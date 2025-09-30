@@ -100,8 +100,30 @@ ssh your_username@postel.felk.cvut.cz
 
 You should now be able to log in without a password (or only with the local key passphrase if set).
 
-## Visualisation
+## Remote connection with X-forwarding
 
-Some extra setup is required in order to visualise plots or use GUI programs when connecting to the laboratory remotely.
+Some extra setup is required in order to visualise plots or use GUI programs when connecting to the laboratory remotely. Specifically, you need to setup "X-forwarding", which forwards the graphical windows from the remote machine to your local computer.
 
-**TBA**
+### Step 6: Install an X server (if needed)
+
+- **macOS**: Install **XQuartz** (https://www.xquartz.org/)
+- **Windows**: Install VcXsrv (https://sourceforge.net/projects/vcxsrv/)
+- **Linux**: Use your default terminal emulator (no additional installation necessary)
+
+### Step 7: Connect with X-forwarding
+
+In your terminal, use the `-X` option when connecting via SSH:
+
+```bash
+ssh -X your_username@postel.felk.cvut.cz
+```
+
+After connecting with X-forwarding enabled, try running a simple GUI proram on the server e.g. type
+```bash
+thunar
+```
+to open the file browser, or
+```bash
+firefox
+```
+to open the web browser.
