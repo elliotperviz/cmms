@@ -25,7 +25,7 @@ Run the following command in your terminal:
 ssh your_username@postel.felk.cvut.cz
 ```
 
-## **Step 3: Accept the host key (first time only)**
+### **Step 3: Accept the host key (first time only)**
 
 The first time you connect, you may see a message like:
 ```bash
