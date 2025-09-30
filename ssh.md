@@ -77,14 +77,11 @@ On Linux-Ubuntu or Windows-WSL, you can install it with:
 sudo apt install ssh-copy-id
 ```
 
-Once you have generated your key, simply run:
+With `ssh-copy-id` and your generated SSH key, simply run:
 
 ```bash
 ssh-copy-id -i ~/.ssh/id_ed25519.pub your_username@postel.felk.cvut.cz
 ```
-
-If you renamed your key, you should specify the specific `~/.ssh/<keyname>.pub`.
-
 
 This will:
 
@@ -92,6 +89,8 @@ This will:
 - Create the ~/.ssh directory on the server if needed.
 - Append your public key to ~/.ssh/authorized_keys.
 - Set the correct permissions automatically.
+
+Note, if you renamed your key, you should specify the appropriate `~/.ssh/<keyname>.pub`.
 
 Afterwards, test it:
 
