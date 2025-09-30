@@ -127,3 +127,5 @@ to open the file browser, or
 firefox
 ```
 to open the web browser.
+
+It may take some time to load the GUI locally, but if it opens correctly, you are good to go!
