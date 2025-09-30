@@ -1,25 +1,19 @@
 # **SSH Setup Guide**
 
-This is a brief guide for students who need to connect to the laboratory machines from home.
+This is a brief guide for students who want to connect to the laboratory machines from home.
 
 We use the "ssh" service to make a remote connection.
-
----
 
 ## **Prerequisites**
 
 - A **Mac**, **Linux**, or **Windows (with WSL or PowerShell)**.
 - (Optional) An **SSH private key** if not using a password.
 
----
-
 ## **Step 1: Open the Terminal**
 
 - **macOS**: Open **Terminal** (`Cmd + Space`, then type `Terminal`).
 - **Windows**: Use **PowerShell** or **WSL**.
 - **Linux**: Use your default terminal emulator.
-
----
 
 ## **Step 2: Connect Using SSH**
 
