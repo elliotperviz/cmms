@@ -100,10 +100,8 @@ ssh your_username@postel.felk.cvut.cz
 
 You should now be able to log in without a password (or only with the local key passphrase if set).
 
+## Visualisation
 
+Some extra setup is required in order to visualise plots or use GUI programs when connecting to the laboratory remotely.
 
-
-
-
-
-
+**TBA**
