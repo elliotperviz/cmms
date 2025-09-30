@@ -45,7 +45,7 @@ You will then be prompted for your password (unless you are using an SSH key).
 
 An SSH key is much more convenient than entering your password each time you want to log into the the laboratory remotely.
 
-### Step 3: Generate an SSH key (if you don't have one)
+### Step 4: Generate an SSH key (if you don't have one)
 
 ```bash
 ssh-keygen -t ed25519 -C "your_username@cvut.cz"
@@ -66,7 +66,7 @@ Enter passphrase (empty for no passphrase):
 
 A passphrase adds extra security, although this may be skipped if only you have access to your laptop.
 
-### Step 4: Add the public key to the laboratory server
+### Step 5: Add the public key to the laboratory server
 
 Note: this step requires the command `ssh-copy-id`, which may not be installed by default in all terminal applications.
 
