@@ -23,6 +23,7 @@ Run the following command in your terminal:
 
 ```bash
 ssh your_username@postel.felk.cvut.cz
+```
 
 ## **Step 3: Accept the host key (first time only)**
 
