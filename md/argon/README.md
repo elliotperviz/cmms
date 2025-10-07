@@ -152,7 +152,7 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   You should see an 'ERROR' message, related to lost atoms. This means that the timestep is too large to properly capture the dynamics. We should therefore reduce the timestep back to its previous setting by editing "heat.in" (e.g. with `vim`) and setting
   ```bash
   ### MD run #############
-  timestep        1.0
+  timestep        10.0
   ```
 
   Then run LAMMPS again:
