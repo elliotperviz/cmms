@@ -423,7 +423,7 @@ Why?
 <summary>Click for the answer</summary>
 Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as sudden temperature fluctuations.
 
-A weaker coulping avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gruadually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
+A weaker coupling avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gradually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
 </details>
 
 Now run LAMMPS:
