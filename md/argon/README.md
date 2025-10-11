@@ -367,7 +367,6 @@ Follow the standard output (or check "log.lammps" afterwards) to check that ther
 **Optional Objectives**
 
 - Replace the NVE ensemble and Berendsen thermostat with an NVT ensemble and thermostat, visualize/plot the trajectory
-- 
 	
 ### 4. Equilibration - prepare system for measurement at 94.4 K
 
