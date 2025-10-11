@@ -174,7 +174,6 @@ Is it correct to impose a thermostat in the NVE ensemble? Check the description 
   We want to verify that the timestep is appropriate to model the dynamics in the NVE ensemble, in particular we want the total energy to be approximately constant (within reasonable tolerance).
 
   **Let's check this explicitly**. You may have noticed when inspecting the output file that the output is sandwiched between two specific lines, which we can search using `grep`.
-  ```
   ```bash
   perviell@postel 2-heat$ grep -n "Time" log.lammps
   92:Time TotEng PotEng KinEng Temp Press 
