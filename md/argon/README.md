@@ -401,7 +401,7 @@ run 		50000
 
 unfix		thermos
 
-run		50000
+run			50000
 ########################
 ```
 We specify two different integrations in the same input file:<br>
