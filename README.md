@@ -72,7 +72,7 @@ For installation on your home computer, please see the above links, where you ca
 
 Demonstrating the calculation of equilibrium properties via molecular dynamics, implemented in the LAMMPS software package, through various examples
 1) Lattice constant of cubic diamond Silicon
-2) Diffusion coefficient and radial distribution function of Argon
+2) Diffusion coefficient and radial distribution function of Argon gas
 
 ### Quantum Mechanics
 
