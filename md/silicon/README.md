@@ -8,7 +8,7 @@ Introduction
 
 Measure (i) isobaric thermal expansion coefficient α (from NPT runs at several temperatures) and (ii) isochoric heat capacity Cv from energy fluctuations in NVT.
 
-** Outline **
+**Outline**
 1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
 2. [2-heat](2-heat/) Heating - initialise velocities at 10K, heat to 500K
 3. [3-cool](3-cool/) Cooling - cool system to 94.4K
