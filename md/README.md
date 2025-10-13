@@ -1,6 +1,6 @@
 # Molecular Dynamics
 
-The molecular dynamics tutorial is separated into two parts:
+This molecular dynamics tutorial is separated into two parts:
 1. [Lattice constant of cubic diamond Silicon](silicon/)
 2. [Diffusion coefficient and radial distribution function of Argon gas](argon/)
 
