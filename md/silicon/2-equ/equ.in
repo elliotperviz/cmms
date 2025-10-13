@@ -1,0 +1,66 @@
+### simulation params ##
+variable	steps_dump   equal 1000   # steps
+########################
+
+### begin ##############
+clear                  	
+units           metal  	# mass = grams/mole
+		       	# distance = Angstroms
+			# time = picoseconds
+		       	# energy = eV
+		       	# velocity = Angstroms/picosecond
+		       	# force = eV/Angstrom
+		       	# temperature = Kelvin
+		       	# pressure = bars
+			# charge = multiple of electron charge (1.0 is a proton)
+			# density = gram/cm^3
+
+boundary        p p p  	# periodic in all directions
+########################
+
+### force field (1) ####
+atom_style	atomic
+pair_style      tersoff
+########################
+
+### initial conf #######
+read_data       min.data # read a data file
+########################
+
+### force field (2) ####
+pair_coeff      * * ../Si.tersoff Si
+########################
+
+### neighbor list ######
+neighbor	3.0 bin # define the skin
+
+neigh_modify	every 1 delay 0 check yes # options of the neighbor list
+########################
+
+### print trajectory ###
+dump		traj all custom ${steps_dump} equ.lammpstrj element x y z vx vy vz fx fy fz
+dump_modify 	traj element Si
+dump_modify 	traj sort id
+########################
+
+# initialize velocities
+velocity all create 300.0 12345 mom yes rot yes
+########################
+
+### MD run #############
+timestep        0.01
+
+thermo          100
+thermo_style    custom step temp press pe ke etotal lx ly lz
+
+#fix		integ all nve # integrate equation of motion
+fix             npt all npt temp 300.0 300.0 0.1 iso 0.0 0.0 1.0
+
+run 		100000
+
+unfix		npt
+########################
+
+### write data #########
+write_data      equ.data
+########################

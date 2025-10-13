@@ -5,7 +5,16 @@ variable	steps_dump   equal 1000   # steps
 ### begin ##############
 clear
 box		tilt large
-units           metal
+units           metal  	# mass = grams/mole
+		       	# distance = Angstroms
+			# time = picoseconds
+		       	# energy = eV
+		       	# velocity = Angstroms/picosecond
+		       	# force = eV/Angstrom
+		       	# temperature = Kelvin
+		       	# pressure = bars
+			# charge = multiple of electron charge (1.0 is a proton)
+			# density = gram/cm^3
 boundary        p p p
 ########################
 
@@ -16,7 +25,7 @@ pair_style      tersoff
 
 ### initial config #####
 read_data       Si.lmp
-replicate	4 4 4
+#replicate	4 4 4
 ########################
 
 ### force field (2) ####
@@ -25,7 +34,7 @@ pair_coeff      * * ../Si.tersoff Si
 
 ### neighbor list ######
 neighbor        3.0 bin
-neigh_modify    delay 0 check yes every 1
+neigh_modify    delay 0 every 1 delay 0 check yes
 ########################
 
 ### print trajectory ###
@@ -50,7 +59,7 @@ write_data	min.data
 ### end minimization ###
 
 # short NVE check 5ps ##
-timestep 	0.001
+timestep 	0.01
 reset_timestep 	0
 
 thermo 		100
