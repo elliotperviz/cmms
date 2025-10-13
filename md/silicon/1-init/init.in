@@ -1,12 +1,12 @@
+### simulation params ##
+variable	steps_dump   equal 1000   # steps
+########################
+
 ### begin ##############
 clear
 box		tilt large
 units           metal
 boundary        p p p
-########################
-
-### simulation params ##
-variable	steps_dump   equal 1000   # steps
 ########################
 
 ### force field (1) ####
@@ -15,37 +15,50 @@ pair_style      tersoff
 ########################
 
 ### initial config #####
-read_data       system.data
+read_data       Si.lmp
+replicate	4 4 4
 ########################
 
 ### force field (2) ####
-pair_coeff      * * Si.tersoff Si
+pair_coeff      * * ../Si.tersoff Si
 ########################
 
 ### neighbor list ######
-#neighbor        3.0 bin
-#neigh_modify    delay 0 check yes every 1
+neighbor        3.0 bin
+neigh_modify    delay 0 check yes every 1
 ########################
 
 ### print trajectory ###
-dump		traj all custom ${steps_dump} system.lammpstrj element x y z vx vy vz fx fy fz
+dump		traj all custom ${steps_dump} min.lammpstrj element x y z vx vy vz fx fy fz
 dump_modify 	traj element Si
 dump_modify 	traj sort id
 ########################
 
 
-### start minimization 
+## start minimization ##
 thermo          1
 thermo_style    custom time lx ly lz pe fnorm fmax
-thermo_modify   format 3 %26.16g
 
 fix             f1 all box/relax iso 0.0 fixedpoint 0.0 0.0 0.0 nreset 1
 
 min_style       cg
 minimize        0.0 1.0e-10 1000000 1000000
-### end minimization 
 
-### write data
-write_data      final.data
-###
+unfix		f1
+undump		traj
+write_data	min.data
+### end minimization ###
 
+# short NVE check 5ps ##
+timestep 	0.001
+reset_timestep 	0
+
+thermo 		100
+thermo_style 	custom step temp press pe ke etotal
+
+fix		nve all nve
+
+run 		50000
+
+unfix 		nve
+########################
