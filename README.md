@@ -70,7 +70,7 @@ For installation on your home computer, please see the above links, where you ca
 
 ### Molecular Dynamics
 
-Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, and follow the examples which the demonstrate the calculation of equilibrium properties using the LAMMPS software package:
+Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, and follow the examples which demonstrate the calculation of equilibrium properties using the LAMMPS software package:
 1) [Lattice constant of cubic diamond Silicon](md/silicon)
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
