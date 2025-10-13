@@ -1,4 +1,4 @@
-# Tutorial
+# Tutorial 2 - Equilibrium properties of Argon
 
 In this tutorial, we focus on using Molecular Dynamics (MD) to measure observable properties at equilibrium.
 
