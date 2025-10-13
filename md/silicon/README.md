@@ -6,7 +6,7 @@ Introduction
 
 **Goal**
 
-Measure (i) isobaric thermal expansion coefficient α (from NPT runs at several temperatures) and (ii) isochoric heat capacity Cv from energy fluctuations in NVT.
+Measure (i) isobaric thermal expansion coefficient α from NPT runs at several temperatures and (ii) isochoric heat capacity Cv from energy fluctuations in NVT.
 
 **Outline**
 1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
@@ -83,7 +83,29 @@ We should highlight a few aspects of the system setup here.
 2. We read "Si.lmp" (containing 8 atoms), and replicate this box 4x4x4 along each x,y,z to give in total 512 atoms. This box size is chosen to obtain better estimates of bulk equilibrium properties. Note that in general, one should perform a convergence study to obtain the best choice of system size. 
 2. We relax both atomic positions and box lengths at the same time.
 3. We finally perform a short NVE run to check the appropriate choice of timestep.
-  - Plot the total energy as a function of time and fit a line of best fit using linear regression. Is the choice of timestep appropriate?
+
+- Finally, let's run LAMMPS. Note, this simulation is more computationally demanding than the previous simulation on a gas of Argon atoms. For this reason, we are going to share the workload across different CPU cores via `mpirun`. This process is called *parallelisation*.
+  ```bash
+  mpirun -np 4 lmp -in init.in
+  ```
+  Follow the minimisation and thermodynamic output. Once finished, check that in the current directory the following files are present:
+  ```bash
+  perviell@postel 1-init$ ls
+  BPOSCAR  init.in  log.lammps  min.data  min.lammpstrj  POSCAR  Si.lmp
+  ```
+  where we now have output files "log.lammps", "min.data", and "min.lammpstrj". Recall (for example from the previous tutorial) the purpose of these different files, and check that the output has been produced correctly in each case.
+
+**Objectives**
+  - Visualize the minimisation (trajectory file "min.lammpstrj") with `vmd`
+  - Extract the NVE trajectory from "log.lammps" using `grep` and `sed`/`awk` and plot the total energy as a function of time and fit a line of best fit using linear regression using `gnuplot`. Is the choice of timestep appropriate?
+
+### 2. Initialisation & potential minimisation
+
+- Copy "min.data" (the final configuration after minimisation) and change directory into [2-equ](2-equ/)
+  ```bash
+  cp min.data ../2-equ/
+  cd ../2-equ/
+  ```
 
 
 
