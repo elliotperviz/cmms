@@ -12,17 +12,21 @@ int is_number(const char *str);
 
 int main(int argc, char *argv[]) {
 
-	if (argc != 7) {
-		fprintf(stderr, "Usage: %s <input_file> <output_file> <dt> <step_window> <step_col_id> <col_to_avg_id>\n", argv[0]);
+	if (argc != 8) {
+		fprintf(stderr, "Usage: %s <input_file> <output_file> <dt> <thermo_freq> <step_window> <step_col_id> <col_to_avg_id>\n", argv[0]);
 		return 1;
 	}
 
 	char *input_filename = argv[1];
 	char *output_filename = argv[2];
 	double dt = atof(argv[3]);
-	int window_size = atoi(argv[4]);
-	int step_col_id = atoi(argv[5]);
-	int temp_col_id = atoi(argv[6]);
+	int thermo_freq = atoi(argv[4]);
+	int window_size = atoi(argv[5]);
+	int step_col_id = atoi(argv[6]);
+	int temp_col_id = atoi(argv[7]);
+
+	double actual_time_window = window_size * thermo_freq * dt;
+	printf("INFO: Moving average will be computed over a time window of %.5lf (step_window = %d samples, thermo_freq = %d, dt = %.5lf)\n", actual_time_window, window_size, thermo_freq, dt);
 
 	step_col_id -= 1;
 	temp_col_id -= 1;
@@ -162,7 +166,7 @@ int main(int argc, char *argv[]) {
             		stddev = sqrt((sum_sq / window_size) - moving_avg * moving_avg);
 
 	    		// Write step, moving average, and stddev to output_file
-			step_time = step * dt;
+			step_time = step * dt * thermo_freq;
 			fprintf(output_file, "%.5lf %.5lf %.5lf\n", step_time, moving_avg, stddev);
 		}
 	}	
@@ -170,10 +174,12 @@ int main(int argc, char *argv[]) {
     	fclose(input_file);
     	fclose(output_file);
 
-	printf("INFO: Moving average and standard deviation written to '%s'\n", output_filename);
-	printf("INFO: Moving average computed over a time window of %.5lf (step_window = %d, dt = %.5lf)\n", window_size * dt, window_size, dt);
 
-    	return 0;
+	double t_max = step*dt;
+	printf("INFO: Maximum time detected = %.5lf (from last step = %d)\n", t_max, step);
+	printf("INFO: Moving average and standard deviation written to '%s'\n", output_filename);
+
+	return 0;
 }
 
 void move_window(double *window, int size) {
