@@ -6,7 +6,7 @@ Introduction
 
 **Goal**
 
-Measure (i) isobaric thermal expansion coefficient α (from NPT runs at several temperatures) and (ii) isochoric heat capacity C_V from energy fluctuations in NVT.
+Measure (i) isobaric thermal expansion coefficient α (from NPT runs at several temperatures) and (ii) isochoric heat capacity Cv from energy fluctuations in NVT.
 
 ** Outline **
 1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
