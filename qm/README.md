@@ -42,4 +42,5 @@ TBC
 **Extract and analyse physical properties**
 
 - Energetics: total energy, formation energy etc.
-- Electronic sturcture: DOS, band structure, charge density, electronic localisation, charge polarisation, charge dipole moment, magnetic moment
+- Electronic properties: DOS, band structure, charge density, electronic localisation, charge polarisation, charge dipole moment
+- Magnetic properties: spin polarisation, magnetic moment
