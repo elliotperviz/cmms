@@ -1,8 +1,8 @@
 # Molecular Dynamics
 
 The molecular dynamics tutorial is separated into two parts:
-1. [silicon](silicon/) Lattice constant of cubic diamond Silicon
-2. [argon](silicon/) Diffusion coefficient and radial distribution function of Argon gas
+1. [Lattice constant of cubic diamond Silicon](silicon/) Lattice constant of cubic diamond Silicon
+2. [Diffusion coefficient and radial distribution function of Argon gas](argon/) Diffusion coefficient and radial distribution function of Argon gas
 
 In the above examples, we demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (LAMMPS) software to calculate various equilibrium properties.
 
