@@ -10,7 +10,7 @@ Set up and run a simple LAMMPS simulation to measure the equilibrium lattice con
 
 **Outline**
 1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
-2. [2-equ](2-equ/) Equilibrate the system at 300K and measure the lattice constant.
+2. [2-equ](2-equ/) Equilibrate the system at 300K and measure the average lattice constant.
 
 ## Simulation procedure
 
