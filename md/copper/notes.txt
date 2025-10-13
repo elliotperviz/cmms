@@ -1,8 +1,0 @@
-phonopy --symmetry -c POSCAR
--> writes PPOSCAR and BPOSCAR
-
-atomsk BPOSCAR lmp
--> writes BPOSCAR.lmp
-
-lmp -in init.in
--> with replicate 4x4x4 for 512 atoms
