@@ -11,8 +11,6 @@ Below, we provide an overview of molecular dynamics. The discussion is separated
 - The core molecular dynamics loop
 - A general workflow for equilibrium measurements
 
-We demonstrate the use of molecular dynamics with an example, which may be found in the [argon](/argon/) folder.
-
 ## What is Molecular Dynamics?
 
 <details>
