@@ -180,7 +180,7 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
 
   a) Fit a straight line to the variation of the lattice constant. The intersect of the straight line with the y-axis is our average value of the lattice constant.
 
-  or b) use `movavg`, report the average and standard deviation.
+  or b) use `movavg`, report the (moving) average and standard deviation.
 
 **Questions**
 - The fluctuation of the pressure over the equilibrium trajectory is large, why is this the case?
