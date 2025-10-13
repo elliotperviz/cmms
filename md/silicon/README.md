@@ -181,7 +181,7 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
 
   or b) use `movavg`, report the average and standard deviation.
 
-** Questions **
+**Questions**
 - The fluctuation of the pressure over the equilibrium trajectory is large, why is this the case?
   <details>
   <summary>Click to reveal answer</summary>
