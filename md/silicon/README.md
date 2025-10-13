@@ -79,7 +79,8 @@ Now, let's proceed to initialise the system and minimise the potential with LAMM
 
 We should highlight a few aspects of the system setup here.
 1. We use a **Tersoff** 3-body potential (consult the LAMMPS documentation for the analytical definition). To use this potential, we provide an auxilliary file, "Si.tersoff", in the parent directory of this tutorial (in the same folder where this documentation is written). In this file we set the optimised parameters for 3-body interactions between Si atoms in the Tersoff formulation.
-  - Open "Si.tersoff" with `vim`/`less`/`cat` and check the syntax 
+  - Open "Si.tersoff" with `vim`/`less`/`cat` and check the syntax
+2. We read "Si.lmp" (containing 8 atoms), and replicate this box 4x4x4 along each x,y,z to give in total 512 atoms. This box size is chosen to obtain better estimates of bulk equilibrium properties. Note that in general, one should perform a convergence study to obtain the best choice of system size. 
 2. We relax both atomic positions and box lengths at the same time.
 3. We finally perform a short NVE run to check the appropriate choice of timestep.
   - Plot the total energy as a function of time and fit a line of best fit using linear regression. Is the choice of timestep appropriate?
