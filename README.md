@@ -68,11 +68,11 @@ For installation on your home computer, please see the above links, where you ca
 
 ## Tutorial Outline
 
-### [Molecular Dynamics](md/)
+### Molecular Dynamics
 
-Demonstrating the calculation of equilibrium properties via molecular dynamics, implemented in the LAMMPS software package, through various examples
-1) Lattice constant of cubic diamond Silicon
-2) Diffusion coefficient and radial distribution function of Argon gas
+Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, and follow the examples which the demonstrate the calculation of equilibrium properties using the LAMMPS software package:
+1) [Lattice constant of cubic diamond Silicon](md/silicon)
+2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
 ### Quantum Mechanics
 
