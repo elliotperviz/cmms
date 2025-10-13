@@ -47,7 +47,7 @@ But dynamic and collective phenomena depend on correlations and wavelengths that
 
 In practice, the "correct" system size that can be used to obtain measurements of bulk properties is obtained via a convergence study, where we increase the system size and check how ensemble average quantities change. Once these quantities are ~ constant within a reasonable tolerance, we say that the system is *converged*.
 
-Summary: 
+**Summary**: 
 
 When a small system with PBCs is enough (negligible finite size error)
 - Equilibrium lattice constant, cohesive energy, pressure–volume curve
@@ -82,7 +82,7 @@ We should highlight a few aspects of the system setup here.
 
 **Objectives**
 
-- Let's let's run LAMMPS.
+- Now let's run LAMMPS.
   ```bash
   lmp -in init.in
   ```
