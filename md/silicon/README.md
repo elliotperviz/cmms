@@ -27,7 +27,7 @@ cd 1-init/
 - View the contents of the directory:
 ```bash
 perviell@postel 1-init$ ls
-init.in POSCAR Si.lmp
+BPOSCAR init.in POSCAR Si.lmp
 ```
 
 Our starting point is the **cubic diamond-Si primitive cell**. This is the minimum size unit, containing two atoms, that we can use to simulate bulk crystalline cubic diamond-Si via periodic boundary conditions (PBCs). The definition of the primitive cell system (lattice parameters, atomic positions) is given in the "POSCAR" file. 
@@ -39,7 +39,7 @@ A "POSCAR" file is one possible format in which we define the crystal structures
 
 Now, we do not actually use the primitive cell representation of diamond-Si for our simulation, that is, for measurement of bulk equilibrium properties.
 
-Why?
+**Why?**
 <details>
 <summary>Click for the answer</summary>
 Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space.
@@ -69,9 +69,22 @@ Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. W
 
 Whilst we will not directly use the VASP inputs in this tutorial, it is useful to check and compare the differences between the two files. What is important to remember is that although the syntax may change between softwares, ultimately we must be able to provide the core definitions of the crystal structure (lattice parameters and atomic positions).
 
-Now, let's inspect the LAMMPS input file.
+Now, let's proceed to initialise the system and minimise the potential with LAMMPS.
 
-- 
+- Inspect the LAMMPS input file.
+  ```bash
+  vim init.in
+  ```
+  Check the sections of the input file and make sure you understand the keywords and parameters. Consult the LAMMPS documentation (https://docs.lammps.org) if there is something you don't recognise.
+
+We should highlight a few aspects of the system setup here.
+1. We use a **Tersoff** 3-body potential (consult the LAMMPS documentation for the analytical definition). To use this potential, we provide an auxilliary file, "Si.tersoff", in the parent directory of this tutorial (in the same folder where this documentation is written). In this file we set the optimised parameters for 3-body interactions between Si atoms in the Tersoff formulation.
+  - Open "Si.tersoff" with `vim`/`less`/`cat` and check the syntax 
+2. We relax both atomic positions and box lengths at the same time
+3. We finally perform a short NVE run to check the appropriate choice of timestep
+  - Plot the total energy as a function of time and fit a line of best fit using linear regression. Is the choice of timestep appropriate?
+
+
 
 
 
