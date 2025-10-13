@@ -34,7 +34,7 @@ Our starting point is the **cubic diamond-Si primitive cell**. This is the minim
 
 A "POSCAR" file is one possible format in which we define the crystal structures as input to simulation codes. In particular, "POSCAR" files are used for the Vienna ab inito simulation package `vasp`. The primary purpose of this tool is to solve the Schrodinger equation, which is *not* the focus of this tutorial. However, the "POSCAR" file is convenient and portable, and is one of the most common formats in which you will see crystal structures defined in online databases (due to the widespread use of `vasp`).
 
-Now, we will not actually use the primitive cell representation of diamond-Si for our simulation, that is, for measurement of bulk equilibrium properties.
+It is important to be aware that, even if we are technically simulating the bulk system via periodic boundary conditions, explicitly considering only the primitive (or conventional) cell is not always enough to measure bulk equilibrium properties.
 
 **Why?**
 <details>
@@ -59,7 +59,7 @@ When a small system with PBCs is **not** enough (non-negligible finite size erro
 - Any correlation function (e.g. to obtain transport properties such as diffusion, viscosity, conductivity)
 </details>
 
-Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (VASP) format, while the latter is defined in LAMMPS format.
+Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (`vasp`) format, while the latter is defined in LAMMPS format.
 
 - Inspect "BPOSCAR" with `vim`/`less`/`cat` and visualize with `vesta`
 - Inspect "Si.lmp" with `vim`/`less`/`cat`
