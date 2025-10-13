@@ -65,7 +65,7 @@ Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. W
 
 Whilst we will not directly use the `vasp` inputs in this tutorial, it is useful to check and compare the differences between the two files. What is important to remember is that although the syntax may change between softwares, ultimately we must be able to provide the core definitions of the crystal structure (lattice parameters and atomic positions).
 
-Now, let's proceed to initialise the system and minimise the potential with LAMMPS.
+Now, proceed to initialise the system and minimise the potential with LAMMPS.
 
 - Inspect the LAMMPS input file.
   ```bash
@@ -82,7 +82,7 @@ We should highlight a few aspects of the system setup here.
 
 **Objectives**
 
-- Now let's run LAMMPS.
+- Run LAMMPS.
   ```bash
   lmp -in init.in
   ```
