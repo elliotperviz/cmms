@@ -19,12 +19,12 @@ Measure (i) isobaric thermal expansion coefficient α (from NPT runs at several 
 
 ### 1. Initialisation & potential minimisation
 
-Change into [1-init](1-init/):
+- Change into [1-init](1-init/):
 ```bash
 cd 1-init/
 ```
 
-View the contents of the directory:
+- View the contents of the directory:
 ```bash
 perviell@postel 1-init$ ls
 init.in POSCAR Si.lmp
@@ -62,8 +62,18 @@ When a small system with PBCs is **not** enough (non-negligible finite size erro
 - Any correlation function (diffusion, viscosity, conductivity)
 </details>
 
-Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the convetional cell in POSCAR (VASP) format, while the latter is defined in LAMMPS format.
+Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (VASP) format, while the latter is defined in LAMMPS format.
 
-- Inspect "POSCAR" and "Si.lmp" with `vim`/`less`/`cat`
+- Inspect "BPOSCAR" with `vim`/`less`/`cat` and visualize with `vesta`
+- Inspect "Si.lmp" with `vim`/`less`/`cat`
 
 Whilst we will not directly use the VASP inputs in this tutorial, it is useful to check and compare the differences between the two files. What is important to remember is that although the syntax may change between softwares, ultimately we must be able to provide the core definitions of the crystal structure (lattice parameters and atomic positions).
+
+Now, let's inspect the LAMMPS input file.
+
+- 
+
+
+
+
+
