@@ -11,7 +11,7 @@ of Argon gas at density  1.374 g cm<sup>-3</sup> in equilibrium at 94.4 K.
 In this investigation we aim to replicate the results of the paper *Correlations in the Motion of Atoms in Liquid Argon* by A. Rahman, published in 1964. <br>
 [DOI: https://doi.org/10.1103/PhysRev.136.A405]
 
-If a first time user, it is recommended that you have the LAMMPS manual open on a separate page during this tutorial. It is a complete and well-written resource that you should use to check description and correct syntax of commands. It is good to get into this habit, as even for experienced users it is impossible to remember the meaning of every command and their associated syntax. See the following link: <br>
+For first-time users, it is recommended that you have the LAMMPS manual open on a separate page during this tutorial. It is a complete and well-written resource that you should use to check description and correct syntax of commands. It is good to get into this habit, as even for experienced users it is impossible to remember the meaning of every command and their associated syntax. See the following link: <br>
 [https://docs.lammps.org]
 If you enter the name of a command into the search bar, you will usually be able to find a dedicated help page.
 
