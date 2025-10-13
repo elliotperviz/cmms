@@ -64,7 +64,7 @@ Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. W
 - Inspect "BPOSCAR" with `vim`/`less`/`cat` and visualize with `vesta`
 - Inspect "Si.lmp" with `vim`/`less`/`cat`
 
-Whilst we will not directly use the VASP inputs in this tutorial, it is useful to check and compare the differences between the two files. What is important to remember is that although the syntax may change between softwares, ultimately we must be able to provide the core definitions of the crystal structure (lattice parameters and atomic positions).
+Whilst we will not directly use the `vasp` inputs in this tutorial, it is useful to check and compare the differences between the two files. What is important to remember is that although the syntax may change between softwares, ultimately we must be able to provide the core definitions of the crystal structure (lattice parameters and atomic positions).
 
 Now, let's proceed to initialise the system and minimise the potential with LAMMPS.
 
