@@ -1,12 +1,10 @@
-# Tutorial 1
+# Tutorial 1 - Equilibrium lattice constant of cubic diamond-Si at 300K 
 
-Introduction here
+In this tutorial, we focus on using Molecular Dynamics (MD) to extract the equilibrium lattice constant of cubic diamond-Si at 300K, via the Large-scale Atomic/Molecular Massively Parallel Simulator (**LAMMPS**) software.
 
-## Equilibrium lattice constant of diamond-Si at 300K
-
-**Goal**
-
-Set up and run a simple LAMMPS simulation to measure the equilibrium lattice constant at 300K.
+For first-time users, it is recommended that you have the LAMMPS manual open on a separate page during this tutorial. It is a complete and well-written resource that you should use to check description and correct syntax of commands. It is good to get into this habit, as even for experienced users it is impossible to remember the meaning of every command and their associated syntax. See the following link: <br>
+[https://docs.lammps.org]
+If you enter the name of a command into the search bar, you will usually be able to find a dedicated help page.
 
 **Outline**
 1. [1-init](1-init/) Initialisation & potential minimisation - no time, no kinetic energy, no Newton's equations
@@ -30,7 +28,8 @@ BPOSCAR init.in POSCAR Si.lmp
 Our starting point is the **cubic diamond-Si primitive cell**. This is the minimum size unit, containing two atoms, that we can use to simulate bulk crystalline cubic diamond-Si via periodic boundary conditions (PBCs). The definition of the primitive cell system (lattice parameters, atomic positions) is given in the "POSCAR" file. 
 
  - Inspect "POSCAR" with `vim`/`less`/`cat`
- - Visualize the structure (open the file) in `vesta`.
+ - Visualize the structure (open the file) in `vesta`<br>
+   Check that the lattice vectors and atomic positions match a cubic diamond structure.
 
 A "POSCAR" file is one possible format in which we define the crystal structures as input to simulation codes. In particular, "POSCAR" files are used for the Vienna ab inito simulation package `vasp`. The primary purpose of this tool is to solve the Schrodinger equation, which is *not* the focus of this tutorial. However, the "POSCAR" file is convenient and portable, and is one of the most common formats in which you will see crystal structures defined in online databases (due to the widespread use of `vasp`).
 
@@ -79,6 +78,7 @@ We should highlight a few aspects of the system setup here.
   - Open "Si.tersoff" with `vim`/`less`/`cat` and check the syntax
 2. We relax both atomic positions and box lengths at the same time.
 3. We finally perform a short NVE run to check the appropriate choice of timestep.
+   This checks the timestep for numerical stability: the condition is that the total energy should be conserved, within a reasonable tolerance, over the duration of the simulation.
 
 **Objectives**
 
@@ -131,7 +131,7 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
   velocity all create 300.0 12345 mom yes rot yes
   ########################
   ```
-  We initialize the velocities at 300K with a random seed.
+  We initialize the velocities at 300K with a random seed. This assigns velocities according to a Maxwell-Boltzmann distribution corresponding to 300K. Be aware that this is a quick and dirty way to start the simulation, as after assigning velocities to each atom the forces can be very large, and the starting point may be far from equilibrium. A much safer procedure is to heat the system properly from 0K (the original starting point), unless we know already that the configuration we choose is stable at 300K. In our case we have cubic diamond-Si, so we can be fairly sure this is stable at 300K...
   ```bash
   ### MD run #############
   timestep        0.01
@@ -167,18 +167,23 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
 
 - Check that the system is properly equilibrated
 
-  We initialise the velocities immediately at 300K via the Maxwell-Boltzmann distribution. Be aware that this is a quick and dirty way to start the simulation, as after assigning velocities to each atom the forces can be very large, and the starting point may be far from equilibrium. A much safer procedure is to heat the system properly from 0K (the starting point), unless we know already that the configuration we choose is stable at 300K. In our case we have cubic diamond-Si, so we are fairly sure this is stable at 300K...
+  The first few ps of the NPT simulation are transient; only after the system reaches steady temperature and pressure should we measure the lattice constant.
 
-  Neverthless, let's see whether the system is at equilibrium. We should extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
+  Extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
 
-  Are the thermodynamic variables of interest approximately constant? According to our setup, we should have T ~ 300 K and P ~ 0 Bar. Is this the case? In `gnuplot` use linear regression to fit a straight line to to temperature and pressure.
+  Are the thermodynamic variables of interest approximately constant? According to our setup, we should have T ~ 300 K and P ~ 0 Bar. Is this the case? In `gnuplot` use linear regression to fit a straight line to the temperature and pressure.
 
-- If the system is in equlibrium, **measure the average value of the lattice constant**. Fit a straight line to the variation of the lattice constant over an equilibirum trajectory. The intersect of the straight line with the y-axis is our average value of the lattice constant.
+- Once the system is equilibrated, extract the box dimensions over (lx, ly, lz) over the production portion of the trajectory. By definition, lx = ly = lz, and the Barostat is applied isotropically, so the variation of each component is identical, and it is equivalent to extract just one of them.
+
+  With the extracted values, **measure the average value of the lattice constant**.
+
+  a) Fit a straight line to the variation of the lattice constant. The intersect of the straight line with the y-axis is our average value of the lattice constant.
+
+  or b) use `movavg`, report the average and standard deviation.
 
 ** Questions **
 - The fluctuation of the pressure over the equilibrium trajectory is large, why is this the case?
-  -> Reveal answer...
-
-
-# Notes about why the thermodynamic fluctuations are large
-
+  <details>
+  <summary>Click to reveal answer</summary>
+   The fluctuation of the pressure over the equilibrium trajectory is large because we have a small system (8 atoms). According to the virial theorem, the instantaneous pressure fluctuates around the mean value. In small systems, these fluctuations are proportionally larger. Only the time-averaged pressure converges to the desired value (0 bar).
+  </details>
