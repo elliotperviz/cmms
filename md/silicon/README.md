@@ -80,7 +80,9 @@ We should highlight a few aspects of the system setup here.
 2. We relax both atomic positions and box lengths at the same time.
 3. We finally perform a short NVE run to check the appropriate choice of timestep.
 
-- Finally, let's run LAMMPS.
+**Objectives**
+
+- Let's let's run LAMMPS.
   ```bash
   lmp -in init.in
   ```
@@ -90,11 +92,9 @@ We should highlight a few aspects of the system setup here.
   BPOSCAR  init.in  log.lammps  min.data  min.lammpstrj  POSCAR  Si.lmp
   ```
   where we now have output files "log.lammps", "min.data", and "min.lammpstrj". Recall (for example from the previous tutorial) the purpose of these different files, and check that the output has been produced correctly in each case.
-
-**Objectives**
   - Is the Tersoff potential approporiate for modelling interactions between Si atoms? (Check: do we achieve the desired tolerance on the minimisation of the interatomic forces?)
   - Visualize the minimisation (trajectory file "min.lammpstrj") with `vmd`
-  - Extract the NVE trajectory from "log.lammps" using `grep` and `sed`/`awk` and plot the total energy as a function of time and fit a line of best fit using linear regression using `gnuplot`. Is the choice of timestep appropriate?
+  - Extract the NVE trajectory from "log.lammps" using `grep` and `sed`/`awk` and plot the total energy as a function of time; fit a line of best fit via linear regression using `gnuplot`. Is the choice of timestep appropriate?
 
 ### 2. Equilibration and measurement
 
