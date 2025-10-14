@@ -518,7 +518,7 @@ fix		integ all nve # integrate equation of motion
 
 # cumulative average (last output = mean over whole trajectory)
 fix		rdf_ave all ave/time 5 200 1000 c_rdf[*] file rdf.out mode vector ave running
-# moving average
+# moving average (optional)
 #fix	 rdf_ave all ave/time 5 200 1000 c_rdf[*] file rdf.out mode vector ave one
 
 run 		100000
