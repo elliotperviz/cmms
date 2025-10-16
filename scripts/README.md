@@ -1,6 +1,6 @@
 # Scripts for post-processing simulation outputs
 
-In these tutorials, we generally demonstrate how to directly interface with each simulation package to extract the relevant output data and prepare it for analysis or fisualisation. This approach helps avoid treating the simulation tool as a *black box*. Relying solely on post-processing utilities can lead to several issues:
+In these tutorials, we generally demonstrate how to directly interface with each simulation package to extract the relevant output data and prepare it for analysis or visualisation. This approach helps avoid treating the simulation tool as a *black box*. Relying solely on post-processing utilities can lead to several issues:
 - If the post-processing tool fails to parse the output correctly, you may be unable to proceed.
 - Important warnings or messages in the log files might be overlooked.
 - You may not fully understand what the simulation software is actually doing - only what it outputs. To trust our results, we must be confident tha tthe underlying physical processes (e.g. integration of Newton's equations of motion, or solution of the Schrödinger equation) make sense.
