@@ -13,6 +13,6 @@ echo 'export PATH=$PATH:'"$SCRIPT_DIR" >> ~/.bashrc
 
 # Add lammps-tools folder to PATH and set LAMMPS_PYTHON_TOOLS
 echo 'export PATH=$PATH:'"$SCRIPT_DIR/lammps-python-tools" >> ~/.bashrc
-echo 'export LAMMPS_PYTHON_TOOLS='"$SCRIPT_DIR/lammps-python-tools/pizza" >> ~/.bashrc
+echo 'export LAMMPS_PYTHON_TOOLS='"$SCRIPT_DIR/pizza" >> ~/.bashrc
 
 exit 0
