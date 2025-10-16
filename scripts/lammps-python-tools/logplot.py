@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Script:  logplot.py
 # Purpose: use GnuPlot to plot two columns from a LAMMPS log file

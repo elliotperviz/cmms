@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # make new dump file by combining snapshots from multiple NEB replica dumps
 # Syntax: neb_combine.py -switch arg(s) -switch arg(s) ...
