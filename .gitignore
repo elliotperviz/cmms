@@ -18,6 +18,7 @@ ab.abo
 # -------------------------
 movavg
 rdf
+ave
 *.out
 *.exe
 *.o
