@@ -8,11 +8,27 @@ chmod +x rdf_pp.sh
 # Find script path
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Add script path to PATH
-echo 'export PATH=$PATH:'"$SCRIPT_DIR" >> ~/.bashrc
+# Lines to add
+LINE1="export PATH=\$PATH:$SCRIPT_DIR"
+LINE2="export PATH=\$PATH:$SCRIPT_DIR/lammps-python-tools"
+LINE3="export LAMMPS_PYTHON_TOOLS=$SCRIPT_DIR/pizza"
 
-# Add lammps-tools folder to PATH and set LAMMPS_PYTHON_TOOLS
-echo 'export PATH=$PATH:'"$SCRIPT_DIR/lammps-python-tools" >> ~/.bashrc
-echo 'export LAMMPS_PYTHON_TOOLS='"$SCRIPT_DIR/pizza" >> ~/.bashrc
+# Function to add a line to ~/.bashrc only if it doesn't already exist
+add_to_bashrc() {
+    local line="$1"
+    local file="$HOME/.bashrc"
+    # Check if line already exists (literal match)
+    if ! grep -Fxq "$line" "$file"; then
+        echo "$line" >> "$file"
+        echo "Added: $line"
+    else
+        echo "Already present: $line"
+    fi
+}
+
+# Apply function to all lines
+add_to_bashrc "$LINE1"
+add_to_bashrc "$LINE2"
+add_to_bashrc "$LINE3"
 
 exit 0
