@@ -13,7 +13,7 @@ These are scripts written by the us (the authors of the course) for tasks specif
 
 - `compile.sh` : Bash script that compiles the relevant utility scripts provided in this directory, and updates "~/.bashrc" to permanently modify `$PATH`.
 - `movavg.c` : C program to calculate the moving average and standard deviation of timeseries data.
-- `rdf_pp.sh` : Bash script to post-process LAMMPS radial distribution function (RDF) timeseries data into a format suitable for plotting with `gnuplot`
+- `rdf_pp.sh` : Bash script to post-process LAMMPS radial distribution function (RDF) timeseries data into a format suitable for plotting with `gnuplot`.
 
 Legacy fortran scripts:
 - `ave.f90`
