@@ -9,6 +9,15 @@
 *.tmp
 tmp
 
+# -------------------------
+# NEB output files
+# -------------------------
+
+dump.*
+log.lammps.*
+screen.*
+tmp.lammps.variable
+
 # Abinit output files
 abo_*
 ab.abo
