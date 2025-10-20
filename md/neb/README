@@ -1,3 +1,13 @@
+# NEB
+
+## Initialisation: Build crystalline silicon 
+
+```bash
+cd 1-init
+```
+
+
+
 Run these examples as:
 
 mpirun -np 4 lmp_g++ -partition 4x1 -in in.neb.hop1
