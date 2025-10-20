@@ -45,7 +45,7 @@ group vacmid subtract vacbox vacneigh
 
 ### force field part ###
 pair_style      sw
-pair_coeff * * Si.sw Si
+pair_coeff * * ../Si.sw Si
 ########################
 
 ### neb setup ##########
@@ -66,8 +66,8 @@ thermo          100
 
 # write dump files in groups
 #dump 		neb vacneigh custom 1000 dump.neb.sivac.$u id type x y z c_cn[*]
-dump 		neigh vacneigh custom 1000 dump.vacneigh.sivac.$u id type x y z
-dump		mid vacmid custom 1000 dump.vacmid.sivac.$u id type x y z
+dump 		neigh vacneigh custom 1000 dump.vacneigh.$u id type x y z
+dump		mid vacmid custom 1000 dump.vacmid.$u id type x y z
 dump		rest rest custom 1000 dump.rest.$u id type x y z 
 ########################
 

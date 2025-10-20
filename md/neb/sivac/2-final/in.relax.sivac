@@ -23,7 +23,7 @@ delete_atoms group del compress no
 
 ### force field part ###
 pair_style      sw
-pair_coeff * * Si.sw Si
+pair_coeff * * ../Si.sw Si
 ########################
 
 dump		system all custom 1 dump.all.sivac id type x y z
