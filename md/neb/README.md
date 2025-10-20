@@ -114,7 +114,7 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   This indicates the obvious advantage of running parallel simulations on more powerful machines (such as supercomputing clusters) which have many more available CPU cores (and threads) and much more memory.
 
-  According to the LAMMPS documentation on NEB, it is always use more than 4 replcias for an accurate estimate of the activation energy corresponding to a transition.
+  According to the LAMMPS documentation on NEB, it is recommended to always use more than 4 replicas for an accurate estimate of the activation energy corresponding to a transition.
   
 - Inspect the output files
 
