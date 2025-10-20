@@ -1,7 +1,7 @@
 # variable definitions
 
 variable r equal 2.835		# coordination number cutoff
-variable vacID equal 300	# ID of atom to remove to create vacancy
+variable vacID equal 304	# ID of atom to remove to create vacancy
 
 # NEB simulation of vacancy hopping in silicon crystal
 units           metal
@@ -37,7 +37,8 @@ atom_modify     map array sort 0 0.0
 #mass            1       28.06
 #write_data      initial.sivac
 
-read_data       initial.sivac
+#read_data       initial.sivac
+read_data       first.sivac
 
 group Si type 1
 ########################
@@ -61,12 +62,15 @@ variable rzhi equal ${vz}+${h}
 
 region vaccube block ${rxlo} ${rxhi} ${rylo} ${ryhi} ${rzlo} ${rzhi} units box
 group vacbox region vaccube
-#group rest subtract all vacbox
+group rest subtract all vacbox
 
 # make the vacancy
-group del id 300
-delete_atoms group del compress no
+#group del id ${vacID}
+#delete_atoms group del compress no
 group vacneigh id 174 175 301 304 306 331 337
+
+group vacmid subtract vacbox vacneigh
+
 ########################
 
 ### force field part ###
@@ -86,9 +90,12 @@ reset_timestep  0
 
 # only output atoms near vacancy
 
-dump 		neb vacneigh custom 1000 dump.neb.sivac.$u id type x y z
-dump		nebreg vacbox custom 1000 dump.nebnear.sivac.$u id type x y z
-dump		system all custom 1000 dump.all.sivac.$u id type x y z 
+#compute		cn vacneigh coord/atom cutoff ${r}
+
+#dump 		neb vacneigh custom 1000 dump.neb.sivac.$u id type x y z c_cn[*]
+dump 		neigh vacneigh custom 1000 dump.vacneigh.sivac.$u id type x y z
+dump		mid vacmid custom 1000 dump.vacmid.sivac.$u id type x y z
+dump		rest rest custom 1000 dump.rest.$u id type x y z 
 
 fix             1 all neb 1.0
 
@@ -97,7 +104,7 @@ thermo          100
 # run NEB for 2000 steps or to force tolerance
 
 timestep        0.01
-min_style       quickmin
+min_style       fire
 
-neb             0.0 0.01 100 100 10 final final.sivac
+neb             1.0e-6 1.0e-4 100 100 10 final final_nebin.sivac
 ########################
