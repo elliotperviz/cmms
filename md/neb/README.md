@@ -3,6 +3,8 @@
 This tutorial is a modified version of the LAMMPS neb tutorial, the original may be found at the following link:
 https://docs.lammps.org/neb.html
 
+Further detailed discussion of the various steps of this tutorial will be written up in the future.
+
 ```bash
 cd sivac
 ```
