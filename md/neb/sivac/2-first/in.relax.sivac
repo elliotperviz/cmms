@@ -1,0 +1,42 @@
+# variable definitions
+variable vacID equal 300	# ID of atom to remove to create vacancy
+
+# NEB simulation of vacancy hopping in silicon crystal
+units           metal
+
+boundary        p p p			# periodic in all directions
+
+atom_style      atomic 			# no bonds, angles, charges
+atom_modify     map array sort 0 0.0
+
+### initial conf #######
+# diamond unit cell
+read_data       initial.sivac
+
+group Si type 1
+########################
+
+# make the vacancy
+group del id 300
+delete_atoms group del compress no
+########################
+
+### force field part ###
+pair_style      sw
+pair_coeff * * Si.sw Si
+########################
+
+
+dump		system all custom 1 dump.all.sivac id type x y z
+dump_modify	system sort id
+
+thermo          1
+thermo_style    custom time lx ly lz pe fnorm fmax
+
+# initial minimization to relax vacancy
+
+displace_atoms all random 0.1 0.1 0.1 123456
+minimize        1.0e-6 1.0e-4 1000 10000
+
+write_data	first.sivac.data
+########################
