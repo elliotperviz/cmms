@@ -35,7 +35,7 @@ cd 1-init
   ```
 
 
-## Generate initial and final configuration of damped dynamics
+## Generate initial and final configuration for damped dynamics
 
 - Change directory
   ```bash
