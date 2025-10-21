@@ -34,7 +34,6 @@ cd 1-init
   cp initial.sivac ../final/
   ```
 
-
 ## Generate initial and final configuration for damped dynamics
 
 - Change directory
