@@ -121,6 +121,8 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```bash
   awk '{print $1,$2,$3,$4,$5,$6}' log.lammps
   ```
+  and see the data in column titled "MaxReplicaForce". What are the forces in the other columns describing? You may find their definitions in the LAMMPS documentation (see the link at the top of the page).
+  
 - Check the variation of replica potential energy a) between replicas and b) from one minimisation step to the next, does the potential energy of each replica converge? e.g. with 16 replicas, and default NEB output, the potential energy columns can be extracted via
   ```bash
   awk '{print $11,$13,$15,$17,$19,$21,$23,$25,$27,$29,$31,$33,$35,$37,$39,$41}' log.lammps
