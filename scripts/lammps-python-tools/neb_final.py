@@ -35,6 +35,9 @@ while iarg < narg:
     ilast = iarg + 1
     while ilast < narg and argv[ilast][0] != '-': ilast += 1
     rfiles = argv[iarg+1:ilast]
+    # sort replica files numerically
+    rfiles = sorted(rfiles, key=lambda x: int(x.split('.')[-1]))
+    print(rfiles)
     iarg = ilast
   else: break
 
