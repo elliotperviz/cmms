@@ -117,6 +117,16 @@ Note, the number of threads is not necessarily the same as the number of physica
   
 - Inspect the output files
 
+- Check convergence of the forces (did the NEB calculation run correctly?), e.g.
+  ```bash
+  awk '{print $1,$2,$3,$4,$5,$6}' log.lammps
+  ```
+- Check the variation of replica potential energy a) between replicas and b) from one minimisation step to the next, does the potential energy of each replica converge? e.g. with 16 replicas, and default NEB output, the potential energy columns can be extracted via
+  ```bash
+  awk '{print $11,$13,$15,$17,$19,$21,$23,$25,$27,$29,$31,$33,$35,$37,$39,$41}' log.lammps
+  ```
+  [Hint: you can try to visualize how the potential energy varies by plotting with `gnuplot`].
+
 - Visualise the optimisation of the transition path (progression of NEB calculation)
   ```bash
   neb_combine.py -o dump.opt -r dump.vacneigh.*
