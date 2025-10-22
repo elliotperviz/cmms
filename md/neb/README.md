@@ -129,7 +129,7 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   [Hint: you can try to visualize how the potential energy varies by plotting with `gnuplot`].
 
-- Check convergence of the minimum energy path (MEP)
+- Check convergence of the minimum energy path (MEP)<br>
   Extract the final set of reaction coordinates and potential energies for each replica:
   ```bash
   n1=`grep -n "Running" log.lammps | cut -d ":" -f1`
@@ -176,10 +176,12 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   You should find that the further from the vacancy, the structural distortion will become smaller, as the neighbouring atoms rearrange to effectively 'screen' the migration of the vacancy.
 
+- Try changing the stiffness of the parallel and perpendicular springs (controlling the inter-replica nudging forces), what is the effect on the progression of the NEB calculation (to arrive at the chosen force tolerance)?
+
 
 **Questions**
 
-- How many replicas are enough? Check the convergence of the MEP with respect to number of replicas.
+- How many replicas are enough? Check the convergence of the MEP with respect to the number of replicas.
   <details>
   <summary>Click here for the answer</summary>
   Convergence with respect to replica count must be tested for each system and reaction. This can be checked practically through the following criteria:
