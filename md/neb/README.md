@@ -176,21 +176,25 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   You should find that the further from the vacancy, the structural distortion will become smaller, as the neighbouring atoms rearrange to effectively 'screen' the migration of the vacancy.
 
+
 **Questions**
 
 - How many replicas are enough? Check the convergence of the MEP with respect to number of replicas.
   <details>
   <summary>Click here for the answer</summary>
   Convergence with respect to replica count must be tested for each system and reaction. This can be checked practically through the following criteria:
-(a) the barrier height (energy of the highest replica / saddle point);
-(b) the saddle geometry (coordinates of the highest-energy replica / saddle point).
-When the change in barrier height is less than the chosen tolerance upon increasing the number of replicas, the replica count may be considered converged. An appropriate choice of energy tolerance depends on the physics being modelled and the accuracy required; for typical vacancy or defect migration studies, a target energy resolution of ≲ 10⁻² eV between successive tests is often sufficient.
-For the saddle geometry, a reasonable convergence target is on the scale of thermal vibrations at room temperature (~ 0.01 Å); differences smaller than this are physically insignificant.
-Additionally, it is useful to check:
-(c) the shape of the MEP (e.g. absence of artificial kinks or flat regions).
+    
+  (a) the barrier height (energy of the highest replica / saddle point);<br>
+  (b) the saddle geometry (coordinates of the highest-energy replica / saddle point).<br>
+  
+  When the change in barrier height is less than the chosen tolerance upon increasing the number of replicas, the replica count may be considered converged. An appropriate choice of energy tolerance   depends on the physics being modelled and the accuracy required. <!-- ; for typical vacancy or defect migration studies, a target energy resolution of ≲ 10⁻² eV between successive tests is often sufficient.
+  For the saddle geometry, a reasonable convergence target is on the scale of thermal vibrations at room temperature (~ 0.01 Å); differences smaller than this are physically insignificant.-->
+  
+  Additionally, it is useful to check:<br>
+  (c) the shape of the MEP (e.g. absence of artificial kinks or flat regions).<br>
 
-However, increasing the number of replicas does not necessarily lead to monotonic improvement in convergence of the MEP. Too few replicas cause large interpolation errors and artificial kinks, while too many can overconstrain the band, leading to numerical instabilities and new kinks due to excessive spring coupling between neighbouring images. The optimal number therefore represents a balance between resolution and stability, and must be established by convergence testing for each system.
+
+  However, increasing the number of replicas does not necessarily lead to monotonic improvement in convergence of the MEP. Too few replicas cause large interpolation errors and artificial kinks, while too many can overconstrain the band, leading to numerical instabilities and new kinks due to excessive spring coupling between neighbouring images. The optimal number therefore represents a balance between resolution and stability, and must be established by convergence testing for each system.
   </details>
-
 
 
