@@ -129,6 +129,30 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   [Hint: you can try to visualize how the potential energy varies by plotting with `gnuplot`].
 
+- Check convergence of the minimum energy path (MEP)
+  Extract the final set of reaction coordinates and potential energies for each replica:
+  ```bash
+  n1=`grep -n "Running" log.lammps | cut -d ":" -f1`
+  n2=`grep -n "Climbing" log.lammps | cut -d ":" -f1`
+
+  sed -n "$((n1+1)),$((n2-1))p" log.lammps > stage1.dat
+  sed -n "$((n2+1)),\$p" log.lammps > stage2.dat
+
+  sed -i "1s/^/#/" stage1.dat
+  sed -i "1s/^/#/" stage2.dat
+
+  tail -n 1 stage2.dat  > neb_final.dat
+  awk '{
+    for (i=10; i<=NF; i+=2) {
+      print $(i), $(i+1)
+    }
+  }' neb_final.dat > neb_curve.dat
+  ```
+  Then plot the reaction coordinate vs potential energy e.g. with `gnuplot`:
+  ```bash
+  gnuplot> plot "neb_curve.dat" using 1:2 with linespoints lw 2 pt plot "neb_curve.dat" using 1:2 with linespoints lw 2 pt 77
+  ```
+
 - Visualise the optimisation of the transition path (progression of NEB calculation)
   ```bash
   neb_combine.py -o dump.opt -r dump.vacneigh.*
@@ -141,7 +165,8 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   and load the trajectory file in `ovito`.
 
-**Optional**
+**Optional Objectives**
+
 - Load the different trajectory groups, and observe the structural distortion due to migration of the vacancy, as the distance from the vacancy increases 
   e.g.
   ```bash
@@ -150,3 +175,22 @@ Note, the number of threads is not necessarily the same as the number of physica
   neb_final.py -o dump.final.rest -r dump.rest.sivac.*
   ```
   You should find that the further from the vacancy, the structural distortion will become smaller, as the neighbouring atoms rearrange to effectively 'screen' the migration of the vacancy.
+
+**Questions**
+
+- How many replicas are enough? Check the convergence of the MEP with respect to number of replicas.
+  <details>
+  <summary>Click here for the answer</summary>
+  Convergence with respect to replica count must be tested for each system and reaction. This can be checked practically through the following criteria:
+(a) the barrier height (energy of the highest replica / saddle point);
+(b) the saddle geometry (coordinates of the highest-energy replica / saddle point).
+When the change in barrier height is less than the chosen tolerance upon increasing the number of replicas, the replica count may be considered converged. An appropriate choice of energy tolerance depends on the physics being modelled and the accuracy required; for typical vacancy or defect migration studies, a target energy resolution of ≲ 10⁻² eV between successive tests is often sufficient.
+For the saddle geometry, a reasonable convergence target is on the scale of thermal vibrations at room temperature (~ 0.01 Å); differences smaller than this are physically insignificant.
+Additionally, it is useful to check:
+(c) the shape of the MEP (e.g. absence of artificial kinks or flat regions).
+
+However, increasing the number of replicas does not necessarily lead to monotonic improvement in convergence of the MEP. Too few replicas cause large interpolation errors and artificial kinks, while too many can overconstrain the band, leading to numerical instabilities and new kinks due to excessive spring coupling between neighbouring images. The optimal number therefore represents a balance between resolution and stability, and must be established by convergence testing for each system.
+  </details>
+
+
+
