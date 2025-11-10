@@ -21,6 +21,7 @@ tmp.lammps.variable
 # Abinit output files
 abo_*
 ab.abo
+out
 
 # -------------------------
 # Executables and build artefacts
@@ -39,4 +40,3 @@ ave
 # Miscellaneous files
 # -------------------------
 *.swp
-out
