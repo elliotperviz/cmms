@@ -23,6 +23,7 @@ abo_*
 ab.abo
 ab.abo*
 out
+*.xsf
 
 # -------------------------
 # Executables and build artefacts
