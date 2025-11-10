@@ -54,8 +54,6 @@ During a self-consistent field (SCF) calculation, **Abinit** generates several o
 | **`abo_DDB`** | The **Derivative DataBase** file, generated only if perturbations are computed (e.g., phonons). For a simple SCF run, this file is not important (and may be absent). |
 | **`abo_EBANDS.agr`** | Band structure output formatted for **xmgrace** plotting. Not produced in a standard SCF run — appears only when band structure analysis is explicitly requested. |
 
-The files ending in `.nc` are in the compressed `NetCDF` format. This format is useful...
-
 The files ending in `.nc` are in the compressed **NetCDF** format. This format is highly efficient for storing large datasets, such as wavefunctions, densities, and eigenvalues, which can become very large during extended or high-precision runs. NetCDF files are also **self-describing**, meaning that each file includes metadata about its contents (units, dimensions, variable names, etc.), which allows for straightforward parsing and analysis without manual interpretation. Moreover, the NetCDF standard enables **direct interoperability** with post-processing tools such as `Abipy`, `Phonopy`, and various Python-based data analysis libraries, facilitating automated data extraction, plotting, and workflow integration.
 
 Despite this, as you may already have found as we worked through our Molecular Dynamics tutorials, we will be parsing the outputs directly using commands in the terminal. We discuss this also on the course home page, but to recap, we are doing this for two reasons:
