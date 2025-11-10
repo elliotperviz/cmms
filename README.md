@@ -81,6 +81,9 @@ Navigate to the [md](md/) folder for a discussion and introduction to the Molecu
 1) [Lattice constant of cubic diamond Silicon](md/silicon)
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
+Separate to the calculation of equilibrium properties, we also provide a tutorial to introduce the Nudged Elastic Band (NEB) method:
+3) [Nudged Elastic Band method](md/neb)
+
 ### Quantum Mechanics
 
 **TBA**
