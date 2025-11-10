@@ -82,7 +82,7 @@ Navigate to the [md](md/) folder for a discussion and introduction to the Molecu
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
 Separate to the calculation of equilibrium properties, we also provide a tutorial to introduce the Nudged Elastic Band (NEB) method:
-3) [Nudged Elastic Band method](md/neb)
+\3) [Vacancy migration in cubic diamond Silicon](md/neb)
 
 ### Quantum Mechanics
 
