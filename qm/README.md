@@ -17,6 +17,8 @@ https://docs.abinit.org/variables/
   - Exchange correlation functional
   - HK variational theorem
   - SCF cycle, solve for the ground state only
+ 
+- Comparison of computational complexity of MD vs DFT (e.g. scaling with number of atoms)
 
 - Extension: briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level overview)
 
