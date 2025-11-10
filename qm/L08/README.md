@@ -97,7 +97,8 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 
 **Questions**
 
-- Calculate the ideal interatomic distance<br>
+- Calculate the ideal interatomic distance
+  
   Starting positions: atom 1: -0.5 Bohr; atom 2: 0.5 Bohr (separated by 1 Bohr).<br>
   (We specify in the input file that atoms 1 and 2 sit at 0 in the y and z axes, so we only consider the x-axis.)
 
@@ -105,7 +106,8 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 
   [Hint: Find the dataset ID at which we obtain the minimum energy and multiply by the separation we add at each step.]
 
-- How can we improve our estimate?<br>
+- How can we improve our estimate?
+  
   Note that the experimental bond length is ~ 1.401 Bohr.
   
   
