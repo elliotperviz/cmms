@@ -30,14 +30,14 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   ```bash
   abinit ab.in
   ```
-  And follow the standard output (what is printed to your terminal) as the simulation is execucted.
+  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
 
-  Once the simulation concludes, you should find the following files in our working directory (the location where we ran Abinit):
+  Once the simulation concludes, we should find the following files in your working directory (the location where we ran Abinit):
   ```bash
   perviell@postel:h2-1$ ls
   POSCAR  ab.abo  ab.in  abo_DDB  abo_DEN  abo_EBANDS.agr  abo_EIG  abo_EIG.nc  abo_GSR.nc  abo_OUT.nc  abo_WFK  h.psp8
   ```
-  You will see that aside from the input files that we had previously, Abinit has created a number of output files.
+  We will see that aside from the input files that we had previously, Abinit has created a number of output files.
 
 - Check that the SCF calculation has converged
 
@@ -48,11 +48,65 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   grep "ETOT" ab.abo
   ```
 
+## 2. Ground state energy as a function of H2 interatomic distance
 
+- Change into the appropriate directory:
+  ```bash
+  cd ../h2-2
+  ```
 
+- And list the files in the directory:
+  ```bash
+  perviell@postel:h2-1$ ls
+  ab.in  h.psp8
+  ```
+
+- Inspect the Abinit input file "ab.in" with `vim`/`less`/`cat`
+
+  **Question** - What is different in this input file?
+
+  An important comment to make is that we leverage so-called 'datasets' via the `ndtset` keyword. This is Abinit language to specify chains of simulations, similar to how we can chain simulations together when running molecular dynamics in LAMMPS. In this example, we make use of Abinit datasets to progressively separate the two H atoms, and we tell Abinit to calculate the ground state energy of each configuration.
+
+- Run Abinit
+  ```bash
+  abinit ab.in
+  ```
+  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
+
+  Once the simulation concludes, we should find output files corresponding to each dataset in our working directory. Abinit uses the root **abo_DS{NUM}_** for each dataset (DS) e.g. DS1, DS5, DS20 and so on, followed by the string which identifies what data is contained in each file e.g. DEN, WFK, etc.
+
+- Check that all 21 datasets reach convergence in the SCF procedure
+
+  If we open the output file "ab.abo", we can scroll through and check that each dataset converges correctly. However, this is cumbersome and time-wasting. Instead, we will employ `awk`:
+  ```bash
+  awk '/ETOT/ {
+    if ($2 == 1 && NR > 1) print "";
+    print
+  }' ab.abo
+  ```
+  to search for the 'ETOT' string in "ab.abo" and separate the output into blocks.
+
+- Plot the ground state energy as a function of interatomic distance
+
+  We search "ab.abo" for the keyword which defines the ground state energy at the end of each SCF procedure, and do some additional formatting before writing the final output to "etot.dat".
+  ```bash
+  grep -E "etotal[0-9]" ab.abo |  sed -n 's/etotal//p' | sed 's/^[[:space:]]*//' > etot.dat
+  ```
+
+  And plot using `gnuplot`.
+
+**Questions**
+
+- Calculate the ideal interatomic distance
+  Starting positions: atom 1: -0.5 Bohr; atom 2: 0.5 Bohr (separated by 1 Bohr).<br>
+  (We specify in the input file that atoms 1 and 2 sit at 0 in the y and z axes, so we only consider the x-axis.)
+
+  Each step adds/subtracts: atom 1: -0.025 Bohr; atom 2: +0.025 Bohr.
+
+  [Hint: Find the dataset ID at which we obtain the minimum energy and multiply by the separation we add at each step.]
+
+- How can we improve our estimate?<br>
+  Note that the experimental bond length is ~ 1.401 Bohr.
   
-
-
-
-
+  
 
