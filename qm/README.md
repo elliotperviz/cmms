@@ -33,11 +33,7 @@ Required input files:
   - K-point grid/path
   - Definition of the SCF procedure
 
-Practical considerations:
-- Plane wave cutoff convergence
-- K-point mesh convergence
-- NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
-- Parallelisation
+**Note on units: Abinit uses Hartree, 1 Ha = hbar^2/(m_e * r_0^2) =approx 27.21 eV =approx total E of H atom in ground state via Bohr model.**
 
 During a self-consistent field (SCF) calculation, **Abinit** generates several output files. Aside from the log files, printed to the standard output (e.g. the terminal) or the more compact log written in `ab.abo`, they share the common prefix `abo_`, followed by a string which identifies what each output file contains. For a standard SCF calculation as we just performed, we provide a brief description of the output files we obtained below:
 
@@ -61,6 +57,12 @@ a) to not treat the simulation output as a black box,
 b) and because the file sizes are not very large for the simple examples we consider in these tutorials.
 
 However, it is useful to be aware of tools such as `Abipy` that can be used to automate data extraction and analysis, even if we do not use them here.
+
+Practical considerations:
+- Plane wave cutoff convergence
+- K-point mesh convergence
+- NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
+- Parallelisation
 
 ## Workflow of a standard ground state DFT calculation
 
