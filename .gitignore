@@ -21,6 +21,7 @@ tmp.lammps.variable
 # Abinit output files
 abo_*
 ab.abo
+ab.abo*
 out
 
 # -------------------------
