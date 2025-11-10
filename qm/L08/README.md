@@ -162,7 +162,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   # Option 9 tells cut3d to create an output xsf file (cut3d gives you a list of options, you select 9)
      Enter the name of an output file:
   -> abo_DEN.xsf
-  [the name is optional, but make sure you specify the file type (.xsf) correctly]
+  #the name is optional, but make sure you specify the file type (.xsf) correctly
      Do you want to shift the grid along the x,y or z axis (y/n)?
   -> n
      More analysis of the 3D file ? ( 0=no ; 1=default=yes ; 2= treat another file - restricted usage)
