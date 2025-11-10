@@ -2,10 +2,6 @@
 
 In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to perform calculations on the H2 molecule...
 
-## 1. Calculating the ground state energy
-
-**Objectives**
-
 - Change into the appropriate directory:
   ```bash
   cd h2-1
@@ -23,6 +19,10 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   - Pseudopotential file(s)
 
   The "POSCAR" file is provided for visualisation purposes e.g. it may be opened with `vesta` or `ovito`.
+
+## 1. Calculating the ground state energy
+
+**Objectives**
  
 - Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
   If you don't recognise a keyword, remember to **consult the Abinit documentation**.
