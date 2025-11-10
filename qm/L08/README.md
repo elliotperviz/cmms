@@ -3,6 +3,9 @@
 In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to perform calculations on the H2 molecule...
 
 ## 1. Calculating the ground state energy
+
+**Objectives**
+
 - Change into the appropriate directory:
   ```bash
   cd h2-1
@@ -49,6 +52,8 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   ```
 
 ## 2. Ground state energy as a function of H2 interatomic distance
+
+**Objectives**
 
 - Change into the appropriate directory:
   ```bash
@@ -109,6 +114,64 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 - How can we improve our estimate?
   
   Note that the experimental bond length is ~ 1.401 Bohr.
+
+
+## 3. Visualise the charge density for the H2 molecule at its ideal interatomic separation
+
+
+**Objectives**
+
+- Change into the appropriate directory:
+  ```bash
+  cd ../h2-3
+  ```
+
+- And list the files in the directory:
+  ```bash
+  perviell@postel:h2-1$ ls
+  ab.in  h.psp8
+  ```
+
+- Inspect the Abinit input file "ab.in" with `vim`/`less`/`cat`
+
+  **Question** - What is different in this input file?
+
+- Run Abinit
+  ```bash
+  abinit ab.in
+  ```
+  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
+
+  Check that the necessary output files have been written correctly.
+  
+- Check that the SCF procedure is converged appropriately (Hint: use `grep`... or inspect the file e.g. with `vim`)
+
+- Convert the density to a VESTA-compatible format using the Abinit post-processing tool `cut3d`
+
+  Type
+  ```bash
+  cut3d
+  ```
+
+  And when prompted, enter the following information:
+  ```bash
+     What is the name of the 3D function (density, potential or wavef) file ?
+  -> abo_DEN
+     What is your choice ? Type:
+  -> 9
+  # Option 9 tells cut3d to create an output xsf file (cut3d gives you a list of options, you select 9)
+     Enter the name of an output file:
+  -> abo_DEN.xsf
+  [the name is optional, but make sure you specify the file type (.xsf) correctly]
+     Do you want to shift the grid along the x,y or z axis (y/n)?
+  -> n
+     More analysis of the 3D file ? ( 0=no ; 1=default=yes ; 2= treat another file - restricted usage)
+  -> 0
+  ```
+
+- Visualize the ground state charge density using `vesta`
+
+  
   
   
 
