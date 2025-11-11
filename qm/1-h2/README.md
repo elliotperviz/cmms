@@ -44,7 +44,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 
 - Check that the SCF calculation has converged
 
-  Open the log file `ab.abo` and find the section which reports the progress of the SCF procedure. Does this simulation convergence to to the tolerance that we chose?
+  Open the log file `ab.abo` and find the section which reports the progress of the SCF procedure. Did the ground state energy converge to the tolerance that we chose?
 
   This information can also be extracted succinctly via the following command:
   ```bash
@@ -118,7 +118,6 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 
 ## 3. Visualise the charge density for the H2 molecule at its ideal interatomic separation
 
-
 **Objectives**
 
 - Change into the appropriate directory:
@@ -141,8 +140,6 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   abinit ab.in
   ```
   And follow the standard output (what is printed to the terminal) as the simulation is execucted.
-
-  Check that the necessary output files have been written correctly.
   
 - Check that the SCF procedure is converged appropriately (Hint: use `grep`... or inspect the file e.g. with `vim`)
 
