@@ -11,7 +11,7 @@ nband 15
 
 
 #Definition of the unit cell
-acell 10 10 10    # The keyword "acell" refers to the
+acell 20 20 20    # The keyword "acell" refers to the
                   # lengths of the primitive vectors (in Bohr)
 rprim  1 0 0      # Real space PRIMitive translations
        0 1 0
@@ -30,10 +30,10 @@ natom 1           # There is only one atom
 typat 1           # It is of type 1, that is, Hydrogen
 xcart             # This keyword indicate that the location of the atom
                   # will follow, one triplet of number for each atom
-      0.0 0.0 0.0 # Triplet giving the coordinates of atom 1, in Bohr
+      10.0 10.0 10.0 # Triplet giving the coordinates of atom 1, in Bohr
 
 #Definition of the planewave basis set
-ecut 10.0         # Maximal kinetic energy cut-off, in Hartree
+ecut 50.0         # Maximal kinetic energy cut-off, in Hartree
 
 #Definition of the k-point grid
 kptopt 0          # Enter the k points manually 
