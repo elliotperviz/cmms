@@ -86,8 +86,8 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   cut3d_in.sh
   ```
 
-- Visualize the ground state charge density using `vesta`
-
+- Visualise the wavefunction files using `vesta`<br>
+  Important: For VESTA to recognise the wavefunction files, you must ensure that the file formats are specified correctly (i.e. ending with .cube),
 
 **Questions**
 - Can you identify the different hydrogen orbitals?
