@@ -1,6 +1,6 @@
 # Abinit Tutorial 1 - H<sub>2</sub> molecule
 
-In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to perform calculations on the H2 molecule...
+In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to calculate various electronic properties of the H<sub>2</sub> molecule.
 
 - Change into the appropriate directory:
   ```bash
@@ -27,7 +27,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 - Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
   If you don't recognise a keyword, remember to **consult the Abinit documentation**.
 
-  In this example, we specify as an input the crystal structure of the (condensed) H2 molecule, and tell Abinit to calculate its ground state energy via an SCF (self-consistent field) procedure.
+  In this example, we specify as an input the crystal structure of the (condensed) H<sub>2</sub> molecule, and tell Abinit to calculate its ground state energy via an "SCF" (self-consistent field) procedure.
 
 - Run Abinit
   ```bash
@@ -51,7 +51,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   grep "ETOT" ab.abo
   ```
 
-## 2. Ground state energy as a function of H2 interatomic distance
+## 2. Ground state energy as a function of H<sub>2</sub> interatomic distance
 
 **Objectives**
 
@@ -116,7 +116,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   Note that the experimental bond length is ~ 1.401 Bohr.
 
 
-## 3. Visualise the charge density for the H2 molecule at its ideal interatomic separation
+## 3. Visualise the charge density for the H<sub>2</sub> molecule at its ideal interatomic separation
 
 **Objectives**
 
