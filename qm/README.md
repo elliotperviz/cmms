@@ -6,12 +6,23 @@
 2) [H atom: electronic orbitals](2-h/)
 3) [H<sub>2</sub>O molecule](3-h20/)
 
-Note, it is not the aim of this tutorial material to teach you what is the definition of each keyword we use in each Abinit input. The goal is to show you practical examples for how to setup Abinit simulations and how to extract and analyse physical properties. With this in mind, we recommend that whilst working through these tutorials you consult the Abinit documentation for a detailed definitions and descriptions of each keyword:
+Note, it is not the aim of this tutorial material to teach you what is the definition of every keyword we use in the Abinit inputs. The goal is to show you practical examples for how to setup Abinit simulations and how to extract and analyse physical properties. With this in mind, we recommend that whilst working through these tutorials you consult the Abinit documentation for a detailed definitions and descriptions of each keyword:<br>
 https://docs.abinit.org/variables/
 
-## Discussion
-- High level summary of quantum mechanics
-- To solve this numerically, we use Abinit, which implements quantum equations of density functional theory using a plane-wave basis-set approach.
+## Introduction
+
+
+
+our goal is to solve the Schrödinger Equation
+In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction*: a probability amplitude defined over all space varying with respect to position and time. The time evolution of the wavefunction is governed by the time-dependent Schrödinger equation
+$$
+H(r)\psi(r) = E\psi(r)
+$$
+
+; provided a time-dependent Hamiltonian 
+
+- High level summary of quantum mechanics (upto variational approximation: mention we that now have two tasks, that is to implement a numerical method to obtain best estimate of the ground state, and also how to choose an initial guess to the trial wave function (i.e. the basis, which e.g. could be plane wave, gaussian, hydrogen orbitals, [molecular orbitals?] etc.)
+- We use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
   - plane wave basis
   - HK existence theorem
   - Exchange correlation functional
@@ -37,13 +48,13 @@ Required input files:
 
 **Note on units: Abinit uses Hartree, 1 Ha = hbar^2/(m_e * r_0^2) =approx 27.21 eV =approx total E of H atom in ground state via Bohr model.**
 
-During a self-consistent field (SCF) calculation, **Abinit** generates several output files. Aside from the log files, printed to the standard output (e.g. the terminal) or the more compact log written in `ab.abo`, they share the common prefix `abo_`, followed by a string which identifies what each output file contains. For a standard SCF calculation as we just performed, we provide a brief description of the output files we obtained below:
+During a self-consistent field (SCF) calculation, **Abinit** generates several output files. Aside from the log files, printed to the standard output (e.g. the terminal) or the more compact log written in `ab.abo`, they share the common prefix `abo_`, followed by a string which identifies what each output file contains. For a standard SCF calculation, we generally obtain the following output files:
 
 | File | Description |
 |------|--------------|
-| **`standard output`** | The main **output log**, written by default to the terminal in real time, contains detailed information about the calculation: input parameters, SCF iteration history, total energies, forces, stress (if computed), symmetry operations, and timing. This is the primary file to inspect after a run. |
-| **`ab.abo`** | A **compact progress log**. Useful for monitoring jobs in real time (e.g., via `tail -f`). Contains minimal information compared to the `standard output`. |
-| **`abo_DEN`** | The **ground-state electron density** written at the end of an SCF cycle. Required for non-SCF or post-processing runs (e.g., density analysis, potential plotting, or restart of further calculations). |
+| **`standard output`** | Technically not a file, this is the main **output log** which writes detailed information about the progress of the simulation to the terminal in real time, it contains:: input parameters, SCF iteration history, total energies, forces, stress (if computed), symmetry operations, and timing. |
+| **`ab.abo`** | A **compact progress log**. Useful for checking convergence of the SCF procedure (e.g., via `tail -f`). Contains minimal information compared to the `standard output`. |
+| **`abo_DEN`** | The **ground-state electron density** written at the end of an SCF procedure. Required for non-SCF or post-processing runs (e.g., density analysis, potential plotting, or restart of further calculations). |
 | **`abo_WFK`** | The **Kohn–Sham wavefunction file**, containing the converged wavefunctions for all k-points and bands. Needed for subsequent steps such as non-SCF runs, band structure, or density-of-states calculations. |
 | **`abo_EIG`** | Text file listing **eigenvalues of the electronic states** at each k-point. |
 | **`abo_EIG.nc`** | NetCDF version of the eigenvalues file. Compact and machine-readable; preferred for use with post-processing tools like `anaddb` or `abipy`. |
@@ -54,13 +65,11 @@ During a self-consistent field (SCF) calculation, **Abinit** generates several o
 
 The files ending in `.nc` are in the compressed **NetCDF** format. This format is highly efficient for storing large datasets, such as wavefunctions, densities, and eigenvalues, which can become very large during extended or high-precision runs. NetCDF files are also **self-describing**, meaning that each file includes metadata about its contents (units, dimensions, variable names, etc.), which allows for straightforward parsing and analysis without manual interpretation. Moreover, the NetCDF standard enables **direct interoperability** with post-processing tools such as `Abipy`, `Phonopy`, and various Python-based data analysis libraries, facilitating automated data extraction, plotting, and workflow integration.
 
-Despite this, as you may already have found as we worked through our Molecular Dynamics tutorials, we will be parsing the outputs directly using commands in the terminal. We discuss this also on the course home page, but to recap, we are doing this for two reasons:
+Despite this, as you may already have found as we worked through our Molecular Dynamics tutorials, we will generally parse the outputs directly using commands in the terminal. We discuss why we prefer this approach on the course home page, but to recap, it is for two reasons:
 a) to not treat the simulation output as a black box,
-b) and because the file sizes are not very large for the simple examples we consider in these tutorials.
+b) and since the file sizes we obtain in the tutorials are not very large, direct parsing is still feasible.
 
-However, it is useful to be aware of tools such as `Abipy` that can be used to automate data extraction and analysis, even if we do not use them here.
-
-Practical considerations:
+Practical considerations **TBC**:
 - Plane wave cutoff convergence
 - K-point mesh convergence
 - NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
