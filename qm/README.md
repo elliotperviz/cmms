@@ -24,9 +24,9 @@ H(r,t)\psi(r) = E\psi(r).
 
 The Hamiltonian is defined as a sum of kinetic ($\hat{T}$) and potential ($\hat{V}$) operators:
 ```math
-\hat{H}(r) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_nn
+\hat{H}(r) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_{nn}
 ```
-where $\hat{T}_e$ and $\hat{T}_n$ are the electron and nuclei kinetic operators; $\hat{V}_{en}$, $\hat{V}_{ee}$ and $\hat{V}_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively.
+where $\hat{T}\_e$ and $\hat{T}\_n$ are the electron and nuclei kinetic operators; $\hat{V}\_{en}$, $\hat{V}\_{ee}$ and $\hat{V}\_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively.
 
 Further, the total energy $E$ is defined as the expectation value of the Hamiltonian:
 ```math
