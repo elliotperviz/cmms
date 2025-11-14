@@ -2,7 +2,7 @@
 
 ## Tutorial Outline
 
-- [H<sub>2<\sub> molecule](/1-h2)
+- [H<sub>2</sub> molecule](1-h2/)
 - Y
 - Z
 
