@@ -2,7 +2,7 @@
 
 ## Tutorial Outline
 
-- X
+- [H<sub>2<\sub> molecule](/1-h2)
 - Y
 - Z
 
