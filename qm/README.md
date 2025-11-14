@@ -11,17 +11,52 @@ https://docs.abinit.org/variables/
 
 ## Introduction
 
+In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(r,t)$: a probability amplitude defined over all space varying with respect to position and time, where time evolution is governed by the *time-dependent* Schrödinger equation (TDSE). 
+```math
+i\hbar\frac{\partial \Psi}{\partial t} = \hat{H}(r,t)\Psi(r,t)
+```
+
+However, if we suppose that the Hamiltonian $\hat{H}(r)$ is independent of time, then the total energy of the system is a conserved quantity and the wavefunction may be separated between space and time components $\Psi(r,t)=\psi(r)\chi(t)$ and solved independently. Focusing on the time-independent part, we obtain the *time-independent* Schrödinger equation (TISE):
+
+```math
+H(r,t)\psi(r) = E\psi(r).
+```
+
+The Hamiltonian is defined as a sum of kinetic ($\hat{T}$) and potential ($\hat{V}$) operators:
+```math
+\hat{H}(r) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_nn
+```
+where $\hat{T}_e$ and $\hat{T}_n$ are the electron and nuclei kinetic operators; $\hat{V}_{en}$, $\hat{V}_{ee}$ and $\hat{V}_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively.
+
+Further, the total energy $E$ is defined as the expectation value of the Hamiltonian:
+```math
+E = \int \psi^*(r) \hat{H} \psi(r) dr
+```
+
+Thus, provided we know the solution $\psi(r)$, and we are able to compute all the terms in $\hat{H}(r)$, we can derive $E$. Unfortunately, an analytical solution to the TISE exists only for the hydrogen atom. Therefore for any practical scenario in materials science, we can only obtain approximate solutions via numerical methods.
+
+Before thinking about the numerical implementation, we can first make a simplifying assumption: We introduce the Born-Oppenheimer (BO) approximation, which assumes that electrons react instantaneously to changes in nucleon position due to the large mass difference between a nucleon and an electron. In other words, we are able to follow a so-called "semi-classical" approach: classical "point-like" atoms and quantum electrons. Focusing on the quantum part, we may neglect purely nuclear contributions in the Hamiltonian to give
+```math
+\hat{H}_{\text{BO}}(r;R) = \hat{T}_e + \hat{V}_{en} + \hat{V}_{ee}
+```
+and hence arrive at the *electronic* TISE:
+```math
+\hat{H}_e(r;R) \psi_e(r;R) = E_e(R) \psi_e(r;R)
+```
+where $\psi_e(r)$ is the *electronic* wavefunction at a particular point in space, which is parametrically dependent on the nuclear coordinates $R$, and the *electronic* total energy is defined as
+```math
+E_e = \int \psi_e^*(r)\hat{H}_e\psi_e(r) dr
+```
+
+This is a much more approachable problem, but there are still some issues that remain:
+- What is an appropriate starting guess for the electronic wavefunction? (basis set e.g. plane wave, gaussian, hydrogen orbitals; and variational approximation)
+- How do we compute the electron-electron interaction, when electron positions are indeterminate? (motivation for DFT: HK existence theorem, HK variational theorem)
+- How can we iteratively improve our guess for the electronic wavefunction? (SCF cycle)
 
 
-our goal is to solve the Schrödinger Equation
-In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction*: a probability amplitude defined over all space varying with respect to position and time. The time evolution of the wavefunction is governed by the time-dependent Schrödinger equation
-$$
-H(r)\psi(r) = E\psi(r)
-$$
 
-; provided a time-dependent Hamiltonian 
 
-- High level summary of quantum mechanics (upto variational approximation: mention we that now have two tasks, that is to implement a numerical method to obtain best estimate of the ground state, and also how to choose an initial guess to the trial wave function (i.e. the basis, which e.g. could be plane wave, gaussian, hydrogen orbitals, [molecular orbitals?] etc.)
+
 - We use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
   - plane wave basis
   - HK existence theorem
