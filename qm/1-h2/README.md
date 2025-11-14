@@ -1,4 +1,4 @@
-# Abinit Tutorial 1 - H2 molecule
+# Abinit Tutorial 1 - H<sub>2</sub> molecule
 
 In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to perform calculations on the H2 molecule...
 
