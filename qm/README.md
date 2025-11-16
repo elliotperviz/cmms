@@ -97,6 +97,10 @@ DFT Hamiltonian, one-electron KS eigenfunctions, exchange correlation functional
 ### What is the iterative procedure to improve our guess for the electronic wavefunction? (SCF cycle)
 
 
+### Solution for (periodic) crystalline materials - The Bloch functions
+
+
+
 - We use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
   - plane wave basis
   - HK existence theorem
