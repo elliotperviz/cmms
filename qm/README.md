@@ -99,20 +99,29 @@ DFT Hamiltonian, one-electron KS eigenfunctions, exchange correlation functional
 
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
+### Practical considerations
 
+- Choice of pseudopotential
+- Choice of exchange correlation functional
+- Plane wave cutoff convergence
+- K-point mesh convergence
+- NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
 
-- We use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
+### Extensions 
+Briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level overview)
+
+### Comparison to MD
+ 
+- Comparison of computational complexity of MD vs DFT (e.g. scaling with number of atoms)
+
+## Abinit
+
+In these tutorials we will use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
   - plane wave basis
   - HK existence theorem
   - Exchange correlation functional
   - HK variational theorem
   - SCF cycle, solve for the ground state only
- 
-- Comparison of computational complexity of MD vs DFT (e.g. scaling with number of atoms)
-
-- Extension: briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level overview)
-
-## Abinit
 
 Required input files:
 - Pseudopotential file(s)
@@ -124,6 +133,7 @@ Required input files:
   - Plane wave cutoff
   - K-point grid/path
   - Definition of the SCF procedure
+- Optional: parallelisation
 
 **Note on units: Abinit uses Hartree, 1 Ha = hbar^2/(m_e * r_0^2) =approx 27.21 eV =approx total E of H atom in ground state via Bohr model.**
 
@@ -147,14 +157,6 @@ The files ending in `.nc` are in the compressed **NetCDF** format. This format i
 Despite this, as you may already have found as we worked through our Molecular Dynamics tutorials, we will generally parse the outputs directly using commands in the terminal. We discuss why we prefer this approach on the course home page, but to recap, it is for two reasons:
 a) to not treat the simulation output as a black box,
 b) and since the file sizes we obtain in the tutorials are not very large, direct parsing is still feasible.
-
-Practical considerations **TBC**:
-- Choice of pseudopotential
-- Choice of exchange correlation functional
-- Plane wave cutoff convergence
-- K-point mesh convergence
-- NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
-- Parallelisation
 
 ## Workflow of a standard ground state DFT calculation
 
