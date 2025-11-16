@@ -11,50 +11,90 @@ https://docs.abinit.org/variables/
 
 ## Introduction
 
-In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(r,t)$: a probability amplitude defined over all space varying with respect to position and time, where time evolution is governed by the *time-dependent* Schrödinger equation (TDSE). 
+In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(\mathbf{r_N},t)$: a probability amplitude defined over all possible configurations of $N$ particles, i.e. $\mathbf{r_N}$ represents the $3N$-dimensional configuration space:
 ```math
-i\hbar\frac{\partial \Psi}{\partial t} = \hat{H}(r,t)\Psi(r,t)
+(\mathbf{r}_1, \mathbf{r}_2, \dotsc, \mathbf{r}_N) \in \mathbb{R}^3.
+```
+Note that, in the model system we are considering, the "particles" are protons and electrons.
+
+Now, $\Psi(\mathbf{r_N},t)$ varies with respect to position and time, where time evolution is governed by the *time-dependent* Schrödinger equation (TDSE): 
+```math
+i\hbar\frac{\partial \Psi(\mathbf{r_N},t)}{\partial t} = \hat{H}(\mathbf{r_N},t)\Psi(\mathbf{r_N},t).
 ```
 
-However, if we suppose that the Hamiltonian $\hat{H}(r)$ is independent of time, then the total energy of the system is a conserved quantity and the wavefunction may be separated between space and time components $\Psi(r,t)=\psi(r)\chi(t)$ and solved independently. Focusing on the time-independent part, we obtain the *time-independent* Schrödinger equation (TISE):
+However, if we suppose that the Hamiltonian $\hat{H}(\mathbf{r})$ is independent of time, then the total energy of the system is a conserved quantity and the wavefunction may be separated between space and time components $\Psi(\mathbf{r},t)=\psi(\mathbf{r})\chi(t)$ and solved independently. Focusing on the **ground state solution** $\psi(\mathbf{r})$ of the time-independent part, we arrive (skipping the derivation) at the *time-independent* Schrödinger equation (TISE):
 
 ```math
-H(r,t)\psi(r) = E\psi(r).
+H(\mathbf{r})\psi(\mathbf{r_N}) = E_0\psi(\mathbf{r_N})
+```
+where $E_0$ is the ground state total energy, itself defined as the expectation value of the Hamiltonian:
+```math
+E_0 = \int \psi^*(\mathbf{r_N}) \hat{H} \psi(\mathbf{r_N}) \mathbf{r_N}
 ```
 
-The Hamiltonian is defined as a sum of kinetic ($\hat{T}$) and potential ($\hat{V}$) operators:
+It is useful also to consider the linear expansion of the Hamiltonian into its component kinetic ($\hat{T}$) and potential ($\hat{V}$) operators:
 ```math
-\hat{H}(r) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_{nn}
+\hat{H}(\mathbf{r_N}) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_{nn}
 ```
 where $\hat{T}\_e$ and $\hat{T}\_n$ are the electron and nuclei kinetic operators; $\hat{V}\_{en}$, $\hat{V}\_{ee}$ and $\hat{V}\_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively.
 
-Further, the total energy $E$ is defined as the expectation value of the Hamiltonian:
-```math
-E = \int \psi^*(r) \hat{H} \psi(r) dr
-```
+Now, with the above description, provided we know the solution $\psi(\mathbf{r_N})$ and we are able to write analytically all the terms in $\hat{H}(\mathbf{r_N})$, we can compute $E_0$. Unfortunately, an analytical solution to the TISE exists only for the hydrogen atom (one proton and one electron). Therefore for any practical scenario in materials science, we can only obtain approximate solutions via numerical methods.
 
-Thus, provided we know the solution $\psi(r)$, and we are able to compute all the terms in $\hat{H}(r)$, we can derive $E$. Unfortunately, an analytical solution to the TISE exists only for the hydrogen atom. Therefore for any practical scenario in materials science, we can only obtain approximate solutions via numerical methods.
-
-Before thinking about the numerical implementation, we can first make a simplifying assumption: We introduce the Born-Oppenheimer (BO) approximation, which assumes that electrons react instantaneously to changes in nucleon position due to the large mass difference between a nucleon and an electron. In other words, we are able to follow a so-called "semi-classical" approach: classical "point-like" atoms and quantum electrons. Focusing on the quantum part, we may neglect purely nuclear contributions in the Hamiltonian to give
+Before thinking about the numerical implementation, we will first simplify the problem: We introduce the Born-Oppenheimer (BO) approximation, which assumes that electrons react instantaneously to changes in nucleon position due to the large mass difference between a nucleon and an electron. In other words, we are able to follow a so-called "semi-classical" approach: classical "point-like" atoms and quantum electrons. Focusing on the quantum part, we may neglect purely nuclear contributions in the Hamiltonian to give
 ```math
-\hat{H}_{\text{BO}}(r;R) = \hat{T}_e + \hat{V}_{en} + \hat{V}_{ee}
+\hat{H}_{\text{BO}}(\mathbf{r}_{N_e}) = \hat{T}_e + \hat{V}_{en} + \hat{V}_{ee}
 ```
 and hence arrive at the *electronic* TISE:
 ```math
-\hat{H}_e(r;R) \psi_e(r;R) = E_e(R) \psi_e(r;R)
+\hat{H}_e(\mathbf{r}_{N_e}) \psi_e(\mathbf{r}_{N_e}) = E_e(\mathbf{r}_{N_e}) \psi_e(\mathbf{r}_{N_e})
 ```
-where $\psi_e(r)$ is the *electronic* wavefunction at a particular point in space, which is parametrically dependent on the nuclear coordinates $R$, and the *electronic* total energy is defined as
+where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction existing now only in $3N_e$-dimensional configuration space. The corresponding ground state *electronic* total energy is written as
 ```math
-E_e = \int \psi_e^*(r)\hat{H}_e\psi_e(r) dr
+E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) d\mathbf{r}_{N_e}
 ```
 
-This is a much more approachable problem, but there are still some issues that remain:
-- What is an appropriate starting guess for the electronic wavefunction? (basis set e.g. plane wave, gaussian, hydrogen orbitals; and variational approximation)
-- How do we compute the electron-electron interaction, when electron positions are indeterminate? (motivation for DFT: HK existence theorem, HK variational theorem)
-- How can we iteratively improve our guess for the electronic wavefunction? (SCF cycle)
+The TISE provides us with the exact electronic ground state energy $E_e$, provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
 
+### The variational theorem
 
+Although the physical ground state corresponds to a single eigenfunction of the electronic Hamiltonian, we require a practical way to represent this function when solving the electronic TISE numerically. A standard approach is to expand the trial wavefunction in a chosen set of functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$, collectively called the *basis*, such that
+```math
+\psi_e^{\prime}(\mathbf{r}_{N_e}) = \sum_n c_n \phi_n(\mathbf{r}_{N_e})$
+```
+where $c_n$ are the complex coefficients of each function in the basis.
 
+We can then introduce $E_e^{\prime}$ as the "trial" ground state energy associated with the trial wavefunction, defined as
+```math
+E_e^{\prime} = \sum_n {|c_n|}^2 \int \phi_n^*(\mathbf{r}_{N_e}) \hat{H_e} \phi_n(\mathbf{r}_{N_e}) d\mathbf{r}_{N_e}
+``` 
+
+Now, the **variational theorem** states that the trial ground state energy $E_e^{\prime} \geq E_e$ for any choice of $\psi_e^{\prime}(\mathbf{r}_{N_e})$. The equality may only arise when $\psi_e^{\prime}(\mathbf{r}\_{N_e})$ reproduces the exact ground state wavefunction $\psi_e(\mathbf{r}\_{N_e})$. Thus, we may summise that, by following a *variational procedure*, we could attempt to minimise $E_e^{\prime}$ by iteratively varying the parameters $c_n$ of the basis.
+
+### Choosing the trial wavefunction
+
+The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square integrable wavefunction can be represented to arbitrary accuracy within this expansion. Different choices of basis (such as *plane waves*, *localised Gaussian functions*, or *atomic orbitals*) offer different advantages depending on the physical problem and the numerical method employed, and it is always possible to transform between bases when convenient.
+
+### Motivation for Density Functional Theory (DFT)
+
+The many-electron wavefunction exists in $3N_e$-dimensional configuration space. If we discretise each coordinate (e.g. on a grid) with $M$ points, the total number of points required is $M^{3N_e}$. Even for modest $M ~ 10^2$ and small $N_e = 10$, $M^{3N_e}$ is astronomically large. For realistic materials, this makes obtaining a numerical solution of the TISE impossible: variationally optimising (and storing) such a high-dimensional object is computationally intractable.
+
+**Density functional theory (DFT)** provides a way around this difficulty:
+
+The *Hohenberg–Kohn existence* theorem establishes that the ground-state electron density
+```math
+n(r) = N_e \int |\psi_e(\mathbf{r}_{N_e})| d\mathbf{r}_{N_e},
+``` 
+uniquely determines the external potential and hence all ground-state properties of the system.
+
+The *Hohenberg–Kohn variational* theorem further states that the *true* ground state density is the one that minimises the total energy. This establishes a variational principle formulated in terms of the density.
+
+This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points.
+
+### The DFT formulation
+
+DFT Hamiltonian, one-electron KS eigenfunctions, exchange correlation functional
+
+### What is the iterative procedure to improve our guess for the electronic wavefunction? (SCF cycle)
 
 
 - We use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
@@ -105,6 +145,8 @@ a) to not treat the simulation output as a black box,
 b) and since the file sizes we obtain in the tutorials are not very large, direct parsing is still feasible.
 
 Practical considerations **TBC**:
+- Choice of pseudopotential
+- Choice of exchange correlation functional
 - Plane wave cutoff convergence
 - K-point mesh convergence
 - NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
