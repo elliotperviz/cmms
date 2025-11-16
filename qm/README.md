@@ -76,7 +76,7 @@ The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square in
 
 ### Motivation for Density Functional Theory (DFT)
 
-The many-electron wavefunction exists in a $3N_e$-dimensional configuration space. If we discretise each coordinate (e.g. on a grid) with $M$ points, the total number of points required is $M^{3N_e}$. Even for modest $M ~ 10^2$ and small $N_e = 10$, $M^{3N_e}$ is astronomically large. For realistic materials, this makes obtaining a numerical solution of the TISE impossible: variationally optimising (and storing) such a high-dimensional object is computationally intractable.
+The many-electron wavefunction exists in a $3N_e$-dimensional configuration space. If we discretise each coordinate (e.g. on a grid) with $M$ points, the total number of points required is $M^{3N_e}$. Even for modest $M = 10^2$ and small $N_e = 10$, $M^{3N_e}$ is astronomically large. For realistic materials, this makes obtaining a numerical solution of the TISE impossible: variationally optimising (and storing) such a high-dimensional object is computationally intractable.
 
 **Density functional theory (DFT)** provides a way around this difficulty:
 
@@ -90,7 +90,7 @@ The *Hohenberg–Kohn variational* theorem further states that the *true* ground
 
 This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points.
 
-### The DFT formulation
+### The DFT approach
 
 DFT Hamiltonian, one-electron KS eigenfunctions, exchange correlation functional
 
