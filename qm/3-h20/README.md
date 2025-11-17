@@ -5,10 +5,12 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 - Let's see what files we have:
   ```bash
   perviell@postel:h2-1$ ls
-  1-h2o  2-h2o  3-h2o
+  1-h2o  2-h2o  3-h2o README.md
   ```
 
-## 1. Calculating the ground state energy
+  You should see 3 folders (and one README file, which you are currently reading here), which separates different parts of the tutorial to follow...
+
+## 1. Ground state charge density with ixc = 11 - non-optimised atomic positions  
 
 **Objectives**
  
@@ -39,7 +41,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   grep "ETOT" ab.abo
   ```
 
-## 2. Ground state energy as a function of H<sub>2</sub> interatomic distance
+## 2. Ground state charge density with ixc = 11 - optimised atomic positions with ixc = 1
 
 **Objectives**
 
@@ -104,7 +106,7 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   Note that the experimental bond length is ~ 1.401 Bohr.
 
 
-## 3. Visualise the charge density for the H<sub>2</sub> molecule at its ideal interatomic separation
+## 3. Ground state charge density with ixc = 11 - optimised atomic positions with ixc = 11
 
 **Objectives**
 
