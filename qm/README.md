@@ -156,6 +156,7 @@ The exact form of $V_{\text{XC}}$ is unknown. In practice, it must be approximat
 - Generalised Gradient Approximation (GGA) - includes the gradient of the local density to better account for inhomogeneity
 - Hybrid functionals - essentially a correction to GGA, mix in a portion of more accurate treatment of electron-electron repulsion
 
+<!--
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
 ### Practical considerations
@@ -172,6 +173,7 @@ Briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level ove
 ### Comparison to MD
  
 - Comparison of computational complexity of MD vs DFT (e.g. scaling with number of atoms)
+-->
 
 ## Abinit
 
