@@ -4,13 +4,12 @@
 # Print the charge density that corresponds to optimized 
 # interatomic distance.
 
-pseudos = "o.psp8, h.psp8"
+pseudos "o.psp8, h.psp8"
 prtden 1
 prtposcar 1
 prtdipole 1
 prtcif 1
 prtgeo 2
-
 ixc    11
 
 #-----------------------------------------------------------------
