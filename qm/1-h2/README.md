@@ -41,7 +41,7 @@ The "POSCAR" file is provided for visualisation purposes e.g. it may be opened w
   ```bash
   abinit ab.in
   ```
-  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
 
   Once the simulation concludes, we should find the following files in your working directory (the location where we ran Abinit):
   ```bash
@@ -84,7 +84,7 @@ The "POSCAR" file is provided for visualisation purposes e.g. it may be opened w
   ```bash
   abinit ab.in
   ```
-  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
 
   Once the simulation concludes, we should find output files corresponding to each dataset in our working directory. Abinit uses the root **abo_DS{NUM}_** for each dataset (DS) e.g. DS1, DS5, DS20 and so on, followed by the string which identifies what data is contained in each file e.g. DEN, WFK, etc.
 
@@ -147,7 +147,7 @@ The "POSCAR" file is provided for visualisation purposes e.g. it may be opened w
   ```bash
   abinit ab.in
   ```
-  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
   
 - Check that the SCF procedure is converged appropriately (Hint: use `grep`... or inspect the file e.g. with `vim`)
 
