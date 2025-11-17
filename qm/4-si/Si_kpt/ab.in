@@ -22,7 +22,7 @@ znucl 14          # The keyword "znucl" refers to the atomic number of the
 #Definition of the atoms
 natom 2             
 typat 1 1
-#typat 1*2
+#typat 2*1
 #     Si
 xred              
    0.0000000000000000  0.0000000000000000  0.0000000000000000
@@ -48,7 +48,7 @@ shiftk 0.5 0.5 0.5
                   # so-called 4x4x4 Monkhorst-Pack grid
 
 #Definition of the SCF procedure
-iscf 17		  # SCF procedure implementation choice
+iscf 17           # SCF procedure implementation choice
 nstep 10          # Maximal number of SCF cycles
 toldfe 1.0d-9 eV  # Will stop when, twice in a row, the difference 
                   # between two consecutive evaluations of total energy 
