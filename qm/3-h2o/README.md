@@ -1,23 +1,39 @@
 # Abinit Tutorial 3 - H<sub>2</sub>O molecule
 
-In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to extract the ground state density of the H<sub>2</sub>O molecule from different starting configurations, and with different choices of **exchange-correlation** functional.
+In this tutorial we will examine two different initial geometry configurations of the HH<sub>2</sub>O molecule.
 
-- Let's see what files we have:
+We have seen previously in the [H<sub>2</sub> molecule](../1-h2) example that the ground state depended on the interatomic separation of the H atoms. While it was not mentioned explicitly, this result alludes to a more general phenomenon: **the ground state, as well as other observable properties, are a function of the geometry**. Moreover, the geometry which gives us the best estimate of the ground state is the one that minimises the ground state energy.
+
+Simply speaking, a bad starting geometry will give us a bad estimate of the ground state, regardless of whether we obtain convergence of the electron density via the SCF procedure.
+
+Thus, the first aim of this tutorial is to examine the different results we obtain from non-optimised and optimised geometries. We will not actually perform geometry optimisation/relaxation here, which is left to a later example, instead focusing on how the starting geometry affects the measurement of the ground state electron density.
+
+The second aim, is to compare the results we obtain for the ground state electron density using different levels of approximation for the **exchange-correlation functional**. In particular, we will compare results obtained using the Local Density Approximation (LDA) and the Perdew-Burke-Ernzerhof Generalised Gradient Approximation (PBE-GGA). Before continuing with this tutorial, it is recommended to read the detailed [introduction](../) to the quantum mechanics tutorial material where the physical origin and meaning of the exchange correlation potential is discussed, as it will not be repeated again here.
+
+For reference, consult the Abinit [documentation](https://docs.abinit.org/variables/basic/#ixc) for the `ixc` keyword to know which exchange correlation functionals are available and how to set them in the input file.
+
+- Now, let's see what files we have:
   ```bash
-  perviell@postel:h2-1$ ls
-  1-h2o  2-h2o  3-h2o README.md
+  perviell@postel:3-h2o$ ls
+  1-nonopt-ixc11  2-opt-ixc1  3-opt-ixc11 README.md
   ```
-
-  You should see 3 folders (and one README file, which you are currently reading here), which separates different parts of the tutorial to follow...
+  You should see 3 folders (and one README file, which you are currently reading here), which separates the different parts of the tutorial to follow.
 
 ## 1. Ground state charge density with ixc = 11 - non-optimised atomic positions  
 
+We begin with a non-optimum H<sub>2<\sub>O geometry, and employ the PBE-GGA (`ixc=11`) exchange correlation potential.
+
 **Objectives**
+
+- Navigate to the appropriate directory
+  ```bash
+  cd 1-nonopt-ixc11
+  ```
  
-- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
+- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, take a look at the definition of the initial geometry, and make sure you find where the `ixc` keyword is set. `<br>
   If you don't recognise a keyword, remember to **consult the Abinit documentation**.
 
-  In this example, we specify as an input the crystal structure of the (condensed) H<sub>2</sub> molecule, and tell Abinit to calculate its ground state energy via an "SCF" (self-consistent field) procedure.
+  In this example, we specify as an input the (non-optimised) geometry of the H<sub>2</sub>O molecule, and tell Abinit to calculate its ground state energy via an SCF (self-consistent field) procedure.
 
 - Run Abinit
   ```bash
