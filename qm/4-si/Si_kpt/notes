@@ -1,0 +1,1 @@
+grep -E "etotal[0-9]" ab.abo |  sed -n 's/etotal//p' | sed 's/^[[:space:]]*//' > kpt.dat
