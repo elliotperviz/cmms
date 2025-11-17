@@ -178,11 +178,6 @@ Briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level ove
 ## Abinit
 
 In these tutorials we will use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
-  - plane wave basis
-  - HK existence theorem
-  - Exchange correlation functional
-  - HK variational theorem
-  - SCF cycle, solve for the ground state only
 
 Required input files:
 - Pseudopotential file(s)
@@ -194,9 +189,9 @@ Required input files:
   - Plane wave cutoff
   - K-point grid/path
   - Definition of the SCF procedure
-- Optional: parallelisation
+<!-- - Optional: parallelisation -->
 
-**Note on units: Abinit uses Hartree, 1 Ha = hbar^2/(m_e * r_0^2) =approx 27.21 eV =approx total E of H atom in ground state via Bohr model.**
+Note on units: Abinit uses Hartree, 1 Ha = $\hbar^2/(m_e r_0^2)$ \approx 27.21 eV$ $\approx$ total energy of the H atom in its ground state determined via the Bohr model.
 
 During a self-consistent field (SCF) calculation, **Abinit** generates several output files. Aside from the log files, printed to the standard output (e.g. the terminal) or the more compact log written in `ab.abo`, they share the common prefix `abo_`, followed by a string which identifies what each output file contains. For a standard SCF calculation, we generally obtain the following output files:
 
