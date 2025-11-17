@@ -2,11 +2,6 @@
 
 In this tutorial we will use the **Abinit** simulation package, which employs the quantum equations of Density Functional Theory (DFT), to calculate various electronic properties of the H<sub>2</sub> molecule.
 
-- Change into the appropriate directory:
-  ```bash
-  cd h2-1
-  ```
-
 - Let's see what files we have:
   ```bash
   perviell@postel:h2-1$ ls
