@@ -147,11 +147,11 @@ E_e[n_0] = \sum_n^{N_e} \int \phi_e^{\prime*}(\mathbf{r}) \hat{T} \phi_e(\mathbf
 
 ### Exchange correlation functional
 
-THe exchange-correlation term accounts for all the quantum many-body effects that are not captured by the classical Hartree term or the non-interacting kinetic energy. This includes:
+The exchange-correlation term, $V_{\text{XC}}$, accounts for all the quantum many-body effects that are not captured by the classical Hartree term or the non-interacting kinetic energy. This includes:
 - Exchange interactions due to the antisymmetry of the wavefunction (Pauli exclusion principle).
 - Correlation effects due to the instantaneous repulsion between electrons beyond the mean field approximation.
 
-The exact form of $V_{\text{XC}}$ is unknown. In practice, it must be approximated. Common approximations include:
+Its exact form is unknown, meaning its analytical form can only be written approximately. There are number of different common approximations:
 - Local Density Approximation (LDA) - assumes that XC energy at each point depends only on the local electron density
 - Generalised Gradient Approximation (GGA) - includes the gradient of the local density to better account for inhomogeneity
 - Hybrid functionals - essentially a correction to GGA, mix in a portion of more accurate treatment of electron-electron repulsion
