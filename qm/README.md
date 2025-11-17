@@ -177,7 +177,7 @@ Briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level ove
 
 ## Abinit
 
-In these tutorials we will use the software Abinit, which implements the numerical/computational solution to the above question by implementation of the quantum equations of density functional theory using a plane-wave basis-set approach.
+In these tutorials we will use the software Abinit, which implements the numerical solution to the quantum equations of density functional theory using a plane-wave basis-set approach.
 
 Required input files:
 - Pseudopotential file(s)
