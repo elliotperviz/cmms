@@ -174,7 +174,7 @@ The "POSCAR" file is provided for visualisation purposes e.g. it may be opened w
   -> 0
   ```
 
-- Visualize the ground state charge density using `vesta`
+- Visualise the ground state charge density using `vesta`
 
   
   
