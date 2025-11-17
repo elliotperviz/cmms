@@ -1,16 +1,17 @@
 # H2O molecule in a big box
-# Geometry is optimized with ixc=1 functional (LDA=CA), but density
-# is calculated with ixc=11 (GGA=PBE)
+#
+#
 # Print the charge density that corresponds to optimized 
 # interatomic distance.
 
 pseudos "o.psp8, h.psp8"
+
 prtden 1
 prtposcar 1
 prtdipole 1
 prtcif 1
 prtgeo 2
-ixc    11
+ixc 1
 
 #-----------------------------------------------------------------
 
@@ -48,7 +49,7 @@ nkpt 1            # Only one k point is needed for isolated system,
                   # taken by default to be 0.0 0.0 0.0
 
 #Definition of the SCF procedure
-nstep 100          # Maximal number of SCF cycles
+nstep 100         # Maximal number of SCF cycles
 toldfe 1.0d-8     # Will stop when, twice in a row, the difference
                   # between two consecutive evaluations of total energy
                   # differ by less than toldfe (in Hartree)
