@@ -22,9 +22,9 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   ```bash
   abinit ab.in
   ```
-  And follow the standard output (what is printed to the terminal) as the simulation is execucted.
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
 
-  Once the simulation concludes, we should find the following files in your working directory (the location where we ran Abinit):
+  Once the simulation concludes, we should find the following files in our working directory (the location where we ran Abinit):
   ```bash
   perviell@postel:h2-1$ ls
   ab.abo  ab.in  abo_DDB  abo_DEN  abo_EBANDS.agr  abo_EIG  abo_EIG.nc  abo_GSR.nc  abo_OUT.nc  abo_WFK  h.psp8
@@ -90,5 +90,5 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
   Important: For VESTA to recognise the wavefunction files, you must ensure that the file formats are specified correctly (i.e. ending with .cube),
 
 **Questions**
-- Can you identify the different hydrogen orbitals?
-- How close are these orbitals (best approximate solution from Kohn-Sham DFT) to the analytically-obtained (from direct solution of the TISE) hydrogen orbitals?
+- Is it possible to match the wavfunction of different bands to the various hydrogen orbitals? Further, how close are these orbitals to the real analytical solution?<br>
+  [Recall that the wavefunctions we obtain are the best approximate solution from Kohn-Sham DFT.]
