@@ -5,17 +5,30 @@ In this tutorial we will use the **Abinit** simulation package, which employs th
 - Let's see what files we have:
   ```bash
   perviell@postel:h2-1$ ls
-  POSCAR  ab.in  h.psp8
+  README.md  h2-1  h2-2  h2-3
   ```
   [Note: You should not enter the part before $, it is there to show the result of running `ls` on my machine (which prints on the following line) as shown above.]
 
-  Recall, the files we must always have to start a calculation in Abinit:
+Each folder is prepared for a different part of this tutorial, the steps of which are explained below.
+
+## 1. Calculating the ground state energy
+
+- Change into the appropriate directory
+  ```bash
+  cd 1-h2
+  ```
+
+- Check the available files
+  ```bash
+  perviell@postel:h2-1$ ls
+  POSCAR  ab.in  h.psp8
+  ```
+
+As a general reminder, recall the files we must always have to start a calculation in Abinit:
   - Abinit input file
   - Pseudopotential file(s)
 
-  The "POSCAR" file is provided for visualisation purposes e.g. it may be opened with `vesta` or `ovito`.
-
-## 1. Calculating the ground state energy
+The "POSCAR" file is provided for visualisation purposes e.g. it may be opened with `vesta` or `ovito`.
 
 **Objectives**
  
