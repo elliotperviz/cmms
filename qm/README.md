@@ -142,7 +142,7 @@ That is, we can follow a numerical **self-consistent field** (**SCF**) procedure
 
 Finally, the total electronic ground state energy in DFT can be written, for simplicity, as a *functional* of the ground state electron density. A functional is simply an object that takes a function (here the density) as input and returns a number (here, the total energy). Using this notation, the total energy in DFT may be written compactly as 
 ```math
-E_e[n_0] = \sum_n^{N_e} \int \phi_e^{\prime*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r}
+E_e[n_0] = \sum_n^{N_e} \int \phi_e^{\prime*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r}.
 ```
 
 ### Exchange correlation functional
