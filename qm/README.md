@@ -72,7 +72,7 @@ The **variational theorem** states that the trial ground state energy $E_e^{\pri
 
 ### Choosing the trial wavefunction
 
-The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square integrable wavefunction can be represented to arbitrary accuracy within this expansion. Different choices of basis (such as *plane waves*, *localised Gaussian functions*, or *atomic orbitals*) offer different advantages depending on the physical problem and the numerical method employed, and it is always possible to transform between bases when convenient.
+The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square integrable wavefunction can be represented to arbitrary accuracy within this expansion. Different choices of basis (such as *plane waves*, *localised Gaussian functions*, or *atomic orbitals*) offer different advantages depending on the physical problem and the numerical method employed. It is always possible *in principle* to transform between bases, but whether or not it is possible depends on the implementation.
 
 ### Motivation for Density Functional Theory (DFT)
 
@@ -147,7 +147,14 @@ E_e[n_0] = \sum_n^{N_e} \int \phi_e^{\prime*}(\mathbf{r}) \hat{T} \phi_e(\mathbf
 
 ### Exchange correlation functional
 
-Brief description, mention different analytical descriptions (LDA, PBE etc.)?
+THe exchange-correlation term accounts for all the quantum many-body effects that are not captured by the classical Hartree term or the non-interacting kinetic energy. This includes:
+- Exchange interactions due to the antisymmetry of the wavefunction (Pauli exclusion principle).
+- Correlation effects due to the instantaneous repulsion between electrons beyond the mean field approximation.
+
+The exact form of $V_{\text{XC}}$ is unknown. In practice, it must be approximated. Common approximations include:
+- Local Density Approximation (LDA) - assumes that XC energy at each point depends only on the local electron density
+- Generalised Gradient Approximation (GGA) - includes the gradient of the local density to better account for inhomogeneity
+- Hybrid functionals - essentially a correction to GGA, mix in a portion of more accurate treatment of electron-electron repulsion
 
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
