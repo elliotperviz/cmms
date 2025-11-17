@@ -159,6 +159,8 @@ The exact form of $V_{\text{XC}}$ is unknown. In practice, it must be approximat
 <!--
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
+### Geometry optimisation - Hellmann-Feynmann theorem
+
 ### Practical considerations
 
 - Choice of pseudopotential
