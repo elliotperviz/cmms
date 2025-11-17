@@ -11,30 +11,30 @@ https://docs.abinit.org/variables/
 
 ## Introduction
 
-In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(\mathbf{r_N},t)$: a probability amplitude defined over all possible configurations of $N$ particles, i.e. $\mathbf{r_N}$ represents the $3N$-dimensional configuration space:
+In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(\mathbf{r}_N,t)$: a probability amplitude defined over all possible configurations of $N$ particles, i.e. $\mathbf{r}_N$ represents the $3N$-dimensional configuration space:
 ```math
 (\mathbf{r}_1, \mathbf{r}_2, \dotsc, \mathbf{r}_N) \in \mathbb{R}^3.
 ```
 Note that, in the model system we are considering, the "particles" are protons and electrons.
 
-Now, $\Psi(\mathbf{r_N},t)$ varies with respect to position and time, where time evolution is governed by the *time-dependent* Schrödinger equation (TDSE): 
+Now, $\Psi(\mathbf{r}_N,t)$ varies with respect to position and time, where time evolution is governed by the *time-dependent* Schrödinger equation (TDSE): 
 ```math
-i\hbar\frac{\partial \Psi(\mathbf{r_N},t)}{\partial t} = \hat{H}(\mathbf{r_N},t)\Psi(\mathbf{r_N},t).
+i\hbar\frac{\partial \Psi(\mathbf{r}_N,t)}{\partial t} = \hat{H}(\mathbf{r}_N,t)\Psi(\mathbf{r}_N,t).
 ```
 
-However, if we suppose that the Hamiltonian $\hat{H}(\mathbf{r})$ is independent of time, then the total energy of the system is a conserved quantity and the wavefunction may be separated between space and time components $\Psi(\mathbf{r},t)=\psi(\mathbf{r})\chi(t)$ and solved independently. Focusing on the **ground state solution** $\psi(\mathbf{r})$ of the time-independent part, we arrive (skipping the derivation) at the *time-independent* Schrödinger equation (TISE):
+However, if we suppose that the Hamiltonian $\hat{H}(\mathbf{r}_N)$ is independent of time, then the total energy of the system is a conserved quantity and the wavefunction may be separated between space and time components $\Psi(\mathbf{r}_N,t)=\psi(\mathbf{r}_N)\chi(t)$ and solved independently. Focusing on the **ground state solution** $\psi(\mathbf{r}_N)$ of the time-independent part, we arrive (skipping the derivation) at the *time-independent* Schrödinger equation (TISE):
 
 ```math
-H(\mathbf{r})\psi(\mathbf{r_N}) = E_0\psi(\mathbf{r_N})
+H(\mathbf{r})\psi(\mathbf{r}_N) = E_0\psi(\mathbf{r}_N)
 ```
 where $E_0$ is the ground state total energy, itself defined as the expectation value of the Hamiltonian:
 ```math
-E_0 = \int \psi^*(\mathbf{r_N}) \hat{H} \psi(\mathbf{r_N}) \mathbf{r_N}
+E_0 = \int \psi^*(\mathbf{r}_N) \hat{H} \psi(\mathbf{r}_N) \mathrm{d}\mathbf{r}_N
 ```
 
 It is useful also to consider the linear expansion of the Hamiltonian into its component kinetic ($\hat{T}$) and potential ($\hat{V}$) operators:
 ```math
-\hat{H}(\mathbf{r_N}) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_{nn}
+\hat{H}(\mathbf{r}_N) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_{nn}
 ```
 where $\hat{T}\_e$ and $\hat{T}\_n$ are the electron and nuclei kinetic operators; $\hat{V}\_{en}$, $\hat{V}\_{ee}$ and $\hat{V}\_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively.
 
@@ -42,7 +42,7 @@ Now, with the above description, provided we know the solution $\psi(\mathbf{r_N
 
 Before thinking about the numerical implementation, we will first simplify the problem: We introduce the Born-Oppenheimer (BO) approximation, which assumes that electrons react instantaneously to changes in nucleon position due to the large mass difference between a nucleon and an electron. In other words, we are able to follow a so-called "semi-classical" approach: classical "point-like" atoms and quantum electrons. Focusing on the quantum part, we may neglect purely nuclear contributions in the Hamiltonian to give
 ```math
-\hat{H}_{\text{BO}}(\mathbf{r}_{N_e}) = \hat{T}_e + \hat{V}_{en} + \hat{V}_{ee}
+\hat{H}_e(\mathbf{r}_{N_e}) = \hat{T}_e + \hat{V}_{en} + \hat{V}_{ee}
 ```
 and hence arrive at the *electronic* TISE:
 ```math
@@ -50,25 +50,25 @@ and hence arrive at the *electronic* TISE:
 ```
 where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction existing now only in $3N_e$-dimensional configuration space. The corresponding ground state *electronic* total energy is written as
 ```math
-E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) d\mathbf{r}_{N_e}
+E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}
 ```
 
-The TISE provides us with the exact electronic ground state energy $E_e$, provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
-
-### The variational theorem
+The electronic TISE provides us with the exact electronic ground state energy $E_e$, provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
 
 Although the physical ground state corresponds to a single eigenfunction of the electronic Hamiltonian, we require a practical way to represent this function when solving the electronic TISE numerically. A standard approach is to expand the trial wavefunction in a chosen set of functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$, collectively called the *basis*, such that
 ```math
-\psi_e^{\prime}(\mathbf{r}_{N_e}) = \sum_n c_n \phi_n(\mathbf{r}_{N_e})$
+\psi_e^{\prime}(\mathbf{r}_{N_e}) = \sum_n c_n \phi_n(\mathbf{r}_{N_e})
 ```
 where $c_n$ are the complex coefficients of each function in the basis.
 
 We can then introduce $E_e^{\prime}$ as the "trial" ground state energy associated with the trial wavefunction, defined as
 ```math
-E_e^{\prime} = \sum_n {|c_n|}^2 \int \phi_n^*(\mathbf{r}_{N_e}) \hat{H_e} \phi_n(\mathbf{r}_{N_e}) d\mathbf{r}_{N_e}
-``` 
+E_e^{\prime} = \sum_n {|c_n|}^2 \int \phi_n^*(\mathbf{r}_{N_e}) \hat{H}_e \phi_n(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}
+```
 
-Now, the **variational theorem** states that the trial ground state energy $E_e^{\prime} \geq E_e$ for any choice of $\psi_e^{\prime}(\mathbf{r}_{N_e})$. The equality may only arise when $\psi_e^{\prime}(\mathbf{r}\_{N_e})$ reproduces the exact ground state wavefunction $\psi_e(\mathbf{r}\_{N_e})$. Thus, we may summise that, by following a *variational procedure*, we could attempt to minimise $E_e^{\prime}$ by iteratively varying the parameters $c_n$ of the basis.
+### The variational theorem
+
+The **variational theorem** states that the trial ground state energy $E_e^{\prime} \geq E_e$ for any choice of $\psi_e^{\prime}(\mathbf{r}_{N_e})$. The equality may only arise when $\psi_e^{\prime}(\mathbf{r}\_{N_e})$ reproduces the exact ground state wavefunction $\psi_e(\mathbf{r}\_{N_e})$. Thus, we may summise that, by following a *variational procedure* we could attempt to minimise $E_e^{\prime}$ by iteratively varying the set of coefficients $`\{c_n\}`$ of the basis.
 
 ### Choosing the trial wavefunction
 
@@ -82,20 +82,72 @@ The many-electron wavefunction exists in a $3N_e$-dimensional configuration spac
 
 The *Hohenberg–Kohn existence* theorem establishes that the ground-state electron density
 ```math
-n(r) = N_e \int |\psi_e(\mathbf{r}_{N_e})| d\mathbf{r}_{N_e},
+n_0(r) = N_e \int {|\psi_e(\mathbf{r}_{N_e})|}^2 \mathrm{d}\mathbf{r}_{N_e},
 ``` 
 uniquely determines the external potential and hence all ground-state properties of the system.
 
 The *Hohenberg–Kohn variational* theorem further states that the *true* ground state density is the one that minimises the total energy. This establishes a variational principle formulated in terms of the density.
 
-This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points.
+This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n_0(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points.
 
 ### The DFT approach
 
-DFT Hamiltonian, one-electron KS eigenfunctions, exchange correlation functional
+In DFT, the many-electron description is replaced by an *effective one-electron problem*. For the purpose of developing an understanding of the choices and parameters that matter in numerical implementations of DFT, it is not necessary to work through the whole derivation. For this reason, we will focus on the final result and its physical meaning.
 
-### What is the iterative procedure to improve our guess for the electronic wavefunction? (SCF cycle)
+<!--
+Nevertheless, it is useful to first introduce one additional mathematical concept to simplify the discussion: a *functional* is a mathematical object that takes an entire *function* as its input and returns a number as its output. If we have a trial ground state wavefunction $\psi_e(\mathbf{r}\_{N_e}$ and a trial ground state electron density $n_0^{\prime}(r)$, these are both functions. But, the trial ground state energy is a *functional* of $\psi_e(\mathbf{r}_{N_e}$; using this formalism we can compactly restate the Hohneberg-Kohn existence theorem as
+```math
+E_e[\psi_e^{\prime}] = E_e[n_0^{\prime}(r)].
+```
+via an equality between $E_e^{\prime}$ dependent on a functional of a) the trial wavefunction and b) the trial ground state density respectively.
+-->
+Now, recall earlier we discussed the need for a practical representation of the trial wavefunction to solve the TISE numerically, a standard approach being to expand in a set of basis functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$ (with some common analytical form e.g. plane wave, gaussian etc.). The DFT approach follows the above recipe but with a crucial difference: instead of constructing a trial wavefunction in the full $3N_e$-dimensional space, DFT expresses the ground state in terms of a set of non-interacting *one-electron wavefunctions* or *orbitals*
+```math
+\psi_e^{\prime}(\mathbf{r}_{N_e}) = \sum_n^{N_e} c_n \phi_n(\mathbf{r})
+```
+whose role is to approximately reproduce the ground-state electron density (in principle we could reproduce *exactly* the ground state density if we knew the *true* one-electron wavefunctions), which may be reconstructed from these orbitals as
+```math
+n_0^{\prime}(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2.
+```
+where ${|c_n|}^2 = 1$.
 
+Each orbital satisfies an independent Kohn-Sham (KS) equation:
+```math
+\hat{H}_{\text{KS}}(\mathbf{r}) \phi_n(\mathbf{r}) = \epsilon_n \phi_n(\mathbf{r}),
+```
+with corresponding eigenvalues $\epsilon_n$
+```math
+\epsilon_n = {|c_n|}^2 \int \phi_n^*(\mathbf{r}) \hat{H}_{\text{KS}} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r}
+```
+and the KS Hamiltonian is
+```math
+\hat{H}_{\text{KS}}(\mathbf{r}) = \hat{T}_{\text{ref}} + \hat{V}_{en} + \hat{V}_H + \hat{V}_{\text{XC}}.
+```
+In the KS Hamiltonian, the terms on the right hand side represent (left to right):
+
+a) Kinetic energy of non-interacting electrons (referred to as the "reference" system),<br>
+b) Electron-nuclear interaction potential,<br>
+c) Classical electron-electron (Hartree) repulsion potential,<br>
+d) **Exchange-correlation** potential\* , which incorporates quantum many-body effects not captured by the previous terms (more on this later).<br>
+
+In this formulation, b), c) and d) depend **only** on the ground state electron density $n_0(r)$.
+
+Suppose then that we make an initial guess to the KS orbitals $`\{\phi_n\}`$:
+1. We can use this to construct $n_0^{\prime}(\mathbf{r})$
+2. With $n_0^{\prime}(\mathbf{r})$, we can calculate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{H}_{\text{XC}}$
+3. With $\hat{V}\_H$ and $\hat{H}\_{\text{XC}}$, we can build $\hat{H}_{\text{KS}}$ and solve $N_e$ KS equations and obtain new $`\{\phi_n\}`$
+4. With new $`\{\phi_n\}`$, repeat from step 1 until *convergence*
+
+That is, we can follow a numerical **self-consistent field** (**SCF**) procedure that iteratively updates the density until we reach *convergence* - when the density or total energy changes by less than a chosen tolerance between consecutive iterations.
+
+Finally, the total electronic ground state energy in DFT can be written, for simplicity, as a *functional* of the ground state electron density. A functional is simply an object that takes a function (here the density) as input and returns a number (here, the total energy). Using this notation, the total energy in DFT may be written compactly as 
+```math
+E_e[n_0] = \sum_n^{N_e} \int \phi_e^{\prime*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r}
+```
+
+### Exchange correlation functional
+
+Brief description, mention different analytical descriptions (LDA, PBE etc.)?
 
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
