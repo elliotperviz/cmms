@@ -6,7 +6,7 @@
 2) [H atom: electronic orbitals](2-h/)
 3) [H<sub>2</sub>O molecule](3-h20/)
 
-Note, it is not the aim of this tutorial material to teach you what is the definition of every keyword we use in the Abinit inputs. The goal is to show you practical examples for how to setup Abinit simulations and how to extract and analyse physical properties. With this in mind, we recommend that whilst working through these tutorials you consult the Abinit documentation for a detailed definitions and descriptions of each keyword:<br>
+Note, it is not the aim of the tutorials to teach you what is the definition of every keyword we use in the Abinit inputs. The goal is to show you practical examples for how to setup Abinit simulations and how to extract and analyse physical properties. With this in mind, we recommend that whilst working through these tutorials you consult the Abinit documentation for a detailed definitions and descriptions of each keyword:<br>
 https://docs.abinit.org/variables/
 
 ## Introduction
