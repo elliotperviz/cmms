@@ -215,7 +215,7 @@ To conclude (the DFT part):
 ### Geometry optimisation - Hellmann-Feynmann theorem
 
 ```math
-\mathbf{F}_I = - \frac{\partial E_T^{\prime}}{\partial \matbf{R}_I}
+\mathbf{F}_I = - \frac{\partial E_T^{\prime}}{\partial \mathbf{R}_I}
 ```
 
 <!--
