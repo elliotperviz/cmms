@@ -15,7 +15,7 @@ In quantum mechanics, the state of the system is no longer described by the prec
 ```math
 (\mathbf{r}_1, \mathbf{r}_2, \dotsc, \mathbf{r}_N) \in \mathbb{R}^3.
 ```
-Note that, in the model system we are considering, the "particles" are protons and electrons.
+Note that, in the model system we are considering, the "particles" are nuclei and electrons.
 
 Now, $\Psi(\mathbf{r}_N,t)$ varies with respect to position and time, where time evolution is governed by the *time-dependent* Schrödinger equation (TDSE): 
 ```math
@@ -156,10 +156,71 @@ Its exact form is unknown, meaning its analytical form can only be written appro
 - Generalised Gradient Approximation (GGA) - includes the gradient of the local density to better account for inhomogeneity
 - Hybrid functionals - essentially a correction to GGA, mix in a portion of more accurate treatment of electron-electron repulsion
 
-<!--
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
+Previously, we noted that the analytical form of the basis used to expand the electronic wavefunction can be chosen according to the problem at hand. We now consider a physically important class of systems: bulk crystalline solids.
+
+From the point of viewpoint of quantum mechanics, a crystal contains far too many electrons and nuclei to treat explicitly. The key simplification which enables the numerical study (e.g. via simulation) of these materials is the **periodicity of the lattice**. A crystal can be constructed from a basic repeating volume called the unit cell, whose edges are defined by the lattice vectors. These vectors connect abstract lattice points, to each of which we attach a basis of atom(s). Any physical quantity that depends on the atomic arrangement, such as the KS potential, is therefore periodic in space.
+
+Because the KS potential is periodic, the one-electron KS orbitals can be written as *Bloch functions*
+```math
+\phi_{n,\mathbf{k}}(\mathbf{r}) = u_{n\mathbf{k}}(\mathbf{r}) \exp(i\mathbf{k} \cdot \mathbf{r})
+```
+where
+- $\mathbf{k}$ is a vector in the *reciprocal space* (the crystal momentum),
+- $n$ is the band (KS orbital) index.
+- $u_{n,\mathbf{k}}(\mathbf{r})$ is periodic with the lattice,
+```math
+u_{n,\mathbf{k}}(\mathbf{r}) = u_{n,\mathbf{k}}(\mathbf{r} + \mathbf{T}).
+```
+The periodic part $u_{n,\mathbf{k}}(\mathbf{r})$ may be expanded in a Fourier series of plane waves:
+```math
+u_{n,\mathbf{k}}(\mathbf{r}) = \sum_{\mathbf{G}} C_{n,\mathbf{k}}(\mathbf{G}) \exp(i\mathbf{G}\cdot\mathbf{r})
+```
+with $\mathbf{G}$ the reciprocal lattice vectors, and constitutes a plane-wave *basis*. This expansion is formally infinite, however in practice we truncate the plane-wave basis by imposing an **energy cutoff**:
+```math
+\frac{\hbar^2}{2m}{|\mathbf{k} + \mathbf{G}|}^2 < E_{\text{cut}},
+```
+retaining only plane waves below this kinetic energy. We do this since only plane waves with low kinetic energy contribute meaningfully to the smooth KS orbitals. To attain better spatial resolution requires increasing $E_{\text{cut}}$, which increases the computational cost as a result. Note that, as a choice of basis, plane waves are particularly convenient for periodic systems because they form an orthonormal basis with coefficients that can be systematically improved, and their computation can be handled efficiently using Fast Fourier Transform Algorithms.
+
+With the Bloch functions defined, the KS equations become
+```math
+\hat{H}_{\text{KS}}\phi_{n,\mathbf{k}}(\mathbf{r}) = \epsilon_{n,\mathbf{k}}\phi_{n,\mathbf{k}}(\mathbf{r}).
+```
+where we have a unique equation for each KS state $(n,\mathbf{k})$.
+
+The ground state density is then obtained by summing over all occupied bands (states) and integrating over in reciprocal space:
+```math
+n_0^{\prime}(\mathbf{r}) = \sum_n^{N_e} \int {|\phi_{n,\mathbf{k}}(\mathbf{r})|}^2 \mathrm{d}\mathbf{k}.
+```
+
+The advantage of the periodic description is that any wavevector $\mathbf{k}^{\prime}$ outside the BZ is equivalent to a wavevector $\mathbf{k}$ inside the BZ by translation $\mathbf{k}^{\prime} = \mathbf{k} + \mathbf{G}$. Thus the BZ contains all unique KS solutions, at the cost of an integral over infinitely many $\mathbf{k}$-vectors.
+
+In practice, the BZ integral is replaced by a finite sampling of wavevectors (for example by constructing a grid):
+```math
+n_0^{\prime}(\mathbf{r}) = \sum_{\mathbf{k}\in\text{BZ}}^{\text{NKPT}} \sum_n^{M} f_{n,\mathbf{k}} {|\phi_{n,\mathbf{k}}(\mathbf{r})|}^2
+```
+where
+- $\text{NKPT}$ is the number of sampled $\mathbf{k}$-points (wavevectors),
+- $f_{n,\mathbf{k}}$ are the Fermi-Dirac occupations,
+- and in general we can include ($M>N_e$) for both occupied and unoccupied bands.
+
+The number of $\mathbf{k}$-points required depends strongly on the material. In insulators and semiconductors, the electron occupancy changes smoothly with $\mathbf{k}$, so relatively coarse grids converge well. On the other hand, metals require much denser sampling because the occupation varies rapdily with $\mathbf{k}$ close to the Fermi level. This difference has a direct impact on computational cost, since each additional $\mathbf{k}$-point requires solving a separate KS-equation. As an additional comment, note that the symmetries of the crystal can be exploited to reduce the number of required $\mathbf{k}$-points, without affecting accuracy.
+
+To conclude (the DFT part): 
+- In a periodic solid, the KS equations must be solved for $M$ bands at each of the $\text{NKPT}$ sampled $\mathbf{k}-points in the first BZ. Each KS state is expressed as a Bloch function expanded in a plane wave basis, truncated at an energy cutoff $E_{\text{cut}}$. The choice of $\text{NKPT}$ and $E_{\text{cut}}$ determines the balance between computational cost and accuracy.
+- These orbitals are then used to construct the electron density at each SCF iteration, yielding a self-consistent solution consistent with the periodic potential of the crystal.
+
+
 ### Geometry optimisation - Hellmann-Feynmann theorem
+
+```math
+\mathbf{F}_I = - \frac{\partial E_T^{\prime}}{\partial \matbf{R}_I}
+```
+
+<!--
+
+Complete geometry optimisation section from thesis notes.
 
 ### Practical considerations
 
