@@ -61,7 +61,7 @@ Although the physical ground state corresponds to a single eigenfunction of the 
 ```
 where $c_n$ are the complex coefficients of each function in the basis.
 
-We can then introduce $E_e^{\prime}$ as the "trial" ground state energy associated with the trial wavefunction, defined as
+We can then introduce $E_e^{\prime}$ as the "trial" ground state electronic total energy associated with the trial wavefunction, defined as
 ```math
 E_e^{\prime} = \sum_n {|c_n|}^2 \int \phi_n^*(\mathbf{r}_{N_e}) \hat{H}_e \phi_n(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}
 ```
@@ -72,7 +72,7 @@ The **variational theorem** states that the trial ground state energy $E_e^{\pri
 
 ### Choosing the trial wavefunction
 
-The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square integrable wavefunction can be represented to arbitrary accuracy within this expansion. Different choices of basis (such as *plane waves*, *localised Gaussian functions*, or *atomic orbitals*) offer different advantages depending on the physical problem and the numerical method employed. It is always possible *in principle* to transform between bases, but whether or not it is possible depends on the implementation.
+The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square integrable wavefunction can be represented to arbitrary accuracy within this expansion. Different choices of basis (such as *plane waves*, *localised Gaussian functions*, or *atomic orbitals*) offer different advantages depending on the physical problem and the numerical method employed. It is always possible *in principle* to transform between bases, but whether or not it is possible numerically depends on the implementation.
 
 ### Motivation for Density Functional Theory (DFT)
 
@@ -105,7 +105,7 @@ Now, recall earlier we discussed the need for a practical representation of the 
 ```math
 \psi_e^{\prime}(\mathbf{r}_{N_e}) = \prod_n^{N_e} \phi_n(\mathbf{r})
 ```
-whose role is to approximately reproduce the ground-state electron density (in principle we could reproduce *exactly* the ground state density if we knew the *true* one-electron wavefunctions), which may be reconstructed from these orbitals as
+whose role is to approximately reproduce the ground-state electron density (in principle we could reproduce *exactly* the ground state density if we knew the *true* one-electron wavefunctions), which may be constructed from these orbitals as
 ```math
 n_0^{\prime}(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2.
 ```
@@ -115,7 +115,7 @@ Each orbital satisfies an independent Kohn-Sham (KS) equation:
 ```math
 \hat{H}_{\text{KS}}(\mathbf{r}) \phi_n(\mathbf{r}) = \epsilon_n \phi_n(\mathbf{r}),
 ```
-with corresponding eigenvalues $\epsilon_n$
+with corresponding eigenvalues
 ```math
 \epsilon_n = {|c_n|}^2 \int \phi_n^*(\mathbf{r}) \hat{H}_{\text{KS}} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r}
 ```
@@ -130,20 +130,21 @@ b) Electron-nuclear interaction potential,<br>
 c) Classical electron-electron (Hartree) repulsion potential,<br>
 d) **Exchange-correlation** potential\* , which incorporates quantum many-body effects not captured by the previous terms (more on this later).<br>
 
-In this formulation, b), c) and d) depend **only** on the ground state electron density $n_0(r)$.
+In this formulation, b), c) and d) depend **only** on the (approximate) ground state electron density $n_0^{\prime}(r)$.
 
 Suppose then that we make an initial guess to the KS orbitals $`\{\phi_n\}`$:
-1. We can use this to construct $n_0^{\prime}(\mathbf{r})$
-2. With $n_0^{\prime}(\mathbf{r})$, we can calculate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{H}_{\text{XC}}$
-3. With $\hat{V}\_H$ and $\hat{H}\_{\text{XC}}$, we can build $\hat{H}_{\text{KS}}$ and solve $N_e$ KS equations and obtain new $`\{\phi_n\}`$
-4. With new $`\{\phi_n\}`$, repeat from step 1 until *convergence*
+1. With $`\{\phi_n\}`$, we can construct $n_0^{\prime}(\mathbf{r})$
+2. With $n_0^{\prime}(\mathbf{r})$, we can calculate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$
+3. With $\hat{V}\_H$ and $\hat{V}\_{\text{XC}}$, we can build $\hat{H}_{\text{KS}}$ and solve $N_e$ KS equations to obtain new $`\{\phi_n\}`$
+4. With new $`\{\phi_n\}`$, repeat steps 1-3 until *convergence*
 
 That is, we can follow a numerical **self-consistent field** (**SCF**) procedure that iteratively updates the density until we reach *convergence* - when the density or total energy changes by less than a chosen tolerance between consecutive iterations.
 
-Finally, the total electronic ground state energy in DFT can be written, for simplicity, as a *functional* of the ground state electron density. A functional is simply an object that takes a function (here the density) as input and returns a number (here, the total energy). Using this notation, the total energy in DFT may be written compactly as 
+Finally, the total electronic ground state energy in DFT can be written, for simplicity, as a *functional* of the ground state electron density. A functional is simply an object that takes a function (here the density) as input and returns a number (here, the total energy). Using this notation, the trial ground state electronic total energy may be written compactly as 
 ```math
-E_e[n_0] = \sum_n^{N_e} \int \phi_e^{\prime*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r}.
+E_e[n_0^{\prime}] = \sum_n^{N_e} \int \phi_e^{*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r},
 ```
+where each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
 
 ### Exchange correlation functional
 
@@ -205,13 +206,16 @@ where
 - $f_{n,\mathbf{k}}$ are the Fermi-Dirac occupations,
 - and in general we can include ($M>N_e$) for both occupied and unoccupied bands.
 
-The number of $\mathbf{k}$-points required depends strongly on the material. In insulators and semiconductors, the electron occupancy changes smoothly with $\mathbf{k}$, so relatively coarse grids converge well. On the other hand, metals require much denser sampling because the occupation varies rapdily with $\mathbf{k}$ close to the Fermi level. This difference has a direct impact on computational cost, since each additional $\mathbf{k}$-point requires solving a separate KS-equation. As an additional comment, note that the symmetries of the crystal can be exploited to reduce the number of required $\mathbf{k}$-points, without affecting accuracy.
+The number of $\mathbf{k}$-points required depends strongly on the material. In insulators and semiconductors, the electron occupancy changes smoothly with $\mathbf{k}$, so relatively coarse grids converge well. On the other hand, metals require much denser sampling because the occupation varies rapidly with $\mathbf{k}$ close to the Fermi level. This difference has a direct impact on computational cost, since each additional $\mathbf{k}$-point requires solving a separate KS-equation. As an additional comment, note that the symmetries of the crystal can be exploited to reduce the number of required $\mathbf{k}$-points, without affecting accuracy.
 
 To conclude (the DFT part): 
 - In a periodic solid, the KS equations must be solved for $M$ bands at each of the $\text{NKPT}$ sampled $\mathbf{k}$-points in the first BZ. Each KS orbital is expressed as a Bloch function expanded in a plane wave basis, truncated at an energy cutoff $E_{\text{cut}}$. The choice of $\text{NKPT}$ and $E_{\text{cut}}$ determines the balance between computational cost and accuracy.
 - The KS orbitals are then used to construct the electron density at each SCF iteration. This iterative procedure yields a self-consistent electronic density, obtained under the periodic KS potential of the crystal.
 
-### Geometry optimisation - Hellmann-Feynmann theorem
+### Geometry optimisation and the Hellmann-Feynmann theorem
+
+Let us consider the meaning of the trial ground state electronic total energy...
+
 
 ```math
 \mathbf{F}_I = - \frac{\partial E_T^{\prime}}{\partial \mathbf{R}_I}
