@@ -80,26 +80,29 @@ Keep in mind, although the plane-wave cutoff and $\mathbf{k}$-point grid are the
 
 - Let's see what files we have:
   ```bash
-  perviell@postel:3-h2o$ ls
-  1-nonopt-ixc11  2-opt-ixc1  3-opt-ixc11 README.md
+  perviell@postel:4-si$ ls
+  README.md  si-1  si-2  si-3  si-4
   ```
-  You should see 3 folders (and one README file, which you are currently reading here), which separates the different parts of the tutorial to follow.
+  You should see 4 folders (and one README file, which you are currently reading here), which separates the different parts of the tutorial to follow.
 
-## 1. Ground state charge density with ixc = 11 - non-optimised atomic positions  
+## 1. Geometry optimisation
 
-We begin with a non-optimum H<sub>2<\sub>O geometry, and employ the PBE-GGA (`ixc=11`) exchange correlation potential.
-
-**Objectives**
+Our first task is to optimise the geometry of the *primitive* cell of crystalline Si.
 
 - Navigate to the appropriate directory
   ```bash
-  cd 1-nonopt-ixc11
+  cd 1-geo-opt
   ```
- 
-- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, take a look at the definition of the initial geometry, and make sure you find where the `ixc` keyword is set. `<br>
-  If you don't recognise a keyword, remember to **consult the Abinit documentation**.
 
-  In this example, we specify as an input the non-optimised geometry of the H<sub>2</sub>O molecule, and tell Abinit to calculate its ground state energy via an SCF procedure.
+- Inspect the contents of the directory
+  ```bash
+  perviell@postel:4-si$ ls
+  BPOSCAR.vasp  PPOSCAR.vasp  ab.in  si.psp8
+  ```
+  As usual, we provide the required Abinit input file "ab.in" and the Si pseudopotential file "si.psp8". We also provide the primitive ("PPOSCAR.vasp") and conventional ("BPOSCAR.vasp") cell configurations of diamond-Si, for easy visualisation with `vesta`.
+ 
+- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, look at the keywords associated with dataset 2, and make sure you understand how they relate to geometry optimisation.<br>
+  If you don't recognise a keyword, remember to **consult the Abinit documentation**.
 
 - Run Abinit
   ```bash
@@ -114,32 +117,12 @@ We begin with a non-optimum H<sub>2<\sub>O geometry, and employ the PBE-GGA (`ix
   ab.in   abo_DDB  abo_EBANDS.agr  abo_EIG.nc  abo_GEO     abo_OUT.nc  abo_WFK     o.psp8
   ```
 
-- Check that the SCF procedure has converged within the maximum number of steps specified (Hint: use `grep`... or inspect the file e.g. with `vim`)
+- Check that the maximum force component on the atoms is smaller than the chosen tolerance<br>
+  Hint: Look for the string "Cartesian forces" in the output of each geometric step.
 
-- Convert the density to a VESTA-compatible format using the Abinit post-processing tool `cut3d`
+- Check that the each SCF procedure converges within the maximum number of steps specified (Hint: use `grep`... or inspect the file e.g. with `vim`)
 
-  Type
-  ```bash
-  cut3d
-  ```
 
-  And when prompted, enter the following information:
-  ```bash
-     What is the name of the 3D function (density, potential or wavef) file ?
-  -> abo_DEN
-     What is your choice ? Type:
-  -> 9
-  # Option 9 tells cut3d to create an output xsf file (cut3d gives you a list of options, you select 9)
-     Enter the name of an output file:
-  -> abo_DEN_nonopt_ixc11.xsf
-  #the name is our choice, but make sure to specify the file type (.xsf) correctly
-     Do you want to shift the grid along the x,y or z axis (y/n)?
-  -> n
-     More analysis of the 3D file ? ( 0=no ; 1=default=yes ; 2= treat another file - restricted usage)
-  -> 0
-  ```
-
-- Visualise the ground state charge density using `vesta`
 
 ## Ground state charge density with ixc = 11 - optimised atomic positions with ixc = 11 
 
