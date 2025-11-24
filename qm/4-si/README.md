@@ -106,6 +106,8 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
 - Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, look at the keywords associated with dataset 2, and make sure you understand how they relate to geometry optimisation.<br>
   If you don't recognise a keyword, remember to **consult the Abinit documentation**.
 
+**Objectives**
+
 - Run Abinit
   ```bash
   abinit ab.in
