@@ -40,7 +40,7 @@ where $\hat{T}\_e$ and $\hat{T}\_n$ are the electron and nuclei kinetic operator
 
 Now, with the above description, provided we know the solution $\psi(\mathbf{r_N})$ and we are able to write analytically all the terms in $\hat{H}(\mathbf{r_N})$, we can compute $E_0$. Unfortunately, an analytical solution to the TISE exists only for the hydrogen atom (one proton and one electron). Therefore for any practical scenario in materials science, we can only obtain approximate solutions via numerical methods.
 
-Before thinking about the numerical implementation, we will first simplify the problem: We introduce the Born-Oppenheimer (BO) approximation, which assumes that electrons react instantaneously to changes in nucleon position due to the large mass difference between a nucleon and an electron. In other words, we are able to follow a so-called "semi-classical" approach: classical "point-like" atoms and quantum electrons. Focusing on the quantum part, we may neglect purely nuclear contributions in the Hamiltonian to give
+Before thinking about the numerical implementation, we will first simplify the problem: We introduce the Born-Oppenheimer (BO) approximation, which assumes that electrons react instantaneously to changes in nucleon position due to the large mass difference between a nucleon and an electron. In other words, we are able to follow a so-called "semi-classical" approach: classical "point-like" atoms and quantum electrons. Focusing on the quantum part, we set the kinetic energy of the nuclei to 0 by the definition of the BO approximation, and neglect (for now) the Coloumic nucleus-nucleus interaction, which allows us to define a simplified *electronic* hamiltonian
 ```math
 \hat{H}_e(\mathbf{r}_{N_e}) = \hat{T}_e + \hat{V}_{en} + \hat{V}_{ee}
 ```
@@ -140,11 +140,11 @@ Suppose then that we make an initial guess to the KS orbitals $`\{\phi_n\}`$:
 
 That is, we can follow a numerical **self-consistent field** (**SCF**) procedure that iteratively updates the density until we reach *convergence* - when the density or total energy changes by less than a chosen tolerance between consecutive iterations.
 
-Finally, the total electronic ground state energy in DFT can be written, for simplicity, as a *functional* of the ground state electron density. A functional is simply an object that takes a function (here the density) as input and returns a number (here, the total energy). Using this notation, the trial ground state electronic total energy may be written compactly as 
+Finally, an expression for the trial ground state electronic total energy $E_e^{\prime}$ may be derived from the above description. The details of the derivation are not necessary for the discussion, so we will simply state the final result in *functional* notation:
 ```math
-E_e[n_0^{\prime}] = \sum_n^{N_e} \int \phi_e^{*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r},
+E_e^{\prime}[n_0^{\prime}] = \sum_n^{N_e} \int \phi_e^{*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r},
 ```
-where each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
+where a functional is simply an object that takes a function as input (the density) and returns a number (the total energy), and each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
 
 ### Exchange correlation functional
 
@@ -214,16 +214,46 @@ To conclude (the DFT part):
 
 ### Geometry optimisation and the Hellmann-Feynmann theorem
 
-Let us consider the meaning of the trial ground state electronic total energy...
+After convergence of the SCF cycle, we obtain a trial ground state electronic energy, $E_e^{\prime}[n_0^{\prime}]$, which is our best estimate of the exact ground state electronic energy $E_e$.
 
-
+The electronic Hamiltonian depends parameterically on the nuclear coordinates $`\{\mathbf{R}_I\}`$ through the electron-nucleus Coulomb potential $V_{en}$. Within the Born-Oppenheimer (BO) approximation, the ground state total enery of the system is obtained by adding the nucleus-nucleus Coulomb energy
 ```math
-\mathbf{F}_I = - \frac{\partial E_T^{\prime}}{\partial \mathbf{R}_I}
+E_{nn} = \frac{1}{2} \sum_{I \neq J} \frac{Z_I Z_J}{|\mathbf{R}_I - \mathbf{R}_J|}.
+```
+This term is purely classical in the BO framework: the nuclear kinetic energy is set to zero, and the nuclei act as fixed point charges. Hence the approximate total energy for a given nuclear configuration is
+```math
+E_{T}^{\prime} = E_e^{\prime}[n_0^{\prime}(\mathbf{r})] + E_{nn}
 ```
 
-<!--
+**Is $E_{T}^{\prime}$ the best possible estimate of the ground state total energy of the system?**
 
-Complete geometry optimisation section from thesis notes.
+**Answer**: Only for the specific nuclear geometry used to compute it. 
+
+Changing the nuclear positions alters $V_{en}$, which changes the KS Hamiltonian, the converged electronic density, and therefore $E_e^{\prime}$. Moreover, each "move" of the atoms changes $E_{nn}$. Thus one may regard $E_{T}^{\prime}$ as defining a **potential energy surface (PES)** over the $3N_{\text{nuc}}$-dimensional space of nuclear coordinates.
+
+**Geometry optimisation**
+
+Geometry optimisation corresponds to finding a local minimum of this PES. The procedure is as follows:
+
+- Choose a trial nuclear geometry.<br>
+  Solve the KS equations to obtain the converged electronic density and energy $E_e^{\prime}$.
+- Compute the forces on the nuclei*.<br>
+  The force on nucleus $I$ is given by the **Hellman-Feynmann** theorem (when the basis does not depend on the nuclear positions, which is the case when using a plane wave basis set)
+```math
+\mathbf{F}_I = - \frac{\partial E_T^{\prime}}{\partial \mathbf{R}_I}.
+```
+- Update the geometry.<br>
+  In principle, this uses the Hessian (2nd derivative matrix) of the PES to determine the next geometry configuration (although explicit evaluation of the Hessian is expensive, practical geometry optimisation uses quasi-Newton methods which build an approximate Hessian iteratively)
+```math
+H_{I,J}^{\alpha \beta} = \frac{\partial^2 E_{T}^{\prime}}{\partial R_I^{\alpha} \partial R_J^{\beta}}
+```
+- Repeat steps 1-3 until the forces on each atom fall below a chosen tolerance.<br>
+  The resulting geometry is taken as the optimised configuration corresponding to the chosen initial structure.
+
+\* Note that, when using localised atomic basis sets an additional **Pulay force** must be included, because the basis set changes with the geometry.
+
+
+<!--
 
 ### Practical considerations
 
