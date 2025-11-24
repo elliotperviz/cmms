@@ -86,7 +86,11 @@ Separate to the calculation of equilibrium properties, we also provide a tutoria
 
 ### Quantum Mechanics
 
-**TBA**
+1) [H2 molecule: electronic properties](qm/1-h2)
+2) [H atom: electronic orbitals](2-h)
+3) [H2O molecule: importance of geometry and the exchange correlation functional](3-h2o)
+4) [Diamond Si: geometry optimisation, band structure, convergence studies](4-si)
+5) [Carbon: TBC](5-c)
 
 ### Phonons
 
