@@ -102,15 +102,14 @@ E_e[\psi_e^{\prime}] = E_e[n_0^{\prime}(r)].
 ```
 via an equality between $E_e^{\prime}$ dependent on a functional of a) the trial wavefunction and b) the trial ground state density respectively.
 -->
-Now, recall earlier we discussed the need for a practical representation of the trial wavefunction to solve the TISE numerically, a standard approach being to expand in a set of basis functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$ (with some common analytical form e.g. plane wave, gaussian etc.). The DFT approach follows the above recipe but with a crucial difference: instead of constructing a trial wavefunction in the full $3N_e$-dimensional space, DFT expresses the ground state in terms of a set of non-interacting *one-electron wavefunctions* or *orbitals*
+Now, recall earlier we discussed the need for a practical representation of the trial wavefunction to solve the TISE numerically, a standard approach being to expand in a set of basis functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$ (with some common analytical form e.g. plane wave, gaussian etc.). The DFT approach follows the above recipe but with a crucial difference: the set of basis functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$ are prescribed to represent a set of non-interacting *one-electron wavefunctions* (a.k.a *orbitals*), such that the trial wavefunction is defined by the product sum of all $\phi_n$:
 ```math
-\psi_e^{\prime}(\mathbf{r}_{N_e}) = \prod_n^{N_e} \phi_n(\mathbf{r})
+\psi_e^{\prime}(\mathbf{r}_{N_e}) = \prod_n^{N_e} \phi_n(\mathbf{r}).
 ```
-whose role is to approximately reproduce the ground-state electron density (in principle we could reproduce *exactly* the ground state density if we knew the *true* one-electron wavefunctions), which may be constructed from these orbitals as
+These orbitals approximately reproduce the ground-state electron density (in principle we could reproduce *exactly* the ground state density if we knew the *true* one-electron wavefunctions), which may be constructed accordingly as
 ```math
 n_0^{\prime}(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2.
 ```
-where ${|c_n|}^2 = 1$.
 
 Each orbital satisfies an independent Kohn-Sham (KS) equation:
 ```math
