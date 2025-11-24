@@ -114,7 +114,7 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
   ```
   And follow the standard output (what is printed to the terminal) as the simulation is executed.
 
-  Once the simulation concludes, we should output files related to datasets 1 and 2 in our working directory.
+  Once the simulation concludes, we should find output files related to datasets 1 and 2 in our working directory.
 
 - Check that the maximum force component on the atoms is smaller than the chosen tolerance<br>
   Hint: Look for the string "Cartesian forces" at the end of each geometric step in "ab.abo" or the standard output.
