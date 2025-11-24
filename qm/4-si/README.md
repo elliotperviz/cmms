@@ -78,10 +78,12 @@ Keep in mind, although the plane-wave cutoff and $\mathbf{k}$-point grid are the
 
 ### Outline of the tutorial
 
+<!-- In class, this tutorial is parallel with the lecture introducing the decription of the crystal lattice, reciprocal space etc. Before continuing with the main tutorial, we should demonstrate the usage of the Materials project database of known crystal structures, show their different shapes and symmetries, how we can transform between primitive and conventional descriptions etc. -->
+
 - Let's see what files we have:
   ```bash
   perviell@postel:4-si$ ls
-  README.md  si-1  si-2  si-3  si-4
+  README.md  1-geo-opt  2-bs  3-ecut  4-kpt
   ```
   You should see 4 folders (and one README file, which you are currently reading here), which separates the different parts of the tutorial to follow.
 
@@ -110,107 +112,22 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
   ```
   And follow the standard output (what is printed to the terminal) as the simulation is executed.
 
-  Once the simulation concludes, we should find the following files in our working directory (the location where we ran Abinit):
-  ```bash
-  perviell@postel:1-nonopt-ixc11$ ls
-  ab.abo  abo.cif  abo_DEN         abo_EIG     abo_FORCES  abo_GSR.nc  abo_POSCAR  h.psp8
-  ab.in   abo_DDB  abo_EBANDS.agr  abo_EIG.nc  abo_GEO     abo_OUT.nc  abo_WFK     o.psp8
-  ```
+  Once the simulation concludes, we should output files related to datasets 1 and 2 in our working directory.
 
 - Check that the maximum force component on the atoms is smaller than the chosen tolerance<br>
-  Hint: Look for the string "Cartesian forces" in the output of each geometric step.
+  Hint: Look for the string "Cartesian forces" at the end of each geometric step in "ab.abo" or the standard output.
 
-- Check that the each SCF procedure converges within the maximum number of steps specified (Hint: use `grep`... or inspect the file e.g. with `vim`)
-
-
-
-## Ground state charge density with ixc = 11 - optimised atomic positions with ixc = 11 
-
-In this example, the starting configuration is that obtained after geometry optimisation with the PBE-GGA XC potential (`ixc=11`), followed by an SCF procedure to obtain the converged ground state solution again with the PBE-GGA XC potential (`ixc=11`).
-
-**Objectives**
-
-- Navigate to the appropriate directory
+- Check that each SCF procedure converges within the maximum number of steps specified<br>
+  Hint: use `grep`... or inspect the file e.g. with `vim`, or you could try the following `awk` command:
   ```bash
-  cd ../2-opt-ixc11
-  ```
- 
-- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, take a look at the definition of the initial geometry (how large is the difference between atomic positions in the optimised vs non-optimised setups?), and make sure you find where the `ixc` keyword is set.<br>
-  If you don't recognise a keyword, remember to **consult the Abinit documentation**.
-
-  In this example, we specify as an input the optimised geometry of the H<sub>2</sub>O molecule, and tell Abinit to calculate its ground state energy via an SCF procedure.
-
-- Run Abinit
-  ```bash
-  abinit ab.in
-  ```
-  And follow the standard output (what is printed to the terminal) as the simulation is executed.
-
-- Check that the SCF procedure has converged within the maximum number of steps specified (Hint: use `grep`... or inspect the file e.g. with `vim`)
-
-- Convert the density to a VESTA-compatible format using the Abinit post-processing tool `cut3d`
-
-  Name the file e.g. "abo_DEN_opt_ixc11.xsf" to separate it from other outputs.
-
-- Visualise the ground state charge density using `vesta`
-
-- Compare the ground state electron density of the optimised geometry against the non-optimised geometry result
-
-  In `vesta`, the two density files can be compared as follows:<vr>
-  [Note: -> indicates the selection from a drop down menu]
-  - On the taskbar select "Edit" -> "Edit data" -> "Volumetric data"
-  - On the "Edit dat" screen, select "Import", navigate to and select the charge density obtained from the previous example, in the next window "Subtract from current data" "OK", and finally select "OK" again to close this popup window
-  - On the taskbar select "Object" -> "Properties" -> "Isosurfaces"
-  - On the "Isosurfaces" screen, create 2 separate isosurfaces for positive and negative density difference
-  - Vary the isosurface value to see how/if the shape of the isosurface changes with magnitude of the density. Where is the density the highest?
- 
-  Note: an *isosurface* is a 3-dimensional surface that represents points in space where a scaslar field has a constant value. In this case, the scalar field is the ground state electron density $n_0(\mathbf{r})$, where an isosurface of this function represents all points $\mathbf{r}$ where $n(\mathbf{r} = $ a specific value (normalised between 0 and 1). A larger isovalue will plot an isosurface on which electrons are distributed at a higher density, a smaller isovalue will do the opposite.
-
-  Further, for a 2D comparison, try:
-  - On the taskbar select "Utilities" -> "2D data display..."
-  - On the "2D data display" screen select "Slice" (you might need to vary the distance from the origin such that the plane passes through the atoms, and make sure the saturation levels are set appropriately e.g. 0 and 100%) and "OK"
- 
-**Question**
-
-- Does the geometry optimisation improve our estimate of the ground state electron density, according to our intuition of how charge will be distributed in the H<sub>2</sub>O molecule?
-
-## 3. Ground state charge density with ixc = 11 - optimised atomic positions with ixc = 1
-
-In the final example in this tutorial, the starting configuration is that obtained after geometry optimisation with the LDA XC potential (`ixc=1`), followed by an SCF procedure to obtain the converged ground state solution with the PBE-GGA XC potential (`ixc=11`).
-
-**Objectives**
-
-- Navigate to the appropriate directory
-  ```bash
-  cd ../3-opt-ixc1
-  ```
- 
-- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, take a look at the definition of the initial geometry (how large is the difference between atomic positions in the optimised vs non-optimised setups?), and make sure you find where the `ixc` keyword is set.<br>
-  If you don't recognise a keyword, remember to **consult the Abinit documentation**.
-
-  In this example, we specify as an input the optimised geometry of the H<sub>2</sub>O molecule, and tell Abinit to calculate its ground state energy via an SCF procedure.
-
-- Run Abinit
-  ```bash
-  abinit ab.in
-  ```
-  And follow the standard output (what is printed to the terminal) as the simulation is executed.
-
-- Check that the SCF procedure has converged within the maximum number of steps specified (Hint: use `grep`... or inspect the file e.g. with `vim`)
-
-- Convert the density to a VESTA-compatible format using the Abinit post-processing tool `cut3d`
-
-  Name the output file e.g. "abo_DEN_opt_ixc11.xsf" to separate it from other outputs.
-
-  Type
-  ```bash
-  cut3d
+  awk '/ETOT/ {
+    if ($2 == 1 && NR > 1) print "";
+    print
+  }' ab.abo
   ```
 
-- Visualise the ground state charge density using `vesta`
+<!-- In the future, it would be useful to have Abipy installed, since we would be able to extract the geometry at each geometric step, and visualise the "trajectories" e.g. in Ovito -->
 
-- Compare the ground state electron density of the optimised geometry against the non-optimised geometry result
- 
-**Questions**
-- Which XC functional provides the best ground state geometry to subsequently extract the ground state electron density, according to our intuition?
-- What happens if we carry out the SCF procedure with `ixc=1` (LDA)? How does this affect the outcome? Is the ground state electron density better or worse? Try changing the value in the input file, run the simulation again, and check the result.
+## Band structure
+
+**TBC**
