@@ -131,7 +131,7 @@ Given an initial guess for the orbitals $`\{\phi_n\}`$, one may therefore follow
 
 Finally, an expression for the trial ground state electronic total energy $E_e^{\prime}$ may be derived from the above description. The details of the derivation are not necessary for the discussion, so we will simply state the final result in *functional* notation:
 ```math
-E_e^{\prime}[n_0^{\prime}] = \sum_n^{N_e} \int \phi_e^{*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})],
+E_e^{\prime}[n_0^{\prime}] = \sum_n^{N_e} \int \phi_n^{*}(\mathbf{r}) \hat{T} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})],
 ```
 where a functional is simply an object that takes a function as input (the density) and returns a number (the total energy), and each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
 
