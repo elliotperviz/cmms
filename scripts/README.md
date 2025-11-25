@@ -28,6 +28,6 @@ We also acknowledge the use of the following external tools:
 - [pizza.py](pizza.py) - A set of utility scripts, provided when compiling LAMMPS, to enable both pre- and post-processing for LAMMPS (and other simulation software).
 - [lammps-python-tools](/lammps-python-tools) - A collection of Python utilities that leverage the `pizza.py` library to extend LAMMPS post-processing functionality.
 
-Depending on whether you (the user) are following these tutorials from within the laboratory, or from home on your own custom installation, you may or may not have access to these tools. To ensure consistency, we provide copies of them here. A
+Depending on whether you (the user) are following these tutorials from within the laboratory, or from home on your own custom installation, you may or may not have access to these tools. To ensure consistency, we provide copies of them here.
 
 Author credits and additional information may be found by in the corresponding "README" files or within the scripts themselves.
