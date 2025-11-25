@@ -93,56 +93,45 @@ This reformulation drastically reduces the numerical complexity of the ground st
 
 ### The DFT approach
 
-In DFT, the many-electron description is replaced by an *effective one-electron problem*. For the purpose of developing an understanding of the choices and parameters that matter in numerical implementations of DFT, it is not necessary to work through the whole derivation. For this reason, we will focus on the final result and its physical meaning.
+Recall that, in general, a numerical solution of the TISE requires a tractable representation of the trial wavefunction, typically obtained by expanding it in a basis set with a convenient analytical form (e.g. plane waves, gaussians, atomic orbitals, ...).
 
-<!--
-Nevertheless, it is useful to first introduce one additional mathematical concept to simplify the discussion: a *functional* is a mathematical object that takes an entire *function* as its input and returns a number as its output. If we have a trial ground state wavefunction $\psi_e(\mathbf{r}\_{N_e}$ and a trial ground state electron density $n_0^{\prime}(r)$, these are both functions. But, the trial ground state energy is a *functional* of $\psi_e(\mathbf{r}_{N_e}$; using this formalism we can compactly restate the Hohneberg-Kohn existence theorem as
+The Kohn-Sham formulation of DFT follows this general strategy but introduces a crucial conceptual simplification: the interacting many-electron system is mapped onto an auxilliary system of non-interacting electrons, and the trial wavefunction of this auxilliary system is written as a *Slater determinant* of one-electron orbitals $`\{\phi_n\}`$,
 ```math
-E_e[\psi_e^{\prime}] = E_e[n_0^{\prime}(r)].
-```
-via an equality between $E_e^{\prime}$ dependent on a functional of a) the trial wavefunction and b) the trial ground state density respectively.
--->
-Now, recall earlier we discussed the need for a practical representation of the trial wavefunction to solve the TISE numerically, a standard approach being to expand in a set of basis functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$ (with some common analytical form e.g. plane wave, gaussian etc.). The DFT approach follows the above recipe but with a crucial difference: the set of basis functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$ are prescribed to represent a set of non-interacting *one-electron wavefunctions* (a.k.a *orbitals*), such that the trial wavefunction is defined by the product sum of all $\phi_n$:
-```math
-\psi_e^{\prime}(\mathbf{r}_{N_e}) = \prod_n^{N_e} \phi_n(\mathbf{r}).
-```
-These orbitals approximately reproduce the ground-state electron density (in principle we could reproduce *exactly* the ground state density if we knew the *true* one-electron wavefunctions), which may be constructed accordingly as
-```math
-n_0^{\prime}(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2.
+\psi_e(\mathbf{r}_{N_e}) = \frac{1}{\sqrt{N_e!}} \det\{\phi_n(\mathbf{r}_n)\}
 ```
 
-Each orbital satisfies an independent Kohn-Sham (KS) equation:
+These one-electron orbitals are chosen such that the resulting electron density
+```math
+n_0(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2
+```
+**exactly reproduces the ground state electron density of the interacting system**. This mapping is an **exact theorem of DFT**, not an approximation.
+
+Each orbital satisfies a Kohn-Sham (KS) equation,
 ```math
 \hat{H}_{\text{KS}}(\mathbf{r}) \phi_n(\mathbf{r}) = \epsilon_n \phi_n(\mathbf{r}),
 ```
-with corresponding eigenvalues
-```math
-\epsilon_n = {|c_n|}^2 \int \phi_n^*(\mathbf{r}) \hat{H}_{\text{KS}} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r}
-```
-and the KS Hamiltonian is
+with eigenvalues $\epsilon_n$, and the KS Hamiltonian is
 ```math
 \hat{H}_{\text{KS}}(\mathbf{r}) = \hat{T}_{\text{ref}} + \hat{V}_{en} + \hat{V}_H + \hat{V}_{\text{XC}}.
 ```
-In the KS Hamiltonian, the terms on the right hand side represent (left to right):
+The terms on the right hand side represent (from left to right):
 
-a) Kinetic energy of non-interacting electrons (referred to as the "reference" system),<br>
-b) Electron-nuclear interaction potential,<br>
-c) Classical electron-electron (Hartree) repulsion potential,<br>
+a) Kinetic energy of the non-interacting auxilliary/reference system,<br>
+b) Electron-nuclear potential,<br>
+c) Classical electron-electron (Hartree) repulsion,<br>
 d) **Exchange-correlation** potential\* , which incorporates quantum many-body effects not captured by the previous terms (more on this later).<br>
 
-In this formulation, b), c) and d) depend **only** on the (approximate) ground state electron density $n_0^{\prime}(r)$.
+In this formulation, the potentials b), c) and d) depend **only** on the ground state electron density $n_0(r)$.
 
-Suppose then that we make an initial guess to the KS orbitals $`\{\phi_n\}`$:
-1. With $`\{\phi_n\}`$, we can construct $n_0^{\prime}(\mathbf{r})$
-2. With $n_0^{\prime}(\mathbf{r})$, we can calculate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$
-3. With $\hat{V}\_H$ and $\hat{V}\_{\text{XC}}$, we can build $\hat{H}_{\text{KS}}$ and solve $N_e$ KS equations to obtain new $`\{\phi_n\}`$
-4. With new $`\{\phi_n\}`$, repeat steps 1-3 until *convergence*
-
-That is, we can follow a numerical **self-consistent field** (**SCF**) procedure that iteratively updates the density until we reach *convergence* - when the density or total energy changes by less than a chosen tolerance between consecutive iterations.
+Given an initial guess for the orbitals $`\{\phi_n\}`$, one may therefore follow a **self-consistent field** (SCF) procedure:
+1. Construct a density $n_0^{\prime}(\mathbf{r})$ from the current  $`\{\phi_n\}`$,
+2. Evaluate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$
+3. Construct the updated KS Hamiltonian and solve the KS equations,
+4. Repeat until the electron density (or total energy) changes by less than a chosen tolerance
 
 Finally, an expression for the trial ground state electronic total energy $E_e^{\prime}$ may be derived from the above description. The details of the derivation are not necessary for the discussion, so we will simply state the final result in *functional* notation:
 ```math
-E_e^{\prime}[n_0^{\prime}] = \sum_n^{N_e} \int \phi_e^{*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})] \mathrm{d}\mathbf{r},
+E_e^{\prime}[n_0^{\prime}] = \sum_n^{N_e} \int \phi_e^{*}(\mathbf{r}) \hat{T} \phi_e(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})],
 ```
 where a functional is simply an object that takes a function as input (the density) and returns a number (the total energy), and each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
 
@@ -152,10 +141,14 @@ The exchange-correlation term, $V_{\text{XC}}$, accounts for all the quantum man
 - Exchange interactions due to the antisymmetry of the wavefunction (Pauli exclusion principle).
 - Correlation effects due to the instantaneous repulsion between electrons beyond the mean field approximation.
 
-Its exact form is unknown, meaning its analytical form can only be written approximately. There are number of different common approximations:
+Its exact form is **unknown** -- **this is the only fundamental approximation in the DFT formalism**.
+
+Since the analytical form is unknown, practical calculations employ approximate functionals, such as:
 - Local Density Approximation (LDA) - assumes that XC energy at each point depends only on the local electron density
 - Generalised Gradient Approximation (GGA) - includes the gradient of the local density to better account for inhomogeneity
 - Hybrid functionals - essentially a correction to GGA, mix in a portion of more accurate treatment of electron-electron repulsion
+
+These approximations affect *all* computed observables: energies, forces, vibrational properties, band gaps etc., as such the choice of exchange correlation functional is **critical** to the accuracy of our results.
 
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
