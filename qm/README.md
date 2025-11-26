@@ -30,14 +30,20 @@ H(\mathbf{r})\psi(\mathbf{r}_N) = E_0\psi(\mathbf{r}_N)
 ```
 where $E_0$ is the ground state total energy, itself defined as the expectation value of the Hamiltonian:
 ```math
-E_0 = \int \psi^*(\mathbf{r}_N) \hat{H} \psi(\mathbf{r}_N) \mathrm{d}\mathbf{r}_N
+E_0[\psi] = \int \psi^*(\mathbf{r}_N) \hat{H} \psi(\mathbf{r}_N) \mathrm{d}\mathbf{r}_N
 ```
+which is formally defined as a *functional* of $\psi$.
+[Note: a functional takes a function (here the wavefunction) as input and returns a number (here the total energy)]
 
 It is useful also to consider the linear expansion of the Hamiltonian into its component kinetic ($\hat{T}$) and potential ($\hat{V}$) operators:
 ```math
 \hat{H}(\mathbf{r}_N) = \hat{T}_e + \hat{T}_n + \hat{V}_{en} + \hat{V}_{ee} + \hat{V}_{nn}
 ```
-where $\hat{T}\_e$ and $\hat{T}\_n$ are the electron and nuclei kinetic operators; $\hat{V}\_{en}$, $\hat{V}\_{ee}$ and $\hat{V}\_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively.
+where $\hat{T}\_e$ and $\hat{T}\_n$ are the electron and nuclei kinetic operators; $\hat{V}\_{en}$, $\hat{V}\_{ee}$ and $\hat{V}\_{nn}$ are the Coulombic potential operators for the electron-nucleus, electron-electron and nucleus-nucleus interactions respectively. Similarly, we may write the expectation value of the Hamiltonian as a sum of functionals:
+```math
+E_0[\psi] = E_{T_e}[\psi] + E_{T_n}[\psi] + E_{V_{en}}[\psi] + E_{V_{ee}}[\psi] + E_{V_{nn}}
+```
+where each term returns the energy associated with the expectation value of its operator with the wavefunction $\psi$ as input.
 
 Now, with the above description, provided we know the solution $\psi(\mathbf{r_N})$ and we are able to write analytically all the terms in $\hat{H}(\mathbf{r_N})$, we can compute $E_0$. Unfortunately, an analytical solution to the TISE exists only for the hydrogen atom (one proton and one electron). Therefore for any practical scenario in materials science, we can only obtain approximate solutions via numerical methods.
 
@@ -51,7 +57,7 @@ and hence arrive at the *electronic* TISE:
 ```
 where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction existing now only in $3N_e$-dimensional configuration space. The corresponding ground state *electronic* total energy is written as
 ```math
-E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}
+E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
 ```
 
 The electronic TISE provides us with the exact electronic ground state energy $E_e$, provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
@@ -87,15 +93,11 @@ n_0(r) = N_e \int {|\psi_e(\mathbf{r}_{N_e})|}^2 \mathrm{d}\mathbf{r}_{N_e},
 ``` 
 uniquely determines the external potential and hence all ground-state properties of the system.
 
-The *Hohenberg–Kohn variational* theorem further states that the *true* ground state density is the one that minimises the total energy. This establishes a variational principle formulated in terms of the density.
+This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n_0(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points, independent of the number of electrons.
 
-This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n_0(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points.
+### Exact Kohn-Sham DFT formalism
 
-### The DFT approach
-
-Recall that, in general, a numerical solution of the TISE requires a tractable representation of the trial wavefunction, typically obtained by expanding it in a basis set with a convenient analytical form (e.g. plane waves, gaussians, atomic orbitals, ...).
-
-The Kohn-Sham formulation of DFT follows this general strategy but introduces a crucial conceptual simplification: the interacting many-electron system is mapped onto an auxilliary system of non-interacting electrons, and the trial wavefunction of this auxilliary system is written as a *Slater determinant* of one-electron orbitals $`\{\phi_n\}`$,
+The Kohn-Sham formulation of DFT introduces a crucial conceptual simplification: the interacting many-electron system is mapped onto an auxiliary system of non-interacting electrons, whose wavefunction is written as a *Slater determinant* of one-electron orbitals $`\{\phi_n\}`$,
 ```math
 \psi_e(\mathbf{r}_{N_e}) = \frac{1}{\sqrt{N_e!}} \det\{\phi_n(\mathbf{r}_n)\}
 ```
@@ -104,36 +106,55 @@ These one-electron orbitals are chosen such that the resulting electron density
 ```math
 n_0(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2
 ```
-**exactly reproduces the ground state electron density of the interacting system**. This mapping is an **exact theorem of DFT**, not an approximation.
+**exactly reproduces the ground state electron density of the interacting system**. This is the **Hohenberg-Kohn existence theorem**.
 
-Each orbital satisfies a Kohn-Sham (KS) equation,
+Each orbital satisfies a Kohn-Sham (KS) equation:
 ```math
 \hat{H}_{\text{KS}}(\mathbf{r}) \phi_n(\mathbf{r}) = \epsilon_n \phi_n(\mathbf{r}),
 ```
-with eigenvalues $\epsilon_n$, and the KS Hamiltonian is
+with eigenvalues $\epsilon_n$, and the KS Hamiltonian is defined as
 ```math
 \hat{H}_{\text{KS}}(\mathbf{r}) = \hat{T}_{\text{ref}} + \hat{V}_{en} + \hat{V}_H + \hat{V}_{\text{XC}}.
 ```
+
 The terms on the right hand side represent (from left to right):
 
-a) Kinetic energy of the non-interacting auxilliary/reference system,<br>
+a) Kinetic energy of the non-interacting auxiliary/reference system,<br>
 b) Electron-nuclear potential,<br>
 c) Classical electron-electron (Hartree) repulsion,<br>
 d) **Exchange-correlation** potential\* , which incorporates quantum many-body effects not captured by the previous terms (more on this later).<br>
 
-In this formulation, the potentials b), c) and d) depend **only** on the ground state electron density $n_0(r)$.
+Importantly, all potentials b-d depend **only** on the ground state electron density $n_0(r)$.
 
-Given an initial guess for the orbitals $`\{\phi_n\}`$, one may therefore follow a **self-consistent field** (SCF) procedure:
-1. Construct a density $n_0^{\prime}(\mathbf{r})$ from the current  $`\{\phi_n\}`$,
-2. Evaluate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$
-3. Construct the updated KS Hamiltonian and solve the KS equations,
-4. Repeat until the electron density (or total energy) changes by less than a chosen tolerance
-
-Finally, an expression for the trial ground state electronic total energy $E_e^{\prime}$ may be derived from the above description. The details of the derivation are not necessary for the discussion, so we will simply state the final result in *functional* notation:
+Conceptually, the KS equations are **implicit**: the orbitals determine the density, while the density determines the KS potential that defines the orbitals. This defines a **Kohn-Sham map**
 ```math
-E_e^{\prime}[n_0^{\prime}] = \sum_n^{N_e} \int \phi_n^{*}(\mathbf{r}) \hat{T} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})],
+\mathcal{F}: n(\mathbf{r}) \rightarrow n^{\prime}(\mathbf{r})
+```
+between an arbitrary input density $n(\mathbf{r})$ and the output $n^{\prime}(\mathbf{r})$ obtained by solving the KS equations.
+
+The **exact ground state density** $n_0(\mathbf{r})$ is the **fixed point** of this map: when used to construct the KS Hamiltonian, it yields orbitals whose density is *exactly* the same.
+
+An expression for the ground state electronic total energy $E_e$ may be derived from the above description. The details of the derivation are not necessary for the discussion, so we will simply state the final result in *functional* notation:
+```math
+E_e^[n_0] = \sum_n^{N_e} \int \phi_n^{*}(\mathbf{r}) \hat{T} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})],
 ```
 where a functional is simply an object that takes a function as input (the density) and returns a number (the total energy), and each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
+
+### Hohenberg-Kohn Variational Theorem
+
+The *Hohenberg–Kohn variational theorem* states that the *true* ground state density is the one that minimises the total energy. This establishes a variational principle formulated entirely in terms of the density.
+
+
+This is useful since, in practice, we do not know the exact one-electron orbitals which define $n_0(\mathbf{r})$. Thus, given an initial guess for the orbitals $`\{\phi_n^{\prime}\}`$, we follow an interative procedure
+1. Construct a trial density $n^{\prime}(\mathbf{r})$ from $`\{\phi_n\}`$,
+2. Evaluate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$
+3. Construct the updated KS Hamiltonian and solve the KS equations.
+4. Feed new $`\{\phi_n\}`$ back into step 1.
+
+Iterating this procedure converges to the fixed point, as a result of the Hohenberg-Kohn varitional theorem, which states
+```math
+E[n^{\prime}] \leq E[n_0]
+```
 
 ### Exchange correlation functional
 
