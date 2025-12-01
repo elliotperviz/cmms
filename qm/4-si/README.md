@@ -32,7 +32,7 @@ In the formalism of density functional theory (DFT), the band structure is obtai
 - a band index $n$, and
 - a wavevector $\mathbf{k}$ in the Brillouin zone (BZ).
 
-If we consider a calculation with $M$ **bands** (with $M > N_e$) and $\text{NKPT}$ sampled $\mathbf{k}$-points, then at each SCF iteration we must solve $M \times $\text{NKPT}$ KS equations - one for each pair ($n,\mathbf{k}$).
+If we consider a calculation with $M$ **bands** (with $M > N_e$) and $\text{NKPT}$ sampled $\mathbf{k}$-points, then at each SCF iteration we must solve $M \times \text{NKPT}$ KS equations - one for each pair ($n,\mathbf{k}$).
 
 The band structure is built from the corresponding eigenvalues $\epsilon_{n,\mathbf{k}}$. These allow us to determine:
 - whether the system is **metallic**, **semiconducting**, or **insulating**,
@@ -42,7 +42,50 @@ The band structure is built from the corresponding eigenvalues $\epsilon_{n,\mat
 g(E) = \sum_{n,\mathbf{k}} \delta(E - \epsilon_{n,\mathbf{k}})
 ```
 
-As an example, we will extract and visualise both the band structure and density of states of crystalline Si-diamond in the **second** part of this tutorial.
+When we consider occupied and unoccupied states, it is useful to consider the following definitions from solid state physics:
+- Fermi energy $E_F =$ the energy of the highest occupied state at 0K.
+- Fermi level $\mu =$ the chemical potential for electrons, the energy at which the probability of occupancy is 50% at a given temperature $T$.<br>
+  At $T=0$ K, $E_F$ and $\mu$ coincide. At finite temperature, $\mu(T)$ can shift slightly due to thermal excitation.
+- Band gap $E_G =$ the difference in energy between the lowest unoccupied state, the **conduction band minimum** (CBM), and the highest occupied state, the **valence band maximum** (VBM)
+  - In a metal, $E_G = 0$.
+  - In a direct semiconductor, like monolayer MoS<sub>2</sub>, the VBM and CBM occur at the *same* $\mathbf{k}$-point.
+  - In an indirect semiconductor like Si, the VBM and CBM occur at *different* $\mathbf{k}$-points.
+  - The mathematical definition is
+```math
+E_G = E_{\text{CBM}} - E_{\text{VBM}}
+```
+
+Note: What is the difference between $E_{\text{VBM}}$ and $E_F$?
+- $E_{\text{VBM}}$ is specifically the top of the valence band.
+- $E_F$ is the Fermi energy of Fermi level (since we are performing calculations in the ground state, these quantities coincide, as described above).
+- So, $E_{\text{VBM}}$ and $E_F$ are different names for the same quantity, and $\mu$ only coincides when $T=0$ K.
+
+We often report the *Fermi level* as the energy separating occupied and unoccupied states in a system with a fixed number of electrons, which is used as a reference to "zero" the energy when plotting the DOS and band structure.
+
+Further, by convention we extract the so-called *high-symmetry* points when plotting and analysing the band structure.
+
+**High symmetry points**
+- are points where crystal symmetry is highest,
+- reflect important crystallographic directions,
+- often correspond to extrema in the band structure,
+- are dependent on the symmetry of the crystal,
+- and exhibit phenomena (such as crossings, degeneracies, symmetry protected states, variation of effective mass) which are often only visible along high-symmetry paths,
+- provide a standarised procedure to sample the Brillouin Zone, allowing for direct comparison of band structure between different computations of the same structure.
+
+The conventional high-symmetry paths that we follow, which depends on the symmetries of the crystal, are given [here](https://doi.org/10.1016/j.commatsci.2010.05.010).
+
+We will extract and visualise both the band structure and density of states of crystalline Si-diamond in the **second** part of this tutorial.
+
+As a further example, we will also extract the **electron localisation function** (ELF):  the ELF is the dimensionless scalar field from $0 \rightarrow 1$, giving the probability to find electrons *localised* within a given region of space:
+- $\approx 1$ - high localisation e.g. electron pairs in covalent bonds, or core electrons close to the nucleus.
+- $\approx 0.5$ - electron gas-like delocalisation.
+- $\approx 0$ - fully delocalised (conduction band electrons).
+
+e.g. Al is metallic, and will have low electron localisation. Si is a semiconductor and has distinct bonding, which is evident in the ELF.
+
+ELF is quite similar to the electron density, however their definitions are separate physical meanings:
+- The electron density is the total number of electrons per unit volume, which includes both localised and delocalised electrons without distinguishing their role. It tells us **where the electrons are**.
+- The ELF tells us *how localised the electrons are*, giving us information about the parts of the band structure that different regions of the electron density are participating in.
 
 ### How can we quantify the accuracy of our results?
 
@@ -98,13 +141,20 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
 
 - Inspect the contents of the directory
   ```bash
-  perviell@postel:4-si$ ls
+  perviell@postel:1-geo-opt$ ls
   BPOSCAR.vasp  PPOSCAR.vasp  ab.in  si.psp8
   ```
   As usual, we provide the required Abinit input file "ab.in" and the Si pseudopotential file "si.psp8". We also provide the primitive ("PPOSCAR.vasp") and conventional ("BPOSCAR.vasp") cell configurations of diamond-Si, for easy visualisation with `vesta`.
  
-- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use. In particular, look at the keywords associated with dataset 2, and make sure you understand how they relate to geometry optimisation.<br>
-  If you don't recognise a keyword, remember to **consult the Abinit documentation**.
+- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
+  Look at the keywords associated with dataset 2:
+  - `optcell`
+  - `ionmov`
+  - `ntime`
+  - `tolmxf`
+
+  and make sure you understand how they relate to geometry optimisation. In particular, note that we allow Abinit to optimise *both* the atomic positions and lattice vectors via `optcell`. When we perform lattice vector relaxation, `tolmxf` also sets the tolerance on cell stress, which is treated like force via a scaling factor `strfact` (check the default value that Abinit sets).<br>
+  Remember, for the full definition of new keywords we can always **consult the Abinit documentation** for reference.
 
 **Objectives**
 
@@ -132,4 +182,88 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
 
 ## Band structure
 
-**TBC**
+Next, we will extract and visualise the band structure (energy eigenvalues of the solutions to the Kohn-Sham equations).
+
+- Navigate to the appropriate directory
+  ```bash
+  cd ../2-bs
+  ```
+
+- Inspect the contents of the directory
+  ```bash
+  perviell@postel:2-bs$ ls
+  ab.in plot_dos.gp si.psp8
+  ```
+  As usual, we provide the required Abinit input file "ab.in" and the Si pseudopotential file "si.psp8".
+ 
+- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
+  Note:
+  - The keywords defining `rprim` and `xred` are empty - we first need to copy the optimised primitive vectors and atomic positions from the previous step.
+  - In dataset 1 we perform an initial SCF calculation on the optimised geometry.
+  - In datasets 2 and 3 we perform two non-SCF runs: one to calculate and print the atom-projected, orbital decomposed DOS; and another to calculate and print the band structure.
+  Check the meaning of the different keywords required, depending on whether we want to extract the DOS or the band structure.
+
+**Objectives**
+
+- Insert the optimised lattice vectors and atomic positions<br>
+  Hint: check the output of the previous geometry optimisation run.
+
+- Run Abinit
+  ```bash
+  abinit ab.in
+  ```
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
+
+  Once the simulation concludes, we should find output files related to datasets 1,2 and 3 in our working directory.
+
+- Visualise the band structure using `xmgrace`
+
+  ```bash
+  xmgrace abo_DS3_EBANDS.agr
+  ```
+
+  We can further customise the visualisation to add relevant labels. In the `xmgrace` window:
+  - Navigate via the tasbar to the "Axes" window<br>
+    Plot -> Axis properties
+  - In the "Axes" window, click "Special"<br>
+    You may proceed to add labels for the specific k-points that we chose to sample in the BZ.<br>
+    The gamma symbol may be entered via the string `\xG`
+
+**Questions**
+
+- What is the size of the band gap (if any)? Is the system conducting, semi-conducting, or insulating?
+- If the system is insulating/semi-conducting At which \mathbf{k}-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
+- How do the above results compare to experimental literature?
+
+DOS
+
+```bash
+efermi=`grep Fermi abo_DS2_DOS_TOTAL | awk '{print $5}'`
+cp abo_DS2_DOS_TOTAL DOS_TOTAL
+# remove header from DOS_TOTAL
+awk -v ef=$efermi '{printf("%.5f %.4f %.4f \n", ($1-ef)*27.114, $2, $3)}' DOS_TOTAL > DOS_TOTAL_SHIFTED
+```
+and plot...
+
+for better formatting we also provide a script "plot_dos.gp", gnuplot -> load plot_dos.gp
+
+Comments: for smoother DOS profile, need to sample more k-points...
+
+Atom-projcted DOS: plot each file with gnuplot
+-> show contribution of each orbital
+-> demonstrate that we can combine different columns in gnuplot ... e.g.
+```bash
+gnuplot
+plot "..." u1:($2+$3+$4) ...
+```
+
+ELF
+
+cut3d
+
+abo_DS2_ELF -> .xsf
+option 9
+plot in vesta
+show isosurfaces and/or lattice planes
+
+
