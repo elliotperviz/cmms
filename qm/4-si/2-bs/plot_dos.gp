@@ -20,7 +20,7 @@ set key top left
 set arrow from 0, graph 0 to 0, graph 1 nohead lc rgb "black" dt 2 lw 1
 
 # Define style for reuse
-plot "TOTAL_DOS_SHIFTED" using 1:2 with lines linecolor "red" linewidth 3 linetype 1 title "Total DOS"
+plot "DOS_TOTAL_SHIFTED" using 1:2 with lines linecolor "red" linewidth 3 linetype 1 title "Total DOS"
 
 pause -1
 
