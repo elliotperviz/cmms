@@ -77,7 +77,7 @@ and overlap matrix elements
 S_{nm} = \int \phi_m^*(\mathbf{r}_{N_e}) \phi_n(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
 ```
 
-If the chosen basis were the *complete* set of exact eigenfunctions of $\hat{H}\_e$, then $H_{mn}$ would be diagonal and the expression above for $E_e^{\prime} would *automatically* yield the exact ground state electronic total energy corresponding to the true ground-state eigenfunction. In practice, however, the basis is finite and almost never composed of exact eigenfunctions; consequently, the matrix representation of $\hat{H}_e$ is not diagonal, and $E_e^{\prime}$ is only an *approximation* to the true ground-state energy. This motivates the need to understand how the approximate energy relates to the exact one.
+If the chosen basis were the *complete* set of exact eigenfunctions of $\hat{H}\_e$, then $H_{mn}$ would be diagonal and the expression above for $E_e^{\prime}$ would *automatically* yield the exact ground state electronic total energy corresponding to the true ground-state eigenfunction. In practice, however, the basis is finite and almost never composed of exact eigenfunctions; consequently, the matrix representation of $\hat{H}_e$ is not diagonal, and $E_e^{\prime}$ is only an *approximation* to the true ground-state energy. This motivates the need to understand how the approximate energy relates to the exact one.
 
 ### The variational theorem
 
