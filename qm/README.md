@@ -60,7 +60,7 @@ where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction e
 E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
 ```
 
-The electronic TISE provides us with the exact electronic ground state energy $E_e$, provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
+The electronic TISE provides us with the exact electronic ground state energy $E_e$ provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
 
 Although the physical ground state corresponds to a single eigenfunction of the electronic Hamiltonian, we require a practical way to represent this function when solving the electronic TISE numerically. A standard approach is to expand the trial wavefunction in a chosen set of functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$, collectively called the *basis*, such that
 ```math
@@ -106,7 +106,7 @@ These one-electron orbitals are chosen such that the resulting electron density
 ```math
 n_0(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2
 ```
-**exactly reproduces the ground state electron density of the interacting system**. This is the **Hohenberg-Kohn existence theorem**.
+**exactly reproduces the ground state electron density of the interacting system**.
 
 Each orbital satisfies a Kohn-Sham (KS) equation:
 ```math
