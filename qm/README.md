@@ -30,7 +30,7 @@ H(\mathbf{r})\psi(\mathbf{r}_N) = E_0\psi(\mathbf{r}_N)
 ```
 where $E_0$ is the ground state total energy, itself defined as the expectation value of the Hamiltonian:
 ```math
-E_0[\psi] = \int \psi^*(\mathbf{r}_N) \hat{H} \psi(\mathbf{r}_N) \mathrm{d}\mathbf{r}_N
+E_0[\psi] = \frac{\int \psi^*(\mathbf{r}_N) \hat{H} \psi(\mathbf{r}_N) \mathrm{d}\mathbf{r}_N}{\int {|\psi(\mathbf{r})|}^2 \mathrm{d}\mathbf{r}_N}
 ```
 which is formally defined as a *functional* of $\psi$.
 [Note: a functional takes a function (here the wavefunction) as input and returns a number (here the total energy)]
@@ -53,33 +53,43 @@ Before thinking about the numerical implementation, we will first simplify the p
 ```
 and hence arrive at the *electronic* TISE:
 ```math
-\hat{H}_e(\mathbf{r}_{N_e}) \psi_e(\mathbf{r}_{N_e}) = E_e(\mathbf{r}_{N_e}) \psi_e(\mathbf{r}_{N_e})
+\hat{H}_e(\mathbf{r}_{N_e}) \psi_e(\mathbf{r}_{N_e}) = E_e \psi_e(\mathbf{r}_{N_e})
 ```
-where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction existing now only in $3N_e$-dimensional configuration space. The corresponding ground state *electronic* total energy is written as
+where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction existing now only in $3N_e$-dimensional configuration space, and $E_e$ is the ground state *electronic* total energy which may be written in functional form as
 ```math
-E_e[\psi_e] = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
+E_e[\psi_e] = \frac{\int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}}{\int {|\psi_e(\mathbf{r})|}^2 \mathrm{d}\mathbf{r}_{N_e}}.
 ```
 
-The electronic TISE provides us with the exact electronic ground state energy $E_e$ provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
-
-Although the physical ground state corresponds to a single eigenfunction of the electronic Hamiltonian, we require a practical way to represent this function when solving the electronic TISE numerically. A standard approach is to expand the trial wavefunction in a chosen set of functions $`\{ \phi_n(\mathbf{r}_{N_e}) \}`$, collectively called the *basis*, such that
+In principle, solving this equation yields $E_e$ exactly. For any realistic system, however, this is computationally intractable, and the exact wavefunction must be replaced by an approximate *trial* wavefunction $\psi_e^{\prime}$. A practical approach is to expand  $\psi_e^{\prime}$ in a chosen set of functions $`\{ \phi_n\}`$, collectively called the *basis*:
 ```math
 \psi_e^{\prime}(\mathbf{r}_{N_e}) = \sum_n c_n \phi_n(\mathbf{r}_{N_e})
 ```
-where $c_n$ are the complex coefficients of each function in the basis.
-
-We can then introduce $E_e^{\prime}$ as the "trial" ground state electronic total energy associated with the trial wavefunction, defined as
+where the complex coefficients $`\{c_n\}`$ specify the particular trial state. Substituting this expansion into the energy functional gives the corresponding *trial* ground state electronic total energy
 ```math
-E_e^{\prime} = \sum_n {|c_n|}^2 \int \phi_n^*(\mathbf{r}_{N_e}) \hat{H}_e \phi_n(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}
+E_e^{\prime} = \frac{\sum_{mn} c_m^* c_n H_{mn}}{\sum_{mn} c_m^* c_n S_{mn}},
 ```
+with Hamiltonian matrix elements
+```math
+H_{mn} = \int \phi_m^*(\mathbf{r}_{N_e}) \hat{H}_e \phi_n(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e},
+```
+and overlap matrix elements
+```math
+S_{nm} = \int \phi_m^*(\mathbf{r}_{N_e}) \phi_n(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
+```
+
+If the chosen basis were the *complete* set of exact eigenfunctions of $\hat{H}\_e$, then $H_{mn}$ would be diagonal and the expression above for $E_e^{\prime} would *automatically* yield the exact ground state electronic total energy corresponding to the true ground-state eigenfunction. In practice, however, the basis is finite and almost never composed of exact eigenfunctions; consequently, the matrix representation of $\hat{H}_e$ is not diagonal, and $E_e^{\prime}$ is only an *approximation* to the true ground-state energy. This motivates the need to understand how the approximate energy relates to the exact one.
 
 ### The variational theorem
 
-The **variational theorem** states that the trial ground state energy $E_e^{\prime} \geq E_e$ for any choice of $\psi_e^{\prime}(\mathbf{r}_{N_e})$. The equality may only arise when $\psi_e^{\prime}(\mathbf{r}\_{N_e})$ reproduces the exact ground state wavefunction $\psi_e(\mathbf{r}\_{N_e})$. Thus, we may summise that, by following a *variational procedure* we could attempt to minimise $E_e^{\prime}$ by iteratively varying the set of coefficients $`\{c_n\}`$ of the basis.
+The **variational theorem** states that
+```math
+E_e^{\prime}[\psi_e^{\prime}] \geq E_e[\psi_e]
+```
+for any choice of $\psi_e^{\prime}$. The equality may only arise when $\psi_e^{\prime}(\mathbf{r}\_{N_e})$ reproduces the exact ground state wavefunction $\psi_e(\mathbf{r}_{N_e})$. Hence, within a given finite basis, improving the coefficients $`\{c_n\}`$ to minimise $E_e^{\prime}$ yields the best possible approximation to the exact ground state electronic total energy available in that basis.
 
 ### Choosing the trial wavefunction
 
-The functions $`\{\phi_n\}`$ form a complete orthonormal basis, so any square integrable wavefunction can be represented to arbitrary accuracy within this expansion. Different choices of basis (such as *plane waves*, *localised Gaussian functions*, or *atomic orbitals*) offer different advantages depending on the physical problem and the numerical method employed. It is always possible *in principle* to transform between bases, but whether or not it is possible numerically depends on the implementation.
+The basis functions $`\{\phi_n\}`$ may be plane waves, localised Gaussian functions, atomic orbitals, or other suitable sets. A sufficiently large basis can represent any square-integrable wavefunction to arbitrary accuracy, although the rate and feasibility of convergence depend strongly on the basis type type and the numerical method employed.
 
 ### Motivation for Density Functional Theory (DFT)
 
