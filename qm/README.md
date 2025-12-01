@@ -57,7 +57,7 @@ and hence arrive at the *electronic* TISE:
 ```
 where $\psi_e(\mathbf{r}_{N_e})$ is the ground state *electronic* wavefunction existing now only in $3N_e$-dimensional configuration space. The corresponding ground state *electronic* total energy is written as
 ```math
-E_e = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
+E_e[\psi_e] = \int \psi_e^*(\mathbf{r}_{N_e})\hat{H}_e\psi_e(\mathbf{r}_{N_e}) \mathrm{d}\mathbf{r}_{N_e}.
 ```
 
 The electronic TISE provides us with the exact electronic ground state energy $E_e$ provided that we know the *exact* solution $\psi_e(\mathbf{r}\_{N_e})$. However, as mentioned earlier, we know this is not the case for any material we might be interested in. Thus, we must sadly abandon the exact description in favour of an approximate solution $\psi_e^{\prime}(\mathbf{r}_{N_e})$, known as the *trial wavefunction*, which we will try to improve iteratively via numerical methods.
@@ -89,11 +89,11 @@ The many-electron wavefunction exists in a $3N_e$-dimensional configuration spac
 
 The *Hohenberg–Kohn existence* theorem establishes that the ground-state electron density
 ```math
-n_0(r) = N_e \int {|\psi_e(\mathbf{r}_{N_e})|}^2 \mathrm{d}\mathbf{r}_{N_e},
+\rho_0(\mathbf{r}) = N_e \int {|\psi_e(\mathbf{r}_{N_e})|}^2 \mathrm{d}\mathbf{r}_{N_e},
 ``` 
 uniquely determines the external potential and hence all ground-state properties of the system.
 
-This reformulation drastically reduces the numerical complexity of the ground state problem: representing $n_0(r)$ on a grid of $M$ points per dimension requires only $M^{3}$ points, independent of the number of electrons.
+This reformulation drastically reduces the numerical complexity of the ground state problem: representing $\rho_0(\mathbf{r})$ on a grid of $M$ points per dimension requires only $M^{3}$ points, independent of the number of electrons.
 
 ### Exact Kohn-Sham DFT formalism
 
@@ -104,7 +104,7 @@ The Kohn-Sham formulation of DFT introduces a crucial conceptual simplification:
 
 These one-electron orbitals are chosen such that the resulting electron density
 ```math
-n_0(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2
+\rho_0(\mathbf{r}) = \sum_n^{N_e} {|\phi_n(\mathbf{r})|}^2
 ```
 **exactly reproduces the ground state electron density of the interacting system**.
 
@@ -122,39 +122,23 @@ The terms on the right hand side represent (from left to right):
 a) Kinetic energy of the non-interacting auxiliary/reference system,<br>
 b) Electron-nuclear potential,<br>
 c) Classical electron-electron (Hartree) repulsion,<br>
-d) **Exchange-correlation** potential\* , which incorporates quantum many-body effects not captured by the previous terms (more on this later).<br>
+d) **Exchange-correlation** potential, which incorporates quantum many-body effects not captured by the previous terms.<br>
 
-Importantly, all potentials b-d depend **only** on the ground state electron density $n_0(r)$.
+Note that the exchange correlation potential is the only term in the KS Hamiltonian for which we do not possess an exact analytical description (more on this later)!
+
+With $\hat{H}_{\text{KS}}$, it may be shown that the total energy becomes:
+```math
+E_e[\rho_0] = \sum_n^{N_e} \int \phi_n^{*}(\mathbf{r}) \hat{T}_{\text{ref}} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[\rho_0] + E_H[\rho_0] + E_{\text{XC}}[\rho_0],
+```
+where all the potential energy terms have a functional dependence *only* on the ground state electron density $\rho_0$.
 
 Conceptually, the KS equations are **implicit**: the orbitals determine the density, while the density determines the KS potential that defines the orbitals. This defines a **Kohn-Sham map**
 ```math
-\mathcal{F}: n(\mathbf{r}) \rightarrow n^{\prime}(\mathbf{r})
+\mathcal{F}: \rho(\mathbf{r}) \rightarrow \rho^{\prime}(\mathbf{r})
 ```
-between an arbitrary input density $n(\mathbf{r})$ and the output $n^{\prime}(\mathbf{r})$ obtained by solving the KS equations.
+between an arbitrary input density $\rho(\mathbf{r})$ and the output $\rho^{\prime}(\mathbf{r})$ obtained by solving the KS equations.
 
-The **exact ground state density** $n_0(\mathbf{r})$ is the **fixed point** of this map: when used to construct the KS Hamiltonian, it yields orbitals whose density is *exactly* the same.
-
-An expression for the ground state electronic total energy $E_e$ may be derived from the above description. The details of the derivation are not necessary for the discussion, so we will simply state the final result in *functional* notation:
-```math
-E_e^[n_0] = \sum_n^{N_e} \int \phi_n^{*}(\mathbf{r}) \hat{T} \phi_n(\mathbf{r}) \mathrm{d}\mathbf{r} + E_{en}[n(\mathbf{r})] + E_H[n(\mathbf{r})] + E_{\text{XC}}[n(\mathbf{r})],
-```
-where a functional is simply an object that takes a function as input (the density) and returns a number (the total energy), and each component on the RHS represents the expectation value of the corresponding term in the KS Hamiltonian.
-
-### Hohenberg-Kohn Variational Theorem
-
-The *Hohenberg–Kohn variational theorem* states that the *true* ground state density is the one that minimises the total energy. This establishes a variational principle formulated entirely in terms of the density.
-
-
-This is useful since, in practice, we do not know the exact one-electron orbitals which define $n_0(\mathbf{r})$. Thus, given an initial guess for the orbitals $`\{\phi_n^{\prime}\}`$, we follow an interative procedure
-1. Construct a trial density $n^{\prime}(\mathbf{r})$ from $`\{\phi_n\}`$,
-2. Evaluate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$
-3. Construct the updated KS Hamiltonian and solve the KS equations.
-4. Feed new $`\{\phi_n\}`$ back into step 1.
-
-Iterating this procedure converges to the fixed point, as a result of the Hohenberg-Kohn varitional theorem, which states
-```math
-E[n^{\prime}] \leq E[n_0]
-```
+The **exact ground state density** $\rho_0(\mathbf{r})$ is the **fixed point** of this map: when used to construct the KS Hamiltonian, it yields orbitals whose density is *exactly* the same.
 
 ### Exchange correlation functional
 
@@ -170,6 +154,18 @@ Since the analytical form is unknown, practical calculations employ approximate 
 - Hybrid functionals - essentially a correction to GGA, mix in a portion of more accurate treatment of electron-electron repulsion
 
 These approximations affect *all* computed observables: energies, forces, vibrational properties, band gaps etc., as such the choice of exchange correlation functional is **critical** to the accuracy of our results.
+
+### Hohenberg-Kohn variational theorem and the Self-Consistent Field (SCF) procedure
+
+The *Hohenberg–Kohn variational theorem* states that the *true* ground state density is the one that minimises the total energy. This establishes a variational principle formulated entirely in terms of the density, such that $E_e^{\prime}[\rho^{\prime}] \geq E_e[\rho_0]$ for all $\rho^{\prime}$.
+
+This is useful since, in practice, we do not know the exact one-electron orbitals which define $\rho_0(\mathbf{r})$. Thus, given an initial guess for the orbitals $`\{\phi_n^{\prime}\}`$, we may follow a **self-consistent field** (SCF) procedure
+1. Construct a trial density $\rho^{\prime}$ from $`\{\phi_n^{\prime}\}`$.
+2. Evaluate $\hat{V}\_{en}$, $\hat{V}\_H$ and $\hat{V}_{\text{XC}}$.
+3. Construct the updated KS Hamiltonian and solve the KS equations.
+4. Feed new $`\{\phi_n^{\prime}\}`$ back into step 1.
+
+Numerically, iterating the SCF procedure converges to the fixed point, as a result of the Hohenberg-Kohn variational theorem.
 
 ### Solution for (periodic) crystalline materials - The Bloch functions
 
@@ -200,35 +196,34 @@ retaining only plane waves below this kinetic energy. We do this since only plan
 
 With the Bloch functions defined, the KS equations become
 ```math
-\hat{H}_{\text{KS}}\phi_{n,\mathbf{k}}(\mathbf{r}) = \epsilon_{n,\mathbf{k}}\phi_{n,\mathbf{k}}(\mathbf{r}).
+\hat{H}_{\text{KS}}\phi_{n,\mathbf{k}}^{\prime}(\mathbf{r}) = \epsilon_{n,\mathbf{k}}\phi_{n,\mathbf{k}}^{\prime}(\mathbf{r}).
 ```
-where we have a unique equation for each KS state $(n,\mathbf{k})$.
+where we have a unique equation for each KS state $(n,\mathbf{k})$, and we mark each one electron wavefunction $\phi_{n,\mathbf{k}}^{\prime}$ with a prime symbol since, due to truncation of the plane wave basis, it is an *approximation* to the true one-electron wavefunction.
 
 The ground state density is then obtained by summing over all occupied bands (states) and integrating over in reciprocal space:
 ```math
-n_0^{\prime}(\mathbf{r}) = \sum_n^{N_e} \int {|\phi_{n,\mathbf{k}}(\mathbf{r})|}^2 \mathrm{d}\mathbf{k}.
+\rho^{\prime}(\mathbf{r}) = \sum_n^{N_e} \int {|\phi_{n,\mathbf{k}}^{\prime}(\mathbf{r})|}^2 \mathrm{d}\mathbf{k}.
 ```
-
 The advantage of the periodic description is that any wavevector $\mathbf{k}^{\prime}$ outside the BZ is equivalent to a wavevector $\mathbf{k}$ inside the BZ by translation $\mathbf{k}^{\prime} = \mathbf{k} + \mathbf{G}$. Thus the BZ contains all unique KS solutions, at the cost of an integral over infinitely many $\mathbf{k}$-vectors.
 
 In practice, the BZ integral is replaced by a finite sampling of wavevectors (for example by constructing a grid):
 ```math
-n_0^{\prime}(\mathbf{r}) = \sum_{\mathbf{k}\in\text{BZ}}^{\text{NKPT}} \sum_n^{M} f_{n,\mathbf{k}} {|\phi_{n,\mathbf{k}}(\mathbf{r})|}^2
+\rho^{\prime}(\mathbf{r}) = \sum_{\mathbf{k}\in\text{BZ}}^{\text{NKPT}} \sum_n^{M} f_{n,\mathbf{k}} {|\phi_{n,\mathbf{k}}^{\prime}(\mathbf{r})|}^2
 ```
 where
 - $\text{NKPT}$ is the number of sampled $\mathbf{k}$-points (wavevectors),
 - $f_{n,\mathbf{k}}$ are the Fermi-Dirac occupations,
-- and in general we can include ($M>N_e$) for both occupied and unoccupied bands.
+- and in general we can include ($M>N_e$) orbitals to represent both occupied and unoccupied bands, e.g. to capture conduction properties.
 
 The number of $\mathbf{k}$-points required depends strongly on the material. In insulators and semiconductors, the electron occupancy changes smoothly with $\mathbf{k}$, so relatively coarse grids converge well. On the other hand, metals require much denser sampling because the occupation varies rapidly with $\mathbf{k}$ close to the Fermi level. This difference has a direct impact on computational cost, since each additional $\mathbf{k}$-point requires solving a separate KS-equation. As an additional comment, note that the symmetries of the crystal can be exploited to reduce the number of required $\mathbf{k}$-points, without affecting accuracy.
 
-To conclude (the DFT part): 
-- In a periodic solid, the KS equations must be solved for $M$ bands at each of the $\text{NKPT}$ sampled $\mathbf{k}$-points in the first BZ. Each KS orbital is expressed as a Bloch function expanded in a plane wave basis, truncated at an energy cutoff $E_{\text{cut}}$. The choice of $\text{NKPT}$ and $E_{\text{cut}}$ determines the balance between computational cost and accuracy.
-- The KS orbitals are then used to construct the electron density at each SCF iteration. This iterative procedure yields a self-consistent electronic density, obtained under the periodic KS potential of the crystal.
+To summarise: 
+- In a periodic solid, the KS equations must be solved for $M$ bands at each of the $\text{NKPT}$ sampled $\mathbf{k}$-points in the first BZ. Each KS orbital is expressed as a Bloch function expanded in a plane wave basis, truncated at an energy cutoff $E_{\text{cut}}$. The choice of $\text{NKPT}$ and $E_{\text{cut}}$ dominates the tradeoff between computational cost and accuracy of the approximation.
+- We use the set of KS orbitals written as Bloch functions expanded in a plane wave basis to construct an initial guess to the electron density, which we iteratively refine via the **SCF procedure**. This iterative procedure yields a self-consistent electronic density, obtained under the periodic KS potential of the crystal.
 
 ### Geometry optimisation and the Hellmann-Feynmann theorem
 
-After convergence of the SCF cycle, we obtain a trial ground state electronic energy, $E_e^{\prime}[n_0^{\prime}]$, which is our best estimate of the exact ground state electronic energy $E_e$.
+After convergence of the SCF procedure, we obtain a trial ground state electronic energy, $E_e^{\prime}[\rho^{\prime}]$, which is our best estimate of the exact ground state electronic energy $E_e[\rho_0]$.
 
 The electronic Hamiltonian depends parameterically on the nuclear coordinates $`\{\mathbf{R}_I\}`$ through the electron-nucleus Coulomb potential $V_{en}$. Within the Born-Oppenheimer (BO) approximation, the ground state total enery of the system is obtained by adding the nucleus-nucleus Coulomb energy
 ```math
@@ -236,7 +231,7 @@ E_{nn} = \frac{1}{2} \sum_{I \neq J} \frac{Z_I Z_J}{|\mathbf{R}_I - \mathbf{R}_J
 ```
 This term is purely classical in the BO framework: the nuclear kinetic energy is set to zero, and the nuclei act as fixed point charges. Hence the approximate total energy for a given nuclear configuration is
 ```math
-E_{T}^{\prime} = E_e^{\prime}[n_0^{\prime}(\mathbf{r})] + E_{nn}
+E_{T}^{\prime} = E_e^{\prime}[\rho^{\prime}] + E_{nn}
 ```
 
 **Is $E_{T}^{\prime}$ the best possible estimate of the ground state total energy of the system?**
@@ -266,17 +261,40 @@ H_{I,J}^{\alpha \beta} = \frac{\partial^2 E_{T}^{\prime}}{\partial R_I^{\alpha} 
 
 \* Note that, when using localised atomic basis sets an additional **Pulay force** must be included, because the basis set changes with the geometry.
 
+### Practical considerations for DFT simulations
+
+Throughout the preceding discussion on DFT, it is evident that to implement DFT numerically requires several different approximations, where our choices in this regard strike a balance between computational cost and accuracy.
+
+In practice, we use software tools which implement the equations of DFT (such as Abinit), where the approximations which control computational cost and accuracy are set via a number of different input files or parameters:
+
+
+1. Exchange-correlation functional (input file / parameter)
+   - Choice of LDA, GGA, or hybrid functional etc. affects accuracy for all observables: energies, forces, vibrational properties and band gaps.
+2. Pseudopotentials (input file)
+   - Replaces core electrons with an effective potential to reduce computational cost.
+   - Choice influences accuracy of forces, total energy, and electronic structure
+3. Plane-wave basis set and energy cutoff (parameter)
+   - Determines the maximum kinetic energy of plane waves included in the expansion
+   - Higher cutoffs improve spatial resolution but increase computational cost.
+4. $\mathbf{k}$-point sampling (parameter)
+   - Discretisation of the Brillouin zone for periodic systems.
+   - Denser meshes are needed for metals, fewer points suffice for insulators/semiconductors
+   - Symmetries can reduce the number of unique $\mathbf{k}$-points.
+5. Number of bands (parameter)
+   - All valence states must be included; additional conduction states may be included to study conduction properties
+6. SCF convergence criteria (parameters)
+   - Convergence thresholds for density, total energy, and/or forces.
+   - Determines the numerical accuracy of ground-state density and energy
+7. Geometry optimisation criteria (parameter)
+   - Force tolerance: convergence criterion for the PES minimum
+8. Optional enhancements (parameters)
+   - Spin polarisation for magnetic systems.
+   - Dispersion corrections (DFT-D) for weakly bound systems.
+   - Smearing methods for metallic occupations (Methfessel-Paxton, Gaussian, Fermi-Dirac)
+  
+Several of the above parameters must be **systematically converged** to ensure that the calculated observables are independent of the chosen discretisation. The most important are the **plane-wave cutoff** and the **k-point mesh**, which both affect the accuracy of the determination of total energies, stresses and forces.
 
 <!--
-
-### Practical considerations
-
-- Choice of pseudopotential
-- Choice of exchange correlation functional
-- Plane wave cutoff convergence
-- K-point mesh convergence
-- NBANDS - Abinit fills electronic states by counting valence electrons in pseudopotential file and occupying lowest levels (initial guess to the ground state)
-
 ### Extensions 
 Briefly mention excited state DFT, spin-polarised DFT (i.e. brief high-level overview)
 
@@ -301,7 +319,7 @@ Required input files:
   - Definition of the SCF procedure
 <!-- - Optional: parallelisation -->
 
-Note on units: Abinit uses Hartree, 1 Ha = $\hbar^2/(m_e r_0^2)$ \approx 27.21 eV$ $\approx$ total energy of the H atom in its ground state determined via the Bohr model.
+Note on units: Abinit uses Hartree, $1 Ha = \hbar^2/(m_e r_0^2) \approx 27.21 \text{eV} \approx$ total energy of the H atom in its ground state determined via the Bohr model.
 
 During a self-consistent field (SCF) calculation, **Abinit** generates several output files. Aside from the log files, printed to the standard output (e.g. the terminal) or the more compact log written in `ab.abo`, they share the common prefix `abo_`, followed by a string which identifies what each output file contains. For a standard SCF calculation, we generally obtain the following output files:
 
