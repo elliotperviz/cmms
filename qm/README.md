@@ -210,7 +210,7 @@ With the Bloch functions defined, the KS equations become
 ```
 where we have a unique equation for each KS state $(n,\mathbf{k})$, and we mark each one electron wavefunction $\phi_{n,\mathbf{k}}^{\prime}$ with a prime symbol since, due to truncation of the plane wave basis, it is an *approximation* to the true one-electron wavefunction.
 
-The ground state density is then obtained by summing over all occupied bands (states) and integrating over in reciprocal space:
+The ground state density is then obtained by summing over all occupied bands (states) and integrating in reciprocal space:
 ```math
 \rho^{\prime}(\mathbf{r}) = \sum_n^{N_e} \int {|\phi_{n,\mathbf{k}}^{\prime}(\mathbf{r})|}^2 \mathrm{d}\mathbf{k}.
 ```
