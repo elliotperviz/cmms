@@ -180,7 +180,7 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
 
 <!-- In the future, it would be useful to have Abipy installed, since we would be able to extract the geometry at each geometric step, and visualise the "trajectories" e.g. in Ovito -->
 
-## Band structure
+## 2. Band structure
 
 Next, we will extract and visualise the band structure (energy eigenvalues of the solutions to the Kohn-Sham equations).
 
@@ -222,6 +222,10 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
   xmgrace abo_DS3_EBANDS.agr
   ```
 
+  You should see that the energy (y-axis) is in eV. Internally, Abinit uses Ha (Hartree) for energy, but the .agr script (which is a default output provided by Abinit) automatically performs the unit conversion.
+
+  Another useful feature of this script is that the Fermi level is pre-subtracted from the energy eigenvalues, such that the Fermi level lies at 0 eV. This allows us to see immediately whether the Fermi level coincides with a real state and to understand the electronic nature of the material (conducting, semi-conducting, insulating etc.).
+
   We can further customise the visualisation to add relevant labels. In the `xmgrace` window:
   - Navigate via the tasbar to the "Axes" window<br>
     Plot -> Axis properties
@@ -229,10 +233,14 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
     You may proceed to add labels for the specific k-points that we chose to sample in the BZ.<br>
     The gamma symbol may be entered via the string `\xG`
 
+- Visualise the density of states
+
+  
+
 **Questions**
 
 - What is the size of the band gap (if any)? Is the system conducting, semi-conducting, or insulating?
-- If the system is insulating/semi-conducting At which \mathbf{k}-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
+- If the system is insulating/semi-conducting At which $\mathbf{k}$-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
 - How do the above results compare to experimental literature?
 
 DOS
