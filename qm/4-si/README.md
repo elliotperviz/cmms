@@ -224,7 +224,7 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
 
   You should see that the energy (y-axis) is in eV. Internally, Abinit uses Ha (Hartree) for energy, but the .agr script (which is a default output provided by Abinit) automatically performs the unit conversion.
 
-  Another useful feature of this script is that the Fermi level is pre-subtracted from the energy eigenvalues, such that the Fermi level lies at 0 eV. This allows us to see immediately whether the Fermi level coincides with a real state and to understand the electronic nature of the material (conducting, semi-conducting, insulating etc.).
+  Another useful feature of this script is that the energy eigenvalues are offset by the Fermi level (Fermi level is subtracted from each eigenvalue), such that the Fermi level lies at 0 eV. This allows us to see immediately whether the Fermi level coincides with a real state and to understand the electronic nature of the material (conducting, semi-conducting, insulating etc.).
 
   We can further customise the visualisation to add relevant labels. In the `xmgrace` window:
   - Navigate via the tasbar to the "Axes" window<br>
@@ -233,45 +233,220 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
     You may proceed to add labels for the specific k-points that we chose to sample in the BZ.<br>
     The gamma symbol may be entered via the string `\xG`
 
+  Of course, we could also use `gnuplot` to plot the band structure, but we would first have to post-process the eigenvalues file ("abo_DS2_EIG"). Generally, if we want full customisation and control over the style of our plots, this would be the preffered approach; however, for quick checks `xmgrace` suffices.
+
 - Visualise the density of states
 
+  Unlike for the band structure, Abinit does not provide the energy eigenvalues offset by the Fermi level, and the units are in Ha (not eV). So, we will use the following commands to post-process the total DOS file to prepare for plotting:
+
+  ```bash
+  efermi=$(grep Fermi abo_DS2_DOS_TOTAL | awk '{print $5}')
+  ln=$(grep -n "energy(Ha)" abo_DS2_DOS_TOTAL | cut -d: -f1)
+
+  awk -v ef="$efermi" -v ln="$ln" '
+  BEGIN { printf "# Fermi = %.5f eV\n", ef }
+  NR==ln { printf "# energy(eV)  DOS1  DOS2\n"; next }
+  NR>ln { printf "%.5f %.4f %.4f\n", ($1-ef)*27.114, $2, $3 }
+  ' abo_DS2_DOS_TOTAL > DOS_TOTAL_SHIFTED
+  ```
+
+  Then plot with `gnuplot`, e.g.
+  ```bash
+  gnuplot > plot "DOS_TOTAL_SHIFTED" u 1:2 w l
+  ```
+
+  Optionally, you may want to plot columns 1:3, which will plot the integrated DOS.
+
+- Visualise the atom-projected (and orbital decomposed) DOS
+
+  We previously plotted the total DOS, which is a default output from `Abinit`. Additionally, we have computed the atom-projected and orbital-decomposed DOS, obtained by projecting the Kohn-Sham wavefunctions expressed in the plane-wave basis onto atom-centered orbitals and decomposing them according to their quantum numbers ($n$, $l$, $m$). This allows us to resolve the contributions of specific atoms and orbitals (e.g. s, p, d) to the electronic states at each energy.
+
+  For the total DOS, the output file "abo_DS2_DOS_TOTAL". Using the same dataset, the atom-projected DOS generates separate files for each atom in the unit cell. We have, for a 2-atom primitive unit cell of silicon:
+  - "abo_DS2_DOS_AT0001" (atom 1)
+  - "abo_DS2_DOS_AT0002" (atom 2)
   
+  Inspecting each file (e.g. with `vim`), the 1st column corresponds to the energy, followed by columns representing the DOS contributions from the different atomic orbitals. Using `gnuplot`, one can plot individual columns to visualise the DOS of specific orbitals or sum selected columns to obtain collective contributions from groups of orbitals.
+
+  It is important to note that summing all columns of the atom-projected and orbital-decomposed DOS will **not** exactly reproduce the total DOS. This is because the set of atomic orbitals forms an incomplete basis for representing the full Kohn–Sham wavefunctions in the plane-wave space. As a result, while the projection-based DOS provides a meaningful decomposition into atomic and orbital contributions, it does not exactly equal the total DOS.
+
+**Comments**
+
+- For the default parameters that we set in the `Abinit` input file, the density of the $\mathbf{k}$-point mesh when calculating the DOS is quite sparse. We can see this in the discontinuous nature of the DOS plot. For more accurate calculations, we should sample the DOS (and band structure) at a much higher density than what we use to calculate the ground state energy/density via the SCF procedure. At the very least, if discontinuities *do* appear in the band structure, we want to know that this is a real physical phenomenon, and not due to our choice of sampling density in the reciprocal space.
 
 **Questions**
 
 - What is the size of the band gap (if any)? Is the system conducting, semi-conducting, or insulating?
-- If the system is insulating/semi-conducting At which $\mathbf{k}$-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
-- How do the above results compare to experimental literature?
+    - Is there are differerence between the DOS and band structure estimate of the band gap? If so, why?
+    - If the system is insulating/semi-conducting, at which $\mathbf{k}$-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
+    - How do our results compare to experimental/computational literature?
+- Aside from increasing the density of the $\mathbf{k}$-point mesh, how else can we improve the accuracy of our estimate of the band gap?
 
-DOS
+**Optional Objectives**
 
-```bash
-efermi=`grep Fermi abo_DS2_DOS_TOTAL | awk '{print $5}'`
-cp abo_DS2_DOS_TOTAL DOS_TOTAL
-# remove header from DOS_TOTAL
-awk -v ef=$efermi '{printf("%.5f %.4f %.4f \n", ($1-ef)*27.114, $2, $3)}' DOS_TOTAL > DOS_TOTAL_SHIFTED
-```
-and plot...
+- Visualise the electron localisation function
 
-for better formatting we also provide a script "plot_dos.gp", gnuplot -> load plot_dos.gp
+  First, we need to convert "abo_DS1_ELF" to a VESTA-compatible format using the Abinit post-processing tool `cut3d`.
 
-Comments: for smoother DOS profile, need to sample more k-points...
+  Type
+  ```bash
+  cut3d
+  ```
 
-Atom-projcted DOS: plot each file with gnuplot
--> show contribution of each orbital
--> demonstrate that we can combine different columns in gnuplot ... e.g.
-```bash
-gnuplot
-plot "..." u1:($2+$3+$4) ...
-```
+  And when prompted, enter the following information:
+  ```bash
+     What is the name of the 3D function (density, potential or wavef) file ?
+  -> abo_DS1_ELF
+     What is your choice ? Type:
+  -> 9
+  # Option 9 tells cut3d to create an output xsf file (cut3d gives you a list of options, you select 9)
+     Enter the name of an output file:
+  -> abo_DS1_ELF.xsf
+  #the name is optional, but make sure you specify the file type (.xsf) correctly
+     Do you want to shift the grid along the x,y or z axis (y/n)?
+  -> n
+     More analysis of the 3D file ? ( 0=no ; 1=default=yes ; 2= treat another file - restricted usage)
+  -> 0
+  ```
 
-ELF
+  Then, we can open "abo_DS1_ELF.xsf" in `vesta`.
 
-cut3d
+  Depending on the default isosurface value set by VESTA we may not initially see any surface aside from the atoms.
 
-abo_DS2_ELF -> .xsf
-option 9
-plot in vesta
-show isosurfaces and/or lattice planes
+  To change the isosurface value, navigate via the taskbar: "Objects" -> "Properties" -> "Isosurfaces". Here you can edit the isosurface value to be between 0 and 1 (or the specified minimum and maximum values). Try setting different isosurface values and observe how the volume of the isosurface varies from 0 -> 1 (corresponding to observing regions of higher and higher electron localisation).
 
+## 3. Convergence study
 
+To quantify the accuracy of the observable properties (e.g., total energy, forces, or derived quantities), we perform a *convergence* study. For general ground state calculations, the two main parameters are `ecut` (energy cutoff of the plane-wave basis) and `ngkpt` (density of the $\mathbf{k}$-point mesh).
+
+In principle, one could vary each parameter independently. However, because the plane-wave basis depends on both the energy cutoff and $\mathbf{k}$-point mesh, the convergence of one parameter can influence the other. In practice, it is therefore necessary to perform two or more rounds of convergence testing until the final values of both parameters are determined reliably.
+
+### a) Energy cutoff convergence
+
+- Navigate to the appropriate directory
+  ```bash
+  cd ../3-ecut
+  ```
+
+- Inspect the contents of the directory
+  ```bash
+  perviell@postel:2-bs$ ls
+  ab.in si.psp8
+  ```
+  As usual, we provide the required Abinit input file "ab.in" and the Si pseudopotential file "si.psp8".
+ 
+- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
+  Note: we define 5 different datasets, increasing `ecut` in steps of $100$ eV from $200$-$600$ eV, and for each dataset perform a single SCF procedure.
+
+**Objectives**
+
+- Run Abinit
+  ```bash
+  abinit ab.in
+  ```
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
+
+  Once the simulation concludes, we should find output files related to datasets 1-5 in our working directory.
+
+- Check that each SCF procedure converges within the maximum number of steps specified<br>
+  Hint: use `grep`... or inspect the file e.g. with `vim`, or you could try the following `awk` command which prints each SCF procedure in blocks:
+  ```bash
+  awk '/ETOT/ {
+    if ($2 == 1 && NR > 1) print "";
+    print
+  }' ab.abo
+  ```
+
+- Extract and plot the ground state total energy as a function of energy cutoff
+
+  We are interested in the final value of the total energy at the end of each SCF cycle. The keyword we are looking for is `etotal`. To search and collect the data in an easy-to-plot format, we can use the following commands to create the file "ecut.dat":
+
+  ```bash
+  grep -E "etotal[0-9]" ab.abo |  sed -n 's/etotal//p' | sed 's/^[[:space:]]*//' > ecut.dat
+  awk 'NR==1{diff=0; printf "%-3s %18.10f %18.10f\n", $1, $2, diff; prev=$2; next} 
+     {diff=$2-prev; printf "%-3s %18.10f %18.10f\n", $1, $2, diff; prev=$2}' ecut.dat > tmp && mv tmp ecut.dat
+  ```
+
+  Then plot "ecut.dat" using `gnuplot`:
+  ```bash
+  gnuplot> plot "ecut.dat" using 1:2 with linespoints
+  ```
+
+  Normally, we would identify a numerical tolerance in the change in the total energy, where if the difference from one `ecut` to the next is smaller than this tolerance, then `ecut` is converged.
+
+  If you inspect the 3rd column of "ecut.dat", this corresponds to the difference from one SCF procedure to the next, as we vary `ecut`. For example:
+  ```bash
+  1        -8.4484760639       0.0000000000
+  2        -8.4552176751      -0.0067416112
+  3        -8.4555971734      -0.0003794983
+  4        -8.4557165282      -0.0001193548
+  5        -8.4557326724      -0.0000161442
+  ```
+
+  Recall that the energy range we are considering is from $200$-$600$ eV, in steps of $100$ eV. We see that between datasets 4 and 5 the difference in total energy is $ < 1.0 \cdot 10^{-4}$ Ha. We see that that increasing the cutoff from $500$-$600$ eV (from dataset 4-5) changes the total energy by $ < 1.0 \cdot 10^{-4}$ Ha. If this is smaller than the tolerance we chose, then $500$ eV is sufficient to reach our target accuracy. This is a reasonable value even for a production calculation on Si, although for better accuracy we might try to reach $ < 1.0 \cdot 10^{-5}$ Ha.
+
+  Note that the ouput values of energy (and change in energy) may be slightly different from one simulation to the next (also depending if we have changed other parmaters), so do not blindly select a specific `ecut` value because we say it here, check that the tolerance criterion is met!
+
+  may obtain slightly different values in the values of the total energy and change from one step to the next, so the optimal value of `ecut` may differ 
+
+  Remember, there is always a tradeoff between computational accuracy and cost. If we increase `ecut` too far, we won't be able to run the calculation in a reasonable time.
+
+  Note: Be careful when working with Abinit about units, as the units of the energy cutoff we specify in the input depends on the choice of the user. On the other hand, the energies we extract from the Abinit output are *always* in Ha.
+
+### b) k-point mesh convergence
+
+- Navigate to the appropriate directory
+  ```bash
+  cd ../4-kpt
+  ```
+
+- Inspect the contents of the directory
+  ```bash
+  perviell@postel:2-bs$ ls
+  ab.in si.psp8
+  ```
+  As usual, we provide the required Abinit input file "ab.in" and the Si pseudopotential file "si.psp8".
+ 
+- Inspect the Abinit input file with `vim`/`less`/`cat`, check that you understand the meaning of each keyword that we use.<br>
+  Note: we again define 5 different datasets with grid densities between 2x2x2 to 10x10x10 (notation specifies density along each reciprocal axis), increasing in steps of 2x2x2. For each dataset we perform a single SCF procedure.
+
+**Objectives**
+
+- Update `ecut` in "ab.in" to specify the converged energy cutoff obtained in the last step.
+
+- Run Abinit
+  ```bash
+  abinit ab.in
+  ```
+  And follow the standard output (what is printed to the terminal) as the simulation is executed.
+
+  Once the simulation concludes, we should find output files related to datasets 1-5 in our working directory.
+
+- Check that each SCF procedure converges within the maximum number of steps specified<br>
+  Hint: use `grep`... or inspect the file e.g. with `vim`, or you could try the following `awk` command which prints each SCF procedure in blocks:
+  ```bash
+  awk '/ETOT/ {
+    if ($2 == 1 && NR > 1) print "";
+    print
+  }' ab.abo
+  ```
+
+- Extract and plot the ground state total energy as a function of $\mathbf{k}$-point mesh density.
+
+  We are interested in the final value of the total energy at the end of each SCF cycle. The keyword we are looking for is `etotal`. To search and collect the data in an easy-to-plot format, we can use the `grep`/`awk` commands as we used for the previous convergence step:
+
+  ```bash
+  grep -E "etotal[0-9]" ab.abo |  sed -n 's/etotal//p' | sed 's/^[[:space:]]*//' > kpt.dat
+  awk 'NR==1{diff=0; printf "%-3s %18.10f %18.10f\n", $1, $2, diff; prev=$2; next} 
+     {diff=$2-prev; printf "%-3s %18.10f %18.10f\n", $1, $2, diff; prev=$2}' kpt.dat > tmp && mv tmp kpt.dat
+  ```
+
+  Then plot "kpt.dat" using `gnuplot`:
+  ```bash
+  gnuplot> plot "kpt.dat" using 1:2 with linespoints
+  ```
+
+  At what $\mathbf{k}$-point mesh density do we obtain convergence?
+
+**Optional Objectives**
+
+- We have run a single convergence test for `ecut` and `ngkpt`. As noted earlier, in general each parameter influences the other. Thus, we should perform a second round of convergence checks. If we obtain the same values of each parameter, then we have finished the convergence study.
