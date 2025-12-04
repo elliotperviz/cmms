@@ -7,10 +7,14 @@ pseudos "si.psp8"
 chkprim 0
 #tolsym 1e-6
 chksymbreak = 0
+prtvol 1
 
 #Definition of the unit cell
-acell 1.0 1.0 1.0 Angstrom 
+acell     7.3193241676E+00  7.3193241676E+00  7.3193241676E+00 Bohr
 rprim
+     0.0000000000E+00  7.0710678119E-01  7.0710678119E-01
+     7.0710678119E-01  0.0000000000E+00  7.0710678119E-01
+     7.0710678119E-01  7.0710678119E-01  0.0000000000E+00
  
 #Definition of the atom types
 ntypat 1          # There is only one type of atom
@@ -23,12 +27,8 @@ znucl 14          # The keyword "znucl" refers to the atomic number of the
 #Definition of the atoms
 natom 2           # There are two atoms
 typat 1 1         # They both are of type 1, that is, Silicon.
-xred              # This keyword indicate that the location of the atoms
-                  # will follow, one triplet of number for each atom
-                  # Triplet giving the REDUCED coordinate of atom 1.
-                  # Triplet giving the REDUCED coordinate of atom 2.
-                  # Note the use of fractions (remember the limited 
-                  # interpreter capabilities of ABINIT)
+xcart     5.4621001274E-30 -4.2703885440E-30  1.8980067256E-30
+          2.5877718763E+00  2.5877718763E+00  2.5877718763E+00
 
 #Definition of the planewave basis set
 ecut  400 eV         # Maximal kinetic energy cut-off, in Hartree
@@ -51,6 +51,7 @@ ndtset 3 jdtset 1 2 3
 #DATASET1 : scf calculation: GS WF in the BZ
 #********************************************
    toldfe1    1.0d-6
+   prtelf1    1            # Print the electron localisation function (ELF)
 
 #DATASET2 : non scf calculation: GS WF in the whole BZ
 #*****************************************************
@@ -63,7 +64,6 @@ ndtset 3 jdtset 1 2 3
 dosdeltae2    0.0069986 eV # Linear grid resolution (energy increment) for computation of DOS (non-zero prtdos)
    prtdos2    3            # Atom-projected angular momentum decomposed DOS (LDOS) (l quantum number)
   prtdosm2    1            # Also, activate m-decomposition (l,m unique states)
-   prtelf2    1            # print the electron localisation function
 
 #DATASET3 : Electronic Band Structure
 #********************************************

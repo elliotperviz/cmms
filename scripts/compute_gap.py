@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Compute band gap (and direct/indirect nature) from ABINIT ASCII outputs.
 

@@ -30,7 +30,7 @@ xred
                   
 
 #Definition of the planewave basis set
-ecut  200.0  eV      
+ecut   eV      
 ecutsm 0.5
 
 #Definition of the k-point grid
