@@ -1,4 +1,6 @@
 #!/bin/bash
+source /opt/miniconda3/etc/profile.d/conda.sh
+conda activate phonopy
 
 phonopy --abinit -d disp.conf -c prim.in
 
