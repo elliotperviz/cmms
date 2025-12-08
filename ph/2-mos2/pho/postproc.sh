@@ -3,7 +3,7 @@ source /opt/miniconda3/etc/profile.d/conda.sh
 conda activate phonopy
 
 # Extract forces
-phonopy --abinit --tolerance1e-8 --fz superc/ab.abo {001..004}/ab.abo
+phonopy --abinit --tolerance=1e-8 --fz superc/ab.abo {001..004}/ab.abo
 
 # Post-process band structure
 phonopy --abinit --tolerance=1e-8 -c prim.in -p band.conf
