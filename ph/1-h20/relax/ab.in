@@ -1,20 +1,7 @@
 # H2O molecule in a big box
-#
-# Print the charge density that corresponds to optimized 
-# interatomic distance.
-
-prtden 0
-ixc    1
-prtposcar 1
-
-pseudos "o.psp8, h.psp8"
-
-#-----------------------------------------------------------------
-
 
 #Definition of the unit cell
-acell 15 15 15    # 7.9376583099 Angstrom # The keyword "acell" refers to the
-                                          # lengths of the primitive vectors (in Bohr)
+acell 20 20 20    # Cell lattice vector scaling 
 rprim  1 0 0      # Real space PRIMitive translations
        0 1 0
        0 0 1 
@@ -30,14 +17,21 @@ znucl 8 1           # The keyword "znucl" refers to the atomic number of the
 #Definition of the atoms
 natom 3           # There are three atoms
 typat 1 2 2       # the first is of type 1, the second and the third are of type 2
-#typat 1 2*2
 xred                                                           
-    0.49762495126452E+00     0.50000000000000E+00     0.50000000000000E+00
-    0.57452083036774E+00     0.40358751724348E+00     0.50000000000000E+00
-    0.57452083036774E+00     0.59641248275653E+00     0.50000000000000E+00
+    0.4615520604483900  0.4999999999999999  0.5000000000000000
+    0.5384479395516100  0.4035875172434799  0.5000000000000000
+    0.5384479395516100  0.5964124827565200  0.5000000000000000
+
+pseudos "o.psp8, h.psp8"
+
+prtden    0
+prtwf     0
+prtposcar 1
+ixc       11
 
 #Definition of the planewave basis set
-ecut 10.0         # Maximal kinetic energy cut-off, in Hartree
+ecut 20.0         # Maximal kinetic energy cut-off, in Hartree
+ecutsm 0.5        # Energy cutoff smearing
 
 #Definition of the k-point grid
 kptopt 0          # Enter the k points manually 
@@ -45,8 +39,8 @@ nkpt 1            # Only one k point is needed for isolated system,
                   # taken by default to be 0.0 0.0 0.0
 
 #Definition of the SCF procedure
-nstep 100          # Maximal number of SCF cycles
-toldfe 1.0d-5     # Will stop when, twice in a row, the difference
+nstep 100         # Maximal number of SCF cycles
+toldfe 1.0d-9     # Will stop when, twice in a row, the difference
                   # between two consecutive evaluations of total energy
                   # differ by less than toldfe (in Hartree)
                   # This value is way too large for most realistic studies of materials
@@ -56,4 +50,14 @@ diemac 2.0        # Although this is not mandatory, it is worth to
                   # is described in the "dielng" input variable section.
                   # Here, we follow the prescriptions for molecules
                   # in a big box
+
+ndtset 2 jdtset 1 2
+
+#DATASET 2: geometry optimization
+#################################
+dilatmx2  1.1
+optcell2  0
+ionmov2   2
+ntime2    200
+tolmxf2   1.0d-5
 

@@ -1,0 +1,25 @@
+# H2O molecule in a big box
+
+#Definition of the unit cell
+acell 20 20 20    # Cell lattice vector scaling
+rprim  1 0 0      # Real space PRIMitive translations
+       0 1 0
+       0 0 1 
+
+#Definition of the atom types
+ntypat 2          # There is only one type of atom
+znucl 8 1           # The keyword "znucl" refers to the atomic number of the 
+                  # possible type(s) of atom. The pseudopotential(s) 
+                  # mentioned in the "files" file must correspond
+                  # to the type(s) of atom. 
+
+#Definition of the atoms
+natom 3           # There are three atoms
+typat 1 2 2       # the first is of type 1, the second and the third are of type 2
+xred
+    4.7455971681E-01  5.0000000000E-01  5.0000000000E-01
+    5.3194411137E-01  4.2797819273E-01  5.0000000000E-01
+    5.3194411137E-01  5.7202180727E-01  5.0000000000E-01
+
+
+
