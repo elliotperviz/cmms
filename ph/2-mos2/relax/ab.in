@@ -30,6 +30,15 @@ prtposcar 1
 ixc       11
 tolsym    1e-8
 
+#autoparal 1
+#max_ncpus 128
+paral_kgb 1
+
+np_spkpt 7
+npfft 2
+npband 9
+bandpp 1
+
 #Definition of the planewave basis set
 ecut 20.0         # Maximal kinetic energy cut-off, in Hartree
 ecutsm 0.5
