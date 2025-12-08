@@ -166,9 +166,6 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
 
   Once the simulation concludes, we should find output files related to datasets 1 and 2 in our working directory.
 
-- Check that the maximum force component on the atoms is smaller than the chosen tolerance<br>
-  Hint: Look for the string "Cartesian forces" at the end of each geometric step in "ab.abo" or the standard output.
-
 - Check that each SCF procedure converges within the maximum number of steps specified<br>
   Hint: use `grep`... or inspect the file e.g. with `vim`, or you could try the following `awk` command:
   ```bash
@@ -177,6 +174,9 @@ Our first task is to optimise the geometry of the *primitive* cell of crystallin
     print
   }' ab.abo
   ```
+
+- Check that the final maximum force component on the atoms is smaller than the chosen tolerance<br>
+  Hint: Look for the string "Cartesian forces" at the end of each geometric step in "ab.abo" or the standard output.
 
 <!-- In the future, it would be useful to have Abipy installed, since we would be able to extract the geometry at each geometric step, and visualise the "trajectories" e.g. in Ovito -->
 
