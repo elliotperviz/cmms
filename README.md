@@ -85,12 +85,13 @@ Separate to the calculation of equilibrium properties, we also provide a tutoria
 
 ### Quantum Mechanics
 
-1) [H2 molecule: electronic properties](qm/1-h2)
-2) [H atom: electronic orbitals](2-h)
-3) [H2O molecule: importance of geometry and the exchange correlation functional](3-h2o)
-4) [Diamond Si: geometry optimisation, band structure, convergence studies](4-si)
+1) [H<sub>2</sub> molecule: electronic properties](qm/1-h2)
+2) [H atom: electronic orbitals](qm/2-h)
+3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](qm/3-h2o)
+4) [Diamond Si: geometry optimisation, band structure, convergence studies](qm/4-si)
 5) [Carbon: TBC](5-c)
 
 ### Phonons
 
-**TBA**
+1) [Phonon band structure of the isolated H<sub>2</sub>O molecule](ph/1-h2o)
+2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2)
