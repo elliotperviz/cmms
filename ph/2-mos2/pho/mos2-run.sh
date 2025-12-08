@@ -1,6 +1,6 @@
 #!/bin/bash
 
-phonopy --abinit -d disp.conf -c prim.in
+phonopy --abinit --tolerance=1e-8 -d disp.conf -c prim.in
 
 # Variable definitions
 list=`ls supercell-*.in | grep -oE '[0-9]{3}'`
@@ -12,7 +12,7 @@ cd $i; cat supercell-$i.in ab_common > ab.in ; rm supercell-$i.in ab_common; ln 
 done
 
 # Run abinit
-for j in $list ; do cd $j; abinit ab.in | tee out ; cd ../ ; done
+for j in $list ; do cd $j; mpirun -np 4 abinit ab.in | tee out ; cd ../ ; done
 
 # Check calculations
 grep -A 1 "Calculation completed" */out
@@ -29,12 +29,4 @@ phonopy --abinit -c prim.in -p anime_GM.conf
 v_sim anime.ascii
 
 exit 0
-
-
-
-# Post-processing phonon band structure
-phonopy --abinit --tolerance=1e-4 -c lat.in -p band.conf
-
-# Post-processing phonon animation, visualisation with v_sim
-phonopy --abinit --tolerance=1e-4 -c lat.in -p anime_GM.conf
 

@@ -1,0 +1,66 @@
+# MoS2 monolayer
+
+#Definition of the unit cell
+acell 1.0 1.0 1.0 Angstrom
+rprim
+   1.5961189560652260   -2.7645591268287690    0.0000000000000000
+   1.5961189560652260    2.7645591268287690    0.0000000000000000
+   0.0000000000000000    0.0000000000000000   13.3782940000000004
+
+#Definition of the atoms
+ntypat 2
+znucl 42 16
+
+#Definition of the atoms
+natom 6 
+typat 1 1 2 2 2 2
+xred
+   0.6666666666666661    0.3333333333333330    0.2500000000000000
+   0.3333333333333330    0.6666666666666661    0.7500000000000000
+   0.6666666666666661    0.3333333333333330    0.6330819999999990
+   0.3333333333333330    0.6666666666666661    0.3669179999999990
+   0.6666666666666661    0.3333333333333330    0.8669180000000000
+   0.3333333333333330    0.6666666666666661    0.1330819999999990
+
+pseudos "mo.psp8, s.psp8"
+
+prtden    0
+prtwf     0
+prtposcar 1
+ixc       11
+tolsym    1e-8
+
+#Definition of the planewave basis set
+ecut 20.0         # Maximal kinetic energy cut-off, in Hartree
+ecutsm 0.5
+
+#Definition of the k-point grid
+kptopt 1           # Option for the automatic generation of k points, taking
+                   # into account the symmetry
+ngkpt 7 7 1        # This is an nxnx1 grid based on the primitive vectors
+nshiftk 1
+shiftk 0.0 0.0 0.0
+
+#Definition of the SCF procedure
+nstep 100         # Maximal number of SCF cycles
+toldfe 1.0d-9     # Will stop when, twice in a row, the difference
+                  # between two consecutive evaluations of total energy
+                  # differ by less than toldfe (in Hartree)
+                  # This value is way too large for most realistic studies of materials
+diemac 12.0       # Although this is not mandatory, it is worth to
+                  # precondition the SCF cycle. The model dielectric
+                  # function used as the standard preconditioner
+                  # is described in the "dielng" input variable section.
+                  # Here, we follow the prescriptions for molecules
+                  # in a big box
+
+ndtset 2 jdtset 1 2
+
+#DATASET 2: geometry optimization
+#################################
+dilatmx2  1.1
+optcell2  2
+ionmov2   2
+ntime2    200
+tolmxf2   1.0d-5
+
