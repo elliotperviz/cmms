@@ -1,4 +1,5 @@
 #!/bin/bash
+#NOTE: This script should NOT be run by students
 
 list="001 002 003 004"
 

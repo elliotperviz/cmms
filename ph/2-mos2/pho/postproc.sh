@@ -1,4 +1,6 @@
 #!/bin/bash
+source /opt/miniconda3/etc/profile.d/conda.sh
+conda activate phonopy
 
 # Extract forces
 phonopy --abinit --tolerance1e-8 --fz superc/ab.abo {001..004}/ab.abo
