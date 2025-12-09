@@ -238,7 +238,7 @@ To summarise:
 
 After convergence of the SCF procedure, we obtain a trial ground state electronic energy, $E_e^{\prime}[\rho^{\prime}]$, which is our best estimate of the exact ground state electronic energy $E_e[\rho_0]$.
 
-The electronic Hamiltonian depends parametrically on the nuclear coordinates $`\{\mathbf{R}_I\}`$ through the electron-nucleus Coulomb potential $V_{en}$. Within the Born-Oppenheimer (BO) approximation, the ground state total enery of the system is obtained by adding the nucleus-nucleus Coulomb energy
+The electronic Hamiltonian depends parametrically on the nuclear coordinates $`\{\mathbf{R}_I\}`$ through the electron-nucleus Coulomb potential $V_{en}$. Within the Born-Oppenheimer (BO) approximation, the ground state total energy of the system is obtained by adding the nucleus-nucleus Coulomb energy
 ```math
 E_{nn} = \frac{1}{2} \sum_{I \neq J} \frac{Z_I Z_J}{|\mathbf{R}_I - \mathbf{R}_J|}.
 ```
@@ -285,25 +285,25 @@ In practice, we use software tools which implement the equations of DFT (such as
    - Choice of LDA, GGA, or hybrid functional etc. affects accuracy for all observables: energies, forces, vibrational properties and band gaps.
 2. Pseudopotentials (input file)
    - Replaces core electrons with an effective potential to reduce computational cost.
-   - Choice influences accuracy of forces, total energy, and electronic structure
+   - Choice influences accuracy of forces, total energy, and electronic structure.
 3. Plane-wave basis set and energy cutoff (parameter)
-   - Determines the maximum kinetic energy of plane waves included in the expansion
+   - Determines the maximum kinetic energy of plane waves included in the expansion.
    - Higher cutoffs improve spatial resolution but increase computational cost.
 4. $\mathbf{k}$-point sampling (parameter)
    - Discretisation of the Brillouin zone for periodic systems.
-   - Denser meshes are needed for metals, fewer points suffice for insulators/semiconductors
+   - Denser meshes are needed for metals, fewer points suffice for insulators/semiconductors.
    - Symmetries can reduce the number of unique $\mathbf{k}$-points.
 5. Number of bands (parameter)
-   - All valence states must be included; additional conduction states may be included to study conduction properties
+   - All valence states must be included; additional conduction states may be included to study conduction properties.
 6. SCF convergence criteria (parameters)
    - Convergence thresholds for density, total energy, and/or forces.
-   - Determines the numerical accuracy of ground-state density and energy
+   - Determines the numerical accuracy of ground-state density and energy.
 7. Geometry optimisation criteria (parameter)
-   - Force tolerance: convergence criterion for the PES minimum
+   - Force tolerance: convergence criterion for the PES minimum.
 8. Optional enhancements (parameters)
    - Spin polarisation for magnetic systems.
    - Dispersion corrections (DFT-D) for weakly bound systems.
-   - Smearing methods for metallic occupations (Methfessel-Paxton, Gaussian, Fermi-Dirac)
+   - Smearing methods for metallic occupations (Methfessel-Paxton, Gaussian, Fermi-Dirac).
   
 Several of the above parameters must be **systematically converged** to ensure that the calculated observables are independent of the chosen discretisation. The most important are the **plane-wave cutoff** and the **k-point mesh**, which both affect the accuracy of the determination of total energies, stresses and forces.
 
