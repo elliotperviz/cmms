@@ -112,7 +112,7 @@ This reformulation drastically reduces the numerical complexity of the ground st
 
 The Kohn-Sham formulation of DFT introduces a crucial conceptual simplification: the interacting many-electron system is mapped onto an auxiliary system of non-interacting electrons, whose wavefunction is written as a *Slater determinant* of one-electron orbitals $`\{\phi_n\}`$,
 ```math
-\psi_e(\mathbf{r}_{N_e}) = \frac{1}{\sqrt{N_e!}} \det\{\phi_n(\mathbf{r}_n)\}
+\psi_e(\mathbf{r}_{N_e}) = \frac{1}{\sqrt{N_e!}} \det\{\phi_n(\mathbf{r}_n)\}.
 ```
 
 These one-electron orbitals are chosen such that the resulting electron density
