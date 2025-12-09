@@ -238,7 +238,7 @@ To summarise:
 
 After convergence of the SCF procedure, we obtain a trial ground state electronic energy, $E_e^{\prime}[\rho^{\prime}]$, which is our best estimate of the exact ground state electronic energy $E_e[\rho_0]$.
 
-The electronic Hamiltonian depends parameterically on the nuclear coordinates $`\{\mathbf{R}_I\}`$ through the electron-nucleus Coulomb potential $V_{en}$. Within the Born-Oppenheimer (BO) approximation, the ground state total enery of the system is obtained by adding the nucleus-nucleus Coulomb energy
+The electronic Hamiltonian depends parametrically on the nuclear coordinates $`\{\mathbf{R}_I\}`$ through the electron-nucleus Coulomb potential $V_{en}$. Within the Born-Oppenheimer (BO) approximation, the ground state total enery of the system is obtained by adding the nucleus-nucleus Coulomb energy
 ```math
 E_{nn} = \frac{1}{2} \sum_{I \neq J} \frac{Z_I Z_J}{|\mathbf{R}_I - \mathbf{R}_J|}.
 ```
