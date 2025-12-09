@@ -15,7 +15,7 @@ https://docs.abinit.org/variables/
 
 ## Introduction
 
-In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(\mathbf{r}_N,t)$: a probability amplitude defined over all possible configurations of $N$ particles, i.e. $\mathbf{r}_N$ represents the $3N$-dimensional configuration space:
+In quantum mechanics, the state of the system is no longer described by the precise position and momentum of a particle (or particles) but by the *wavefunction* $\Psi(\mathbf{r}_N,t)$, a probability amplitude defined over all possible configurations of $N$ particles, i.e. $\mathbf{r}_N$ represents the $3N$-dimensional configuration space:
 ```math
 (\mathbf{r}_1, \mathbf{r}_2, \dotsc, \mathbf{r}_N) \in \mathbb{R}^3.
 ```
