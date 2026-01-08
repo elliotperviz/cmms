@@ -84,7 +84,7 @@
 |---------|-------------|
 | `>` | Redirect output to a file (overwrite). |
 | `>>` | Redirect output to a file (append). |
-| `|` | Pipe output of one command to another. |
+| `\|` | Pipe output of one command to another. |
 
 ---
 
