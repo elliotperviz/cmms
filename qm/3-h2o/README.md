@@ -1,6 +1,6 @@
 # Abinit Tutorial 3 - H<sub>2</sub>O molecule
 
-In this tutorial we will examine two different choices of initial geometry of the H<sub>2</sub>O molecule, as well as two different choices exchange correlation potential, and the effect of these choices on the ground state charge density.
+In this tutorial we will examine two different choices of initial geometry of the H<sub>2</sub>O molecule, as well as two different choices of exchange correlation potential, and the effect of these choices on the ground state charge density.
 
 It was shown previously in the [H<sub>2</sub> molecule](../1-h2) example that we can obtain the optimum interatomic separation of the H atoms by pulling the atoms apart "by hand" (i.e. not via some automated procedure) and checking which configuration minimised the ground state energy. While it was not mentioned explicitly, this result alludes to a more general phenomenon: **the ground state, as well as other observable properties, are a function of the geometry**. Moreover, the geometry which gives us the best estimate of the ground state is the one that minimises the ground state energy.
 
