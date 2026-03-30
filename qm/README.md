@@ -4,7 +4,7 @@
 
 1) [H<sub>2</sub> molecule: electronic properties](1-h2/)
 2) [H atom: electronic orbitals](2-h/)
-3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](3-h20/)
+3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](3-h2o/)
 4) [Diamond Si: geometry optimisation, band structure, convergence studies](4-si/)
 5) [Diamond C: geometry optimisation, band structure*](5-c/)
 
