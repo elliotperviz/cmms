@@ -27,9 +27,8 @@ znucl 14          # The keyword "znucl" refers to the atomic number of the
 #Definition of the atoms
 natom 2           # There are two atoms
 typat 1 1         # They both are of type 1, that is, Silicon.
-xcart
-     2.5872346203E+00  2.5872346203E+00  2.5872346203E+00
-    -1.2543836284E-30 -3.6403234186E-30  7.6908490416E-30
+xcart     5.4621001274E-30 -4.2703885440E-30  1.8980067256E-30
+          2.5877718763E+00  2.5877718763E+00  2.5877718763E+00
 
 #Definition of the planewave basis set
 ecut  400 eV         # Maximal kinetic energy cut-off, in Hartree
@@ -37,7 +36,7 @@ ecut  400 eV         # Maximal kinetic energy cut-off, in Hartree
 #Definition of the k-point grid
 kptopt 1          # Option for the automatic generation of k points, taking
                   # into account the symmetry
-ngkpt 4 4 4       # This is a 4x4x4 grid based on the primitive vectors
+ngkpt 8 8 8       # This is a 3x3x3 grid based on the primitive vectors
 
 #Definition of the SCF procedure
 nstep 20          # Maximal number of SCF cycles
@@ -46,12 +45,15 @@ diemac 12.0       # Although this is not mandatory, it is worth to
                   # function used as the standard preconditioner
                   # is described in the "dielng" input variable section.
                   # Here, we follow the prescription for bulk silicon.
-
-ndtset 3 jdtset 1 2 3
+#ndtset 3 jdtset 1 2 3
+ndtset 1 jdtset 3
 
 #DATASET1 : scf calculation: GS WF in the BZ
 #********************************************
-   toldfe1     1.0d-6 eV
+   toldfe1     1.0d-6
+   ixc1        -406
+   fockoptmix1 0
+   fockdownsampling1 3*2
    prtelf1     1            # Print the electron localisation function (ELF)
 
 #DATASET2 : non scf calculation: GS WF in the whole BZ

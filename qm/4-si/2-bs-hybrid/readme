@@ -1,0 +1,27 @@
+Determing the band gap using hybrid (HSE06) energy functional
+
+For a reasonably quick test
+
+ecut 400
+ngkpt 9 9 9
+fockdownsampling 3*3
+--> overestimates E_g ~ 1.4 eV
+
+
+Better accuracy
+
+ecut 500
+ngkpt 10 10 10
+fockdownsampling 3*2
+--> reaches E_g ~ 1.2 eV
+
+... convergence of ecut, ngkpt, and mesh for Fock operator calculation must be converged...
+
+
+Benchmark paper: https://doi.org/10.1021/acs.jctc.9b00322
+
+HSE06 paper: https://doi.org/10.1063/1.2404663
+
+
+Abinit documentation page for running hybrid calculations:
+https://docs.abinit.org/topics/Hybrids/
