@@ -1,5 +1,7 @@
 # Abinit Tutorial 4 - Geometry optimisation, band structure and convergence study of crystalline Si-diamond
 
+**NOTES: TO DO**: BAND GAP COMPARISON GGA vs HSE06; BAND FOLDING PRIMITIVE vs CONVENTIONAL, BAND COMPARISON PRISTINE VS B DOPED
+
 In the previous tutorial, we demonstrated that the ground state electron density varies depending on the initial geometry of the H<sub>2</sub>O molecule.
 
 This is in fact a general phenomenon: any physical observable we compute depends on the geometry, because the geometry (i.e. the positions of the nuclei) enters the KS Hamiltonian as a parameter that we hold fixed when solving the TISE. 
@@ -233,21 +235,22 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
     You may proceed to add labels for the specific k-points that we chose to sample in the BZ.<br>
     The gamma symbol may be entered via the string `\xG`
 
-  Of course, we could also use `gnuplot` to plot the band structure, but we would first have to post-process the eigenvalues file ("abo_DS2_EIG"). Generally, if we want full customisation and control over the style of our plots, this would be the preffered approach; however, for quick checks `xmgrace` suffices.
+  Of course, we could also use `gnuplot` to plot the band structure, but we would first have to post-process the eigenvalues file ("abo_DS2_EIG"). Generally, if we want full customisation and control over the style of our plots, this would be the preferred approach; however, for quick checks `xmgrace` suffices.
 
 - Visualise the density of states
 
   Unlike for the band structure, Abinit does not provide the energy eigenvalues offset by the Fermi level, and the units are in Ha (not eV). So, we will use the following commands to post-process the total DOS file to prepare for plotting:
 
   ```bash
-  efermi=$(grep Fermi abo_DS2_DOS_TOTAL | awk '{print $5}')
-  ln=$(grep -n "energy(Ha)" abo_DS2_DOS_TOTAL | cut -d: -f1)
+  FILE="abo_DS2_DOS_TOTAL"
+  efermi=$(grep Fermi $FILE | awk '{print $5}')
+  ln=$(grep -n "energy(Ha)" $FILE | cut -d: -f1)
 
   awk -v ef="$efermi" -v ln="$ln" '
   BEGIN { printf "# Fermi = %.5f eV\n", ef }
   NR==ln { printf "# energy(eV)  DOS1  DOS2\n"; next }
   NR>ln { printf "%.5f %.4f %.4f\n", ($1-ef)*27.114, $2, $3 }
-  ' abo_DS2_DOS_TOTAL > DOS_TOTAL_SHIFTED
+  ' $FILE > DOS_TOTAL_SHIFTED
   ```
 
   Then plot with `gnuplot`, e.g.
@@ -271,14 +274,14 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
 
 **Comments**
 
-- For the default parameters that we set in the `Abinit` input file, the density of the $\mathbf{k}$-point mesh when calculating the DOS is quite sparse. We can see this in the discontinuous nature of the DOS plot. For more accurate calculations, we should sample the DOS (and band structure) at a much higher density than what we use to calculate the ground state energy/density via the SCF procedure. At the very least, if discontinuities *do* appear in the band structure, we want to know that this is a real physical phenomenon, and not due to our choice of sampling density in the reciprocal space.
+- For the default parameters that we set in the `Abinit` input file, the density of the $\mathbf{k}$-point mesh when calculating the DOS is quite sparse. We can see this in the discontinuous nature of the DOS plot. For more accurate calculations, we should sample the DOS (and band structure) at a much higher density than what we use to calculate the ground state energy/density via the SCF procedure. At the very least, if discontinuities *do* appear in the band structure, we want to know that this is a real physical phenomenon, and not due to our choice of Brillouin zone sampling.
 
 **Questions**
 
 - What is the size of the band gap (if any)? Is the system conducting, semi-conducting, or insulating?
-    - Is there are differerence between the DOS and band structure estimate of the band gap? If so, why?
+    - Is there are difference between the DOS and band structure estimate of the band gap? If so, why?
     - If the system is insulating/semi-conducting, at which $\mathbf{k}$-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
-    - How do our results compare to experimental/computational literature?
+    - How do our results compare to experimental/computational literature? It may be useful to consider the following (open-access) paper: https://doi.org/10.1021/acs.jpclett.5b02870
 - Aside from increasing the density of the $\mathbf{k}$-point mesh, how else can we improve the accuracy of our estimate of the band gap?
 
 **Optional Objectives**
