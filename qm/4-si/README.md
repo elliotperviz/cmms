@@ -1,5 +1,7 @@
 # Abinit Tutorial 4 - Geometry optimisation, band structure and convergence study of crystalline Si-diamond
 
+**NOTES: TO DO**: BAND GAP COMPARISON GGA vs HSE06; BAND FOLDING PRIMITIVE vs CONVENTIONAL, BAND COMPARISON PRISTINE VS B DOPED
+
 In the previous tutorial, we demonstrated that the ground state electron density varies depending on the initial geometry of the H<sub>2</sub>O molecule.
 
 This is in fact a general phenomenon: any physical observable we compute depends on the geometry, because the geometry (i.e. the positions of the nuclei) enters the KS Hamiltonian as a parameter that we hold fixed when solving the TISE. 
