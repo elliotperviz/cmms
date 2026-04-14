@@ -276,9 +276,9 @@ Next, we will extract and visualise the band structure (energy eigenvalues of th
 **Questions**
 
 - What is the size of the band gap (if any)? Is the system conducting, semi-conducting, or insulating?
-    - Is there are differerence between the DOS and band structure estimate of the band gap? If so, why?
+    - Is there are difference between the DOS and band structure estimate of the band gap? If so, why?
     - If the system is insulating/semi-conducting, at which $\mathbf{k}$-points are the locations of the **valence band maximum** (VBM) and **conduction band minimum**?
-    - How do our results compare to experimental/computational literature?
+    - How do our results compare to experimental/computational literature? It may be useful to consider the following (open-access) paper: https://doi.org/10.1021/acs.jpclett.5b02870
 - Aside from increasing the density of the $\mathbf{k}$-point mesh, how else can we improve the accuracy of our estimate of the band gap?
 
 **Optional Objectives**
