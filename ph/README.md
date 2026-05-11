@@ -11,7 +11,7 @@ Phonopy is a lattice-dynamics tool that constructs harmonic (second-order) force
 
 - **Generate displaced configurations**: Phonopy builds a set of symmetry-inequivalent finite diplacement configurations. For periodic systems, this typically involves creating an $N$ x $N$ x $N$ supercell to capture interatomic force constants that extend beyond the primitive cell.
 - **Compute forces**: For each configuration, forces are evaluated using the chosen atomistic method, such as an ab initio package (e.g. Abinit or VASP) or a classical simulation tool such as LAMMPS.
-- **Assemble force constants**: Phonopy reads the forces, reconstructs the real-space harmonic force-constant matrix, and performs the appropriate Fourier transforms to obtain the dynamical matrix.
+- **Assemble force constant matrix**: Phonopy reads the forces, reconstructs the real-space harmonic force-constant matrix, and performs the appropriate Fourier transforms to obtain the dynamical matrix.
 - **Solve the eigenvector-eigenvalue problem**: Diagonalisation of the dynamical matrix yields the phonon frequencies and normal-mode eigenvectors, enabling the calculation of phonon band structures, density of states, and related properties.
 
 In **periodic solids**, atoms in one cell interact harmonically with atoms in neighbouring cells, so the second-order force constants extend over several lattice vectors. Finite-displacement calculations in a primitive cell cannot capture these intercell couplings, hence an $N$ x $N$ x $N$ *supercell* is required to sample them.
