@@ -150,7 +150,7 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   Then plot the reaction coordinate vs potential energy e.g. with `gnuplot`:
   ```bash
-  gnuplot> plot "neb_curve.dat" using 1:2 with linespoints lw 2 pt plot "neb_curve.dat" using 1:2 with linespoints lw 2 pt 77
+  gnuplot> plot "neb_curve.dat" using 1:2 with linespoints lw 2 pt 77
   ```
 
 - Visualise the optimisation of the transition path (progression of NEB calculation)
