@@ -12,6 +12,7 @@ tmp
 # -------------------------
 # NEB output files
 # -------------------------
+initial.sivac
 dump.*
 log.lammps.*
 screen.*
