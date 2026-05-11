@@ -1,42 +1,48 @@
 # Crystalline silicon 
 #
-
-pseudos "si.psp8"
+pseudos "si.xml, b.xml"
 #spgroup 227
 #brvltt 0
 chkprim 0
 #tolsym 1e-6
-chksymbreak = 0
+chksymbreak 0
 prtvol 1
 
 #Definition of the unit cell
-acell     7.3193241676E+00  7.3193241676E+00  7.3193241676E+00 Bohr
+acell 1.0 1.0 1.0 Angstrom
 rprim
-     0.0000000000E+00  7.0710678119E-01  7.0710678119E-01
-     7.0710678119E-01  0.0000000000E+00  7.0710678119E-01
-     7.0710678119E-01  7.0710678119E-01  0.0000000000E+00
- 
+     5.4437023729394527    0.0000000000000000    0.0000000000000000
+     0.0000000000000000    5.4437023729394527    0.0000000000000000
+     0.0000000000000000    0.0000000000000000    5.4437023729394527
+
 #Definition of the atom types
-ntypat 1          # There is only one type of atom
-znucl 14          # The keyword "znucl" refers to the atomic number of the 
+ntypat 2          # There is only one type of atom
+znucl 14 5        # The keyword "znucl" refers to the atomic number of the 
                   # possible type(s) of atom. The pseudopotential(s) 
                   # mentioned in the "files" file must correspond
                   # to the type(s) of atom. Here, the only type is Silicon.
 
-
 #Definition of the atoms
-natom 2           # There are two atoms
-typat 1 1         # They both are of type 1, that is, Silicon.
-xcart     5.4621001274E-30 -4.2703885440E-30  1.8980067256E-30
-          2.5877718763E+00  2.5877718763E+00  2.5877718763E+00
+natom 8           # There are two atoms
+typat 7*1 1*2         # They both are of type 1, that is, Silicon.
+xred
+  0.2500000000000000  0.7500000000000000  0.7500000000000000
+  0.0000000000000000  0.0000000000000000  0.0000000000000000
+  0.2500000000000000  0.2500000000000000  0.2500000000000000
+  0.0000000000000000  0.5000000000000000  0.5000000000000000
+  0.7500000000000000  0.7500000000000000  0.2500000000000000
+  0.5000000000000000  0.0000000000000000  0.5000000000000000
+  0.7500000000000000  0.2500000000000000  0.7500000000000000
+  0.5000000000000000  0.5000000000000000  0.0000000000000000
 
 #Definition of the planewave basis set
-ecut  400 eV         # Maximal kinetic energy cut-off, in Hartree
+ecut  500 eV         # Maximal kinetic energy cut-off, in Hartree
+pawecutdg 500 eV
 
 #Definition of the k-point grid
 kptopt 1          # Option for the automatic generation of k points, taking
                   # into account the symmetry
-ngkpt 8 8 8       # This is a 3x3x3 grid based on the primitive vectors
+ngkpt 3 3 3       # This is a 3x3x3 grid based on the primitive vectors
 
 #Definition of the SCF procedure
 nstep 20          # Maximal number of SCF cycles
@@ -45,42 +51,55 @@ diemac 12.0       # Although this is not mandatory, it is worth to
                   # function used as the standard preconditioner
                   # is described in the "dielng" input variable section.
                   # Here, we follow the prescription for bulk silicon.
-#ndtset 3 jdtset 1 2 3
-ndtset 1 jdtset 3
+nband 32
 
-#DATASET1 : scf calculation: GS WF in the BZ
+ndtset 3 jdtset  1 2 4
+
+#DATASET 1: geometry optimization
+#################################
+ dilatmx1  1.1
+ optcell1  2
+ ionmov1   2
+ ecutsm1   0.5
+ ntime1    300
+ tolmxf1   5.0d-5
+ toldfe1   1.0d-6
+ prtwf     1
+
+#DATASET 2 : scf calculation: GS WF in the BZ
 #********************************************
-   toldfe1     1.0d-6
-   ixc1        -406
-   fockoptmix1 0
-   fockdownsampling1 3*2
-   prtelf1     1            # Print the electron localisation function (ELF)
+#   getcell2   1
+#   getxcart2  1
+#   getwfk2    1
+   toldfe2    1.0d-6
+   prtden2    1
+   prtwf2     1
 
-#DATASET2 : non scf calculation: GS WF in the whole BZ
+#DATASET 3 : non scf calculation: GS WF in the whole BZ
 #*****************************************************
-   ixc2       11
-   getden2    1
-   getwfk2    1
-     iscf2   -2            # Non-SCF calculation, read density and compute at specified k-points for a fixed potential
-   tolwfr2    1.0d-10      # Convergence tolerance for largest squared residual over all bands and k-points
-    nband2    20
-   kptopt2    3            # Full k-point grid, no symmetry reductions
-dosdeltae2    0.0069986 eV # Linear grid resolution (energy increment) for computation of DOS (non-zero prtdos)
-   prtdos2    3            # Atom-projected angular momentum decomposed DOS (LDOS) (l quantum number)
-  prtdosm2    1            # Also, activate m-decomposition (l,m unique states)
+#   getcell3   1
+#   getxcart3  1
+   getden3    2
+   getwfk3    2
+     iscf3   -2            # Non-SCF calculation, read density and compute at specified k-points for a fixed potential
+   tolwfr3    1.0d-10      # Convergence tolerance for largest squared residual over all bands and k-points
+   kptopt3    3            # Full k-point grid, no symmetry reductions
+dosdeltae3    0.0069986 eV # Linear grid resolution (energy increment) for computation of DOS (non-zero prtdos)
+   prtdos3    2            # Total DOS
+#  prtdosm3    1            # Also, activate m-decomposition (l,m unique states)
 
-#DATASET3 : Electronic Band Structure
+#DATASET 4 : Electronic Band Structure
 #********************************************
-  ixc3      11
-  getden3   1
-  #getwfk3   1
-  prtden3   0
-  iscf3     -2
-  tolwfr3   1.0d-10
-  nband3    20
-  kptopt3   -11            # kptopt < 0 specifies non-SCF BS calculation, and abs(kptopt) gives number of segments
-  ndivsm3   10             # number of divisions of the smallest segment of the high symmetry path
-  kptbounds3               # Specify the high symmetry path in the BZ 
+#  getcell4  1
+#  getxcart4 1
+  pawfatbnd4 1
+  getden4   2
+  getwfk4   2
+  iscf4     -2
+  tolwfr4   1.0d-10
+  kptopt4   -11            # kptopt < 0 specifies non-SCF BS calculation, and abs(kptopt) gives number of segments
+  ndivsm4   10             # number of divisions of the smallest segment of the high symmetry path
+  kptbounds4               # Specify the high symmetry path in the BZ 
    0.0000   0.0000   0.0000   ! \Gamma
    0.5000   0.0000   0.5000   ! X
    0.5000   0.2500   0.7500   ! W
@@ -93,5 +112,4 @@ dosdeltae2    0.0069986 eV # Linear grid resolution (energy increment) for compu
    0.3750   0.3750   0.7500   ! K
    0.6250   0.2500   0.6250   ! U
    0.5000   0.0000   0.5000   ! X
-
 

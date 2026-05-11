@@ -1,0 +1,13 @@
+
+--- !DilatmxError
+src_file: m_precpred_1geo.F90
+src_line: 256
+mpi_rank: 2
+message: |
+    Dilatmx has been exceeded too many times (4)
+    See the description of dilatmx and chkdilatmx input variables.
+    Action: either first do a calculation with chkdilatmx=0, or 
+    restart your calculation with a larger dilatmx, or larger lattice vectors.
+    Warning: With chkdilatmx = 0 the final computation of lattice parameters might be inaccurate.
+...
+

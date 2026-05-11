@@ -30,6 +30,16 @@ out
 DOS_TOTAL_SHIFTED
 
 # -------------------------
+# Phonopy output files
+# -------------------------
+FORCE_CONSTANTS
+FORCE_SETS
+phonopy_disp.yaml
+phonopy.yaml
+band.yaml
+anime.ascii
+
+# -------------------------
 # Executables and build artefacts
 # -------------------------
 movavg
