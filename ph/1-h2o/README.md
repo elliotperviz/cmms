@@ -85,7 +85,7 @@ Moreover, since we are simulating an isolated water molecule, we do not need to 
   - "h.psp8", "o.psp": pseudopotential files for the different atomic types we are simulating.
   - "disp.conf": Phonopy configuration file which specifies supercell size (`DIM`) and whether we want +/- displacements (`PM`).
   - "band.conf": Phonopy configuration file that instructs phonopy to assemble the force constant matrix at a sequence of wavevectors along a chosen high-symmetry path, and to construct and diagonalise the dynamical matrix at user specified points in reciprocal space to obtain the phonon frequencies and eigenvectors. Parameters such as `BAND` and `BAND_POINTS` define the path and its sampling density.
-  - "anime_GM.conf": Phonopy configuration file which tells phonopy to read the previously constructed force constant matrix and construct the dynamical matrix at a user-specified wavevector (`ANIME=...`). The resulting eigenvectors and eigenfrequencies are written to the output file "anime.ascii", which provides the displacement patters required to visualise or animate the phonon modes at that particular point in reciprocal space.
+  - "anime_GM.conf": Phonopy configuration file which tells phonopy to read the previously constructed force constant matrix and construct the dynamical matrix at a user-specified wavevector (`ANIME=...`). The resulting eigenvectors and eigenfrequencies are written to the output file "anime.ascii", which provides the displacement patterns required to visualise or animate the phonon modes at the chosen position in reciprocal space.
   - "h2o-run.sh": Bash script to automate Abinit SCF calculations and phonopy post-pre/post-processing.
 
 **Objectives**
