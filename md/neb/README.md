@@ -30,8 +30,8 @@ cd 1-init
 
 - Copy the LAMMPS data file for the next step
   ```bash
-  cp initial.sivac ../first/
-  cp initial.sivac ../final/
+  cp initial.sivac ../2-first/
+  cp initial.sivac ../2-final/
   ```
 
 ## Generate initial and final configuration for damped dynamics
