@@ -1,0 +1,83 @@
+# variable definitions
+#variable r equal 2.835		# coordination number cutoff
+variable migrantID equal 304	# ID of migrating atom
+
+# NEB simulation of vacancy hopping in silicon crystal
+units           metal
+
+boundary        p p p			# periodic in all directions
+
+atom_style      atomic 			# no bonds, angles, charges
+atom_modify     map array sort 0 0.0
+
+### initial conf #######
+# diamond unit cell
+read_data       first.sivac
+
+group Si type 1
+########################
+
+# visualisation groups #
+# cartesian coordinates of migrating atom
+variable vx equal x[${migrantID}]
+variable vy equal y[${migrantID}]
+variable vz equal z[${migrantID}]
+
+# define small region around vacancy
+variable h equal 6.0
+
+# compute boundaries
+variable rxlo equal ${vx}-${h}
+variable rxhi equal ${vx}+${h}
+variable rylo equal ${vy}-${h}
+variable ryhi equal ${vy}+${h}
+variable rzlo equal ${vz}-${h}
+variable rzhi equal ${vz}+${h}
+
+region vaccube block ${rxlo} ${rxhi} ${rylo} ${ryhi} ${rzlo} ${rzhi} units box
+group vacbox region vaccube
+group rest subtract all vacbox
+
+group vacneigh id 174 175 301 304 306 331 337
+
+group vacmid subtract vacbox vacneigh
+########################
+
+### force field part ###
+pair_style      sw
+pair_coeff * * ../Si.sw Si
+########################
+
+### neb setup ##########
+variable        u uloop 20
+
+# initial minimization to relax vacancy
+
+#displace_atoms all random 0.1 0.1 0.1 123456
+#minimize        1.0e-6 1.0e-4 1000 10000
+
+reset_timestep  0
+
+#fix             1 all neb 0.15 parallel ideal perp 0.19
+fix             1 all neb 1.0 parallel ideal perp 1.0
+
+
+thermo          10
+
+#compute		cn vacneigh coord/atom cutoff ${r}
+
+# write dump files in groups
+#dump 		neb vacneigh custom 1000 dump.neb.sivac.$u id type x y z c_cn[*]
+dump 		neigh vacneigh custom 100 dump.vacneigh.$u id type x y z
+dump		mid vacmid custom 100 dump.vacmid.$u id type x y z
+dump		rest rest custom 100 dump.rest.$u id type x y z 
+########################
+
+##### run NEB ########## 
+# for 2000 steps or to force tolerance
+
+timestep        0.01
+min_style       quickmin
+
+neb             0.0 1.0e-3 2000 2000 10 final final.sivac
+########################
