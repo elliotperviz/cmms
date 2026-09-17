@@ -10,7 +10,7 @@ Below, we provide a brief overview of molecular dynamics. The discussion is sepa
 - The core molecular dynamics loop
 - A general workflow for equilibrium measurements
 
-For further reading, please see **Chapters 2, 3 and 4** of the [lecture notes](../lecture_notes).
+For further reading, please see **Chapters 2 and 4** of the [lecture notes](../lecture_notes).
 
 ## What is Molecular Dynamics?
 
