@@ -2,6 +2,8 @@
 
 ## Tutorial Outline
 
+In this section, we demonstrate how to use [**Abinit**](https://www.abinit.org/) to solve the time-independent Schrödinger equation to calculate ground state electronic properties of simple molecular and crystalline systems. The tutorial is split into multiple parts:
+
 1) [H<sub>2</sub> molecule: electronic properties](1-h2/)
 2) [H atom: electronic orbitals](2-h/)
 3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](3-h2o/)
@@ -10,8 +12,7 @@
 
 \* 5) Documentation still to be written.
 
-Note, it is not the aim of the tutorials to teach you what is the definition of every keyword we use in the Abinit inputs. The goal is to show you practical examples for how to setup Abinit simulations and how to extract and analyse physical properties. With this in mind, we recommend that whilst working through these tutorials you consult the Abinit documentation for a detailed definitions and descriptions of each keyword:<br>
-https://docs.abinit.org/variables/
+Note that, it is not the aim of the tutorials to teach you what is the definition of every keyword we use in the Abinit inputs. The goal is to show you practical examples for how to setup Abinit simulations and how to extract and analyse physical properties. With this in mind, we recommend that whilst working through these tutorials you consult the Abinit [documentation](https://www.abinit.org/variables/) for detailed definitions and descriptions of each keyword.
 
 ## Introduction
 
