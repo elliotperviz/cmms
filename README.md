@@ -74,24 +74,25 @@ For installation on your home computer, please see the above links, where you ca
 
 ## Tutorial Outline
 
-### Molecular Dynamics
+### Molecular dynamics
 
-Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, and follow the examples which demonstrate the calculation of equilibrium properties using the LAMMPS software package:
+Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, then follow the examples which demonstrate the calculation of equilibrium properties using the LAMMPS software package:
 1) [Lattice constant of cubic diamond Silicon](md/silicon)
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
-Separate to the calculation of equilibrium properties, we also provide a tutorial to introduce the Nudged Elastic Band (NEB) method:
-- [Vacancy migration in cubic diamond Silicon](md/neb)
+### Nudged elastic band method
+1) [Vacancy migration in cubic diamond Silicon](md/neb)
 
-### Quantum Mechanics
+### Quantum mechanics
 
+See [qm](qm/) for a brief introduction to Quantum mechanics and an overview of this tutorial, then follow the examples:
 1) [H<sub>2</sub> molecule: electronic properties](qm/1-h2)
 2) [H atom: electronic orbitals](qm/2-h)
 3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](qm/3-h2o)
 4) [Diamond Si: geometry optimisation, band structure, convergence studies](qm/4-si)
-5) [Carbon](5-c): Documentation TBC
+5) [Carbon](5-c): Documentation incomplete
 
 ### Phonons
 
 1) [Phonon band structure of the isolated H<sub>2</sub>O molecule](ph/1-h2o)
-2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation TBC
+2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation incomplete
