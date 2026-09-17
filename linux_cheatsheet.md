@@ -3,7 +3,7 @@
 ## File & Directory Commands
 | Command | Explanation |
 |---------|-------------|
-| `pwd` | Show the filepath of the current director. |
+| `pwd` | Show the filepath of the current directory. |
 | `ls` | List files in the current directory. |
 | `ls -l` | List files with details (permissions, size, date). |
 | `cd <dir>` | Change directory to `<dir>`. |
