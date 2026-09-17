@@ -1,11 +1,13 @@
 # Molecular Dynamics
 
-In this section, we demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (LAMMPS) to calculate equilibrium properties of simple systems. The tutorial is split into two parts:
+## Tutorial Outline
+
+In this section, we demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator ([LAMMPS](https://docs.lammps.org/)) to calculate equilibrium properties of simple systems. The tutorial is split into two parts:
 
 1. [Lattice constant of cubic diamond Silicon](silicon/)
 2. [Diffusion coefficient and radial distribution function of Argon gas](argon/)
 
-Below, we provide a brief overview of molecular dynamics. The discussion is separated into different sections:
+LAMMPS implements Newton's equations of motion, otherwise known as **molecular dynamics**. Below, we provide a brief overview of molecular dynamics. The discussion is separated into different sections:
 - What is molecular dynamics, and some key practical considerations
 - The core molecular dynamics loop
 - A general workflow for equilibrium measurements
