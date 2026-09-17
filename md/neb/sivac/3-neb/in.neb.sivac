@@ -58,24 +58,26 @@ variable        u uloop 20
 
 reset_timestep  0
 
-fix             1 all neb 1.0
+#fix             1 all neb 0.15 parallel ideal perp 0.19
+fix             1 all neb 1.0 parallel ideal perp 1.0
 
-thermo          100
+
+thermo          10
 
 #compute		cn vacneigh coord/atom cutoff ${r}
 
 # write dump files in groups
 #dump 		neb vacneigh custom 1000 dump.neb.sivac.$u id type x y z c_cn[*]
-dump 		neigh vacneigh custom 1000 dump.vacneigh.$u id type x y z
-dump		mid vacmid custom 1000 dump.vacmid.$u id type x y z
-dump		rest rest custom 1000 dump.rest.$u id type x y z 
+dump 		neigh vacneigh custom 100 dump.vacneigh.$u id type x y z
+dump		mid vacmid custom 100 dump.vacmid.$u id type x y z
+dump		rest rest custom 100 dump.rest.$u id type x y z 
 ########################
 
 ##### run NEB ########## 
 # for 2000 steps or to force tolerance
 
 timestep        0.01
-min_style       fire
+min_style       quickmin
 
-neb             1.0e-6 1.0e-4 100 100 10 final final.sivac
+neb             0.0 1.0e-3 2000 2000 10 final final.sivac
 ########################

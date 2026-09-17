@@ -1,6 +1,6 @@
-# NEB
+# Nudged Elastic Band method
 
-This tutorial is a modified version of the LAMMPS neb tutorial, the original may be found at the following link:
+This tutorial is a modified version of the LAMMPS nudged elastic band (NEB) tutorial, the original may be found at the following link:
 https://docs.lammps.org/neb.html
 
 Further detailed discussion of the various steps of this tutorial will be written up in the future.
@@ -30,10 +30,9 @@ cd 1-init
 
 - Copy the LAMMPS data file for the next step
   ```bash
-  cp initial.sivac ../first/
-  cp initial.sivac ../final/
+  cp initial.sivac ../2-first/
+  cp initial.sivac ../2-final/
   ```
-
 
 ## Generate initial and final configuration for damped dynamics
 
@@ -118,6 +117,42 @@ Note, the number of threads is not necessarily the same as the number of physica
   
 - Inspect the output files
 
+- Check convergence of the forces (did the NEB calculation run correctly?), e.g.
+  ```bash
+  awk '{print $1,$2,$3,$4,$5,$6}' log.lammps
+  ```
+  and see the data in column titled "MaxReplicaForce". What are the forces in the other columns describing? You may find their definitions in the LAMMPS documentation (see the link at the top of the page).
+  
+- Check the variation of replica potential energy a) between replicas and b) from one minimisation step to the next, does the potential energy of each replica converge? e.g. with 16 replicas, and default NEB output, the potential energy columns can be extracted via
+  ```bash
+  awk '{print $11,$13,$15,$17,$19,$21,$23,$25,$27,$29,$31,$33,$35,$37,$39,$41}' log.lammps
+  ```
+  [Hint: you can try to visualize how the potential energy varies by plotting with `gnuplot`].
+
+- Check convergence of the minimum energy path (MEP)<br>
+  Extract the final set of reaction coordinates and potential energies for each replica:
+  ```bash
+  n1=`grep -n "Running" log.lammps | cut -d ":" -f1`
+  n2=`grep -n "Climbing" log.lammps | cut -d ":" -f1`
+
+  sed -n "$((n1+1)),$((n2-1))p" log.lammps > stage1.dat
+  sed -n "$((n2+1)),\$p" log.lammps > stage2.dat
+
+  sed -i "1s/^/#/" stage1.dat
+  sed -i "1s/^/#/" stage2.dat
+
+  tail -n 1 stage2.dat  > neb_final.dat
+  awk '{
+    for (i=10; i<=NF; i+=2) {
+      print $(i), $(i+1)
+    }
+  }' neb_final.dat > neb_curve.dat
+  ```
+  Then plot the reaction coordinate vs potential energy e.g. with `gnuplot`:
+  ```bash
+  gnuplot> plot "neb_curve.dat" using 1:2 with linespoints lw 2 pt 77
+  ```
+
 - Visualise the optimisation of the transition path (progression of NEB calculation)
   ```bash
   neb_combine.py -o dump.opt -r dump.vacneigh.*
@@ -130,7 +165,8 @@ Note, the number of threads is not necessarily the same as the number of physica
   ```
   and load the trajectory file in `ovito`.
 
-**Optional**
+**Optional Objectives**
+
 - Load the different trajectory groups, and observe the structural distortion due to migration of the vacancy, as the distance from the vacancy increases 
   e.g.
   ```bash
@@ -139,3 +175,28 @@ Note, the number of threads is not necessarily the same as the number of physica
   neb_final.py -o dump.final.rest -r dump.rest.sivac.*
   ```
   You should find that the further from the vacancy, the structural distortion will become smaller, as the neighbouring atoms rearrange to effectively 'screen' the migration of the vacancy.
+
+- Try changing the stiffness of the parallel and perpendicular springs (controlling the inter-replica nudging forces), what is the effect on the progression of the NEB calculation (to arrive at the chosen force tolerance)?
+
+
+**Questions**
+
+- How many replicas are enough? Check the convergence of the MEP with respect to the number of replicas.
+  <details>
+  <summary>Click here for the answer</summary>
+  Convergence with respect to replica count must be tested for each system and reaction. This can be checked practically through the following criteria:
+    
+  (a) the barrier height (energy of the highest replica / saddle point);<br>
+  (b) the saddle geometry (coordinates of the highest-energy replica / saddle point).<br>
+  
+  When the change in barrier height is less than the chosen tolerance upon increasing the number of replicas, the replica count may be considered converged. An appropriate choice of energy tolerance   depends on the physics being modelled and the accuracy required. <!-- ; for typical vacancy or defect migration studies, a target energy resolution of ≲ 10⁻² eV between successive tests is often sufficient.
+  For the saddle geometry, a reasonable convergence target is on the scale of thermal vibrations at room temperature (~ 0.01 Å); differences smaller than this are physically insignificant.-->
+  
+  Additionally, it is useful to check:<br>
+  (c) the shape of the MEP (e.g. absence of artificial kinks or flat regions).<br>
+
+
+  However, increasing the number of replicas does not necessarily lead to monotonic improvement in convergence of the MEP. Too few replicas cause large interpolation errors and artificial kinks, while too many can overconstrain the band, leading to numerical instabilities and new kinks due to excessive spring coupling between neighbouring images. The optimal number therefore represents a balance between resolution and stability, and must be established by convergence testing for each system.
+  </details>
+
+

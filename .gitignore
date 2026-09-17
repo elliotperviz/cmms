@@ -1,5 +1,5 @@
 # -------------------------
-# Simulation output files
+# LAMMPS output files
 # -------------------------
 *.lammpstrj
 *.lammps
@@ -12,15 +12,33 @@ tmp
 # -------------------------
 # NEB output files
 # -------------------------
-
+initial.sivac
 dump.*
 log.lammps.*
 screen.*
 tmp.lammps.variable
 
+# -------------------------
 # Abinit output files
+# -------------------------
 abo_*
+abo.*
 ab.abo
+ab.abo*
+out
+*.xsf
+*.cube
+DOS_TOTAL_SHIFTED
+
+# -------------------------
+# Phonopy output files
+# -------------------------
+FORCE_CONSTANTS
+FORCE_SETS
+phonopy_disp.yaml
+phonopy.yaml
+band.yaml
+anime.ascii
 
 # -------------------------
 # Executables and build artefacts

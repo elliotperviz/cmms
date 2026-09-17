@@ -1,6 +1,5 @@
 # Computational Methods for Materials Science
-Here you will find lecture and tutorial material for the course **Computational Methods for Materials Science**.
-
+Here you will find lecture and tutorial material for the course **Computational Methods for Materials Science**, taught at the Faculty of Electrical Engineering, Czech Technical University in Prague.
 
 <!--"Some words of an introduction to the course here"-->
 
@@ -81,10 +80,18 @@ Navigate to the [md](md/) folder for a discussion and introduction to the Molecu
 1) [Lattice constant of cubic diamond Silicon](md/silicon)
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
+Separate to the calculation of equilibrium properties, we also provide a tutorial to introduce the Nudged Elastic Band (NEB) method:
+- [Vacancy migration in cubic diamond Silicon](md/neb)
+
 ### Quantum Mechanics
 
-**TBA**
+1) [H<sub>2</sub> molecule: electronic properties](qm/1-h2)
+2) [H atom: electronic orbitals](qm/2-h)
+3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](qm/3-h2o)
+4) [Diamond Si: geometry optimisation, band structure, convergence studies](qm/4-si)
+5) [Carbon](5-c): Documentation TBC
 
 ### Phonons
 
-**TBA**
+1) [Phonon band structure of the isolated H<sub>2</sub>O molecule](ph/1-h2o)
+2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation TBC

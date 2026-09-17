@@ -3,7 +3,7 @@
 ## File & Directory Commands
 | Command | Explanation |
 |---------|-------------|
-| `pwd` | Show current directory. |
+| `pwd` | Show the filepath of the current directory. |
 | `ls` | List files in the current directory. |
 | `ls -l` | List files with details (permissions, size, date). |
 | `cd <dir>` | Change directory to `<dir>`. |
@@ -84,7 +84,7 @@
 |---------|-------------|
 | `>` | Redirect output to a file (overwrite). |
 | `>>` | Redirect output to a file (append). |
-| `|` | Pipe output of one command to another. |
+| `\|` | Pipe output of one command to another. |
 
 ---
 
