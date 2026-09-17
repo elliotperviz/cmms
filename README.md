@@ -50,27 +50,27 @@ To understand the purpose of the different scripts, more context is provided in 
 ### 3. Additional information
 
 For your reference, we provide a list of the relevant simulation packages and links to their documentation:
-- LAMMPS (Large-scale Atomic/Molecular Massively Parallel Simulator) - https://docs.lammps.org/Manual.html
-- Abinit - https://docs.abinit.org/
-- Phonopy - https://phonopy.github.io/phonopy/
+- [LAMMPS](https://docs.lammps.org/Manual.html) (Large-scale Atomic/Molecular Massively Parallel Simulator)
+- [Abinit](https://docs.abinit.org/)
+- [Phonopy](https://phonopy.github.io/phonopy/)
 
 As well as structure and trajectory visualisation tools that we utilise extensively:
-- VMD - https://www.ks.uiuc.edu/Research/vmd/
-- OVITO - https://www.ovito.org/docs/current/
-- VESTA - https://jp-minerals.org/vesta/en/
-- v_sim - https://l_sim.gitlab.io/v_sim/
+- [VMD](https://www.ks.uiuc.edu/Research/vmd/)
+- [OVITO](https://www.ovito.org/docs/current/)
+- [VESTA](https://jp-minerals.org/vesta/en/)
+- [v_sim](https://l_sim.gitlab.io/v_sim/)
 
-Also, tools for post-processing simulation outputs:
-- Pizza.py - https://lammps.github.io/pizza/doc/Manual.html
+Also, tools for post-processing LAMMPS outputs:
+- [Pizza.py](https://lammps.github.io/pizza/doc/Manual.html) 
 
 Then, to plot the data after post-processing we use:
-- Gnuplot - http://www.gnuplot.info/
-- xmgrace - https://plasma-gate.weizmann.ac.il/Grace/
+- [Gnuplot](http://www.gnuplot.info/) 
+- [xmgrace](https://plasma-gate.weizmann.ac.il/Grace/)
 
 Finally, other miscellaneous tools
-- atomsk - https://atomsk.univ-lille.fr/tutorials.php
+- [atomsk](https://atomsk.univ-lille.fr/tutorials.php)
 
-For installation on your home computer, please see the above links, where you can navigate to find invididual installation guides.
+For installation on your home computer, please see the above links, where you can navigate to find individual installation guides.
 
 ## Tutorial Outline
 
