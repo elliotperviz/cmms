@@ -71,6 +71,7 @@ We should highlight a few aspects of the system setup here.
 - Is the Tersoff potential approporiate for modelling interactions between Si atoms? (Check: do we achieve the desired tolerance on the minimisation of the interatomic forces?)
 - Visualize the minimisation (trajectory file "min.lammpstrj") with `vmd`/`ovito`
 - Extract the NVE trajectory from "log.lammps" using `grep` and `sed`/`awk` and plot the total energy as a function of time; fit a line of best fit via linear regression using `gnuplot`. Is the choice of timestep appropriate?
+  - For an automated extraction, try running `log2txt.py log.lammps out.dat -n`
 
 ### 2. Equilibration and measurement
 
@@ -83,7 +84,7 @@ We should highlight a few aspects of the system setup here.
 - View the contents of the directory:
   ```bash
   perviell@postel 1-init$ ls
-  equ.in min.data
+  equ.in init.data
   ```
 
 In the first step, we minimised the potential and checked the validity of the timestep against the total energy in the NVE ensemble.
