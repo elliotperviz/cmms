@@ -77,7 +77,7 @@ We should highlight a few aspects of the system setup here.
 
 - Copy "min.data" (the final configuration after minimisation) and change directory into [2-equ](2-equ/)
   ```bash
-  cp min.data ../2-equ/
+  cp init.data ../2-equ/
   cd ../2-equ/
   ```
   
