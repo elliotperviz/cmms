@@ -140,13 +140,13 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
   ```
   The directory should now contain the LAMMPS output files: "equ.data", "equ.lammpstrj", "log.lammps".
 
-  Inspect each of these output files (e.g. with `vim`/`less`/`cat`), particularly "log.lammps", to see that the simulation ran as expected, and there are no errors/warnings. Aditionally, you can visualize the trajectory ("equ.lammpstrj") using `vmd`.
+  Inspect each of these output files (e.g. with `vim`/`less`/`cat`), particularly "log.lammps", to see that the simulation ran as expected, and there are no errors/warnings. Additionally, you can visualize the trajectory ("equ.lammpstrj") using `vmd`.
 
 - Check that the system is properly equilibrated
 
   The first few ps of the NPT simulation are transient; only after the system reaches steady temperature and pressure should we measure the lattice constant.
 
-  Extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
+  Extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk` or `log2txt.py`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
 
   Are the thermodynamic variables of interest approximately constant? According to our setup, we should have T ~ 300 K and P ~ 0 Bar. Is this the case? In `gnuplot` use linear regression to fit a straight line to the temperature and pressure.
 
