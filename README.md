@@ -80,9 +80,6 @@ Navigate to the [md](md/) folder for a discussion and introduction to the Molecu
 1) [Lattice constant of cubic diamond Silicon](md/silicon)
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
-### Nudged elastic band method
-1) [Vacancy migration in cubic diamond Silicon](md/neb)
-
 ### Quantum mechanics
 
 See [qm](qm/) for a brief introduction to Quantum mechanics and an overview of this tutorial, then follow the examples:
@@ -96,3 +93,6 @@ See [qm](qm/) for a brief introduction to Quantum mechanics and an overview of t
 
 1) [Phonon band structure of the isolated H<sub>2</sub>O molecule](ph/1-h2o)
 2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation incomplete
+
+### Nudged elastic band method
+1) [Vacancy migration in cubic diamond Silicon](md/neb)
