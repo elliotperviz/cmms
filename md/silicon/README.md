@@ -148,7 +148,7 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
 
   Extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk` or `log2txt.py`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
 
-  Are the thermodynamic variables of interest approximately constant? According to our setup, we should have T ~ 300 K and P ~ 0 Bar. Is this the case? In `gnuplot` use linear regression to fit a straight line to the temperature and pressure.
+  Are the thermodynamic variables of interest approximately stationary? According to our setup, the temperature and pressure should fluctuate around approximately 300 K and 0 bar, respectively. After the initial transient, there should be no systematic drift in these quantities. Is this the case? In `gnuplot` use linear regression to fit a straight line to the temperature and pressure.
 
 - Once the system is equilibrated, extract the box dimensions over (lx, ly, lz) over the production portion of the trajectory. By definition, lx = ly = lz, and the Barostat is applied isotropically, so the variation of each component is identical, and it is equivalent to extract just one of them.
 
@@ -162,5 +162,6 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
 - The fluctuation of the pressure over the equilibrium trajectory is large, why is this the case?
   <details>
   <summary>Click to reveal answer</summary>
-   The fluctuation of the pressure over the equilibrium trajectory is large because we have a small system (8 atoms). According to the virial theorem, the instantaneous pressure fluctuates around the mean value. In small systems, these fluctuations are proportionally larger. Only the time-averaged pressure converges to the desired value (0 bar).
+  The instantaneous pressure fluctuates strongly because it is calculated from the instantaneous atomic positions and velocities. In LAMMPS, the pressure contains kinetic and configurational (Virial) contributions, both of which fluctuate as the atoms move. These fluctuations occur even when the system is fully equilibrated. They are particular;y large for our small 8-atom system; recall that statistical fluctuations of intensive quantities scale as $1/\sqrt{N}$.
+  Importantly, equilibration does not require the instantaneous fluctuations of the pressure to be below some threshold variation around 0 bar. What matters is that the pressure becomes statistically stationary and that its time average, over a sufficiently long production trajectory, is consistent with the target pressure within the statistical uncertainty.
   </details>
