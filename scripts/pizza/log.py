@@ -238,7 +238,7 @@ class log:
       s2 = txt.find("\n--",s1)
       if (s2 == -1):
         s2 = txt.find("\nLoop time of",s1)
-      pattern = "\s(\S*)\s*="
+      pattern = r"\s(\S*)\s*="
       keywords = re.findall(pattern,txt[s1:s2])
       keywords.insert(0,"Step")
       i = 0
@@ -333,8 +333,8 @@ class log:
 
       if self.style == 1:
         sections = chunk.split("\n--")
-        pat1 = re.compile("Step\s*(\S*)\s")
-        pat2 = re.compile("=\s*(\S*)")
+        pat1 = re.compile(r"Step\s*(\S*)\s")
+        pat2 = re.compile(r"=\s*(\S*)")
         for section in sections:
           word1 = [re.search(pat1,section).group(1)]
           word2 = re.findall(pat2,section)
