@@ -295,7 +295,8 @@ class log:
         if self.style == 2:
           s1 = txt.find("\n",s1) + 1
       elif s1 >= 0 and s2 >= 0 and s2 < s1:  # found s1,s2 with s2 before s1
-        s1 = 0
+        start = txt.find("\n", s2) + 1
+        continue
       elif s1 == -1 and s2 >= 0:             # found s2, but no s1
         last = 1
         s1 = 0

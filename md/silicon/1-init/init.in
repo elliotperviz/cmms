@@ -55,7 +55,7 @@ minimize        0.0 1.0e-10 1000000 1000000
 
 unfix		f1
 undump		traj
-write_data	min.data
+write_data	init.data
 ### end minimization ###
 
 # short NVE check 5ps ##
