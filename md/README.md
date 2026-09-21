@@ -87,3 +87,51 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
 5. **Post-processing and analysis**
   - Perform statistical analysis of the collected data (e.g. averages, fluctuations, autocorrelation functions)
   - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficient) properties
+
+## Periodic boundary conditions, finite-size effects and statistical fluctuations
+
+Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space. This ensures that every atom has the correct crystalline environment at short range and that there are no artificial free surfaces at the simulation-cell boundaries.
+
+For some static properties, such as the cohesive energy, equilibrium lattice constant, elastic constants, or properties calculated directly from the periodic ground state, a single primitive or conventional cell can be therefore be sufficient to represent the infinite crystal.
+
+However, a finite periodic cell still imposes a finite spatial extent $L$. Consequently, only wavelengths compatible with the periodic cell can be represented. The smallest non-zero wavevector is of order
+```math
+q_{min} \approx \frac{2 \pi}{L},
+```
+so phenomena involving wavelenghts comparable to or larger than $L$, or correlations extending over distances comparable to $L$, cannot be represented correctly. This can lead to **finite-size effects**, even though the system has periodic boundary conditions. 
+
+<!-- extensive: change depending on the size or amount of matter in a system. If you combine two identical samples, an extensive property adds up or doubles. 
+Intensive: stay the same no matter how much of a substance you have. They describe the local state or intrinsic makeup of a material rather than its total size.
+-->
+This is a second distinct issue, associated with the number of atoms. Thermodynamic quantities are often sums of contributions from many atoms. For an extensive quantity
+```math
+A = \sum_{i=1}^N a_i,
+```
+the mean scales as $N$, while, for sufficiently short-ranged correlations,
+```math
+\mathrm{Var}(A) \propto N.
+```
+Therefore, the standard deviation scales as
+```math
+\sigma_A \propto \sqrt{N}.
+```
+For the corresponding intensive quantity A/N,
+```math
+\sigma_{A/N} = \frac{\sigma_A}{N} \propto \frac{1}{\sqrt{N}}.
+```
+Thus, increasing the number of atoms makes intensive quantities such as the energy per atom increasingly self-averaging: their relative statistical fluctuations become smaller. This is a statistical effect and should be distinguished from finite-size effects arising from the finite simulation cell dimensions.
+
+In practice, both effects can be assessed by increasing the simulation-cell size (for example by creating periodic *replicas* or *supercells*) and checking whether the quantity of interest has converged.
+
+- **Finite-size** convergence: has the simulation cell become large enough to capture the relevant spatial correlations and wavelengths?
+- **Statistical** convergence: has the system and trajectory provided sufficiently small statistical uncertainty in the ensemble average
+
+**Summary**: 
+
+When a small system with PBCs is enough (negligible finite size error)
+- Equilibrium lattice constant, cohesive energy, pressure–volume curve
+- Elastic constants
+
+When a small system with PBCs is **not** enough (non-negligible finite size error)
+- Any property depending on phonon dispersion (e.g. Cv, α, κ)
+- Any correlation function (e.g. to obtain transport properties such as diffusion, viscosity, conductivity)
