@@ -31,21 +31,45 @@ Our starting point is the **cubic diamond-Si primitive cell**. This is the minim
  - Visualize the structure (open the file) in `vesta`<br>
    Check that the lattice vectors and atomic positions match a cubic diamond structure.
 
-A "POSCAR" file is one possible format in which we define the crystal structures as input to simulation codes. In particular, "POSCAR" files are used for the Vienna ab inito simulation package `vasp`. The primary purpose of this tool is to solve the Schrodinger equation, which is *not* the focus of this tutorial. However, the "POSCAR" file is convenient and portable, and is one of the most common formats in which you will see crystal structures defined in online databases (due to the widespread use of `vasp`).
+A "POSCAR" file is one possible format in which we define the crystal structures as input to simulation codes. In particular, "POSCAR" files are used for the Vienna ab inito simulation package `vasp`. The primary purpose of this tool is to solve the Schrodinger equation, which is *not* the focus of this tutorial. However, the "POSCAR" file is convenient and portable, and is one of the most common formats in which you will see crystal structures defined in online databases due to the widespread use of `vasp`.
 
-It is important to be aware that, even if we are technically simulating the bulk system via periodic boundary conditions, explicitly considering only the primitive (or conventional) cell is not always enough to measure bulk equilibrium properties.
+It is important to be aware that, even if we are technically simulating the bulk system via periodic boundary conditions, explicitly considering only the primitive (or conventional) cell is not always enough to measure bulk equilibrium properties. **Why?**
 
-**Why?**
-<details>
-<summary>Click for the answer</summary>
-Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space.
-This ensures that every atom has the correct crystalline environment at short range, and that forces at the boundary are continuous.
+Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space. This ensures that every atom has the correct crystalline environment at short range and that there are no artificial free surfaces at the simulation-cell boundaries.
 
-Thus, for purely static properties (e.g. cohesive energy, equilibrium lattice constant, elastic constants, phonon dispersion at Γ), a single conventional cell under PBCs can already represent the infinite crystal adequately.
+For some static properties, such as the cohesive energy, equilibrium lattice constant, elastic constants, or properties calculated directly from the periodic ground state, a single primitive or conventional cell can be therefore be sufficient to represent the infinite crystal.
 
-But dynamic and collective phenomena depend on correlations and wavelengths that can extend beyond one unit cell — and PBCs alone cannot simulate wavelengths longer than the box length. Moreover, with only a handful of atoms, statistical fluctuations in extensive properties are large. Thus, we choose a larger system size, more representative of bulk. 
+However, a finite periodic cell still imposes a finite spatial extent $L$. Consequently, only wavelengths compatible with the periodic cell can be represented. The smallest non-zero wavevector is of order
+```math
+q_{min} \approx \frac{2 \pi}{L},
+```
+so phenomena involving wavelenghts comparable to or larger than $L$, or correlations extending over distances comparable to $L$, cannot be represented correctly. This can lead to **finite-size effects**, even though the system has periodic boundary conditions. 
 
-In practice, the "correct" system size that can be used to obtain measurements of bulk properties is obtained via a convergence study, where we increase the system size and check how ensemble average quantities change. Once these quantities are ~ constant within a reasonable tolerance, we say that the system is *converged*.
+<!-- extensive: change depending on the size or amount of matter in a system. If you combine two identical samples, an extensive property adds up or doubles. 
+Intensive: stay the same no matter how much of a substance you have. They describe the local state or intrinsic makeup of a material rather than its total size.
+-->
+This is a second distinct issue, associated with the number of atoms. Thermodynamic quantities are often sums of contributions from many atoms. For an extensive quantity
+```math
+A = \sum_{i=1}^N a_i,
+```
+the mean scales as $N$, while, for sufficiently short-ranged correlations,
+```math
+\mathrm{Var}(A) \propto N.
+```
+Therefore, the standard deviation scales as
+```math
+\sigma_A \propto \sqrt{N}.
+```
+For the corresponding intensive quantity A/N,
+```math
+\sigma_{A/N} = \frac{\sigma_A}{N} \propto \frac{1}{\sqrt{N}}.
+```
+Thus, increasing the number of atoms makes intensive quantities such as the energy per atom increasingly self-averaging: their relative statistical fluctuations become smaller. This is a statistical effect and should be distinguished from finite-size effects arising from the finite simulation cell dimensions.
+
+In practice, both effects can be assessed by increasing the simulation-cell size (for example by creating periodic *replicas* or *supercells*) and checking whether the quantity of interest has converged.
+
+- **Finite-size** convergence: has the simulation cell become large enough to capture the relevant spatial correlations and wavelengths?
+- **Statistical** convergence: has the system and trajectory provided sufficiently small statistical uncertainty in the ensemble average
 
 **Summary**: 
 
@@ -56,9 +80,8 @@ When a small system with PBCs is enough (negligible finite size error)
 When a small system with PBCs is **not** enough (non-negligible finite size error)
 - Any property depending on phonon dispersion (e.g. Cv, α, κ)
 - Any correlation function (e.g. to obtain transport properties such as diffusion, viscosity, conductivity)
-</details>
 
-Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (`vasp`) format, while the latter is defined in LAMMPS format.
+We start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (`vasp`) format, while the latter is defined in LAMMPS format.
 
 - Inspect "BPOSCAR" with `vim`/`less`/`cat` and visualize with `vesta`
 - Inspect "Si.lmp" with `vim`/`less`/`cat`
