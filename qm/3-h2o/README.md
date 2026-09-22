@@ -21,7 +21,7 @@ For reference, consult the Abinit [documentation](https://docs.abinit.org/variab
 
 ## 1. Ground state charge density with ixc = 11 - non-optimised atomic positions  
 
-We begin with a non-optimum H<sub>2<\sub>O geometry, and employ the PBE-GGA (`ixc=11`) exchange correlation potential.
+We begin with a non-optimum H<sub>2</sub>O geometry, and employ the PBE-GGA (`ixc=11`) exchange correlation potential.
 
 **Objectives**
 
