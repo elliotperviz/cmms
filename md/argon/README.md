@@ -34,7 +34,7 @@ cd 1-init/
 View the contents of the directory and inspect the input file:
 ```bash
 ls
-vim mini.in
+vim init.in
 ```
 Inside `vim`, use PAGEUP and PAGEDOWN keys to navigate.
 

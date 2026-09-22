@@ -54,6 +54,8 @@ ave
 *.dll
 
 # -------------------------
-# Miscellaneous files
+# Miscellaneous files/folders
 # -------------------------
 *.swp
+__pycache__/
+

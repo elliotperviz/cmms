@@ -50,48 +50,49 @@ To understand the purpose of the different scripts, more context is provided in 
 ### 3. Additional information
 
 For your reference, we provide a list of the relevant simulation packages and links to their documentation:
-- LAMMPS (Large-scale Atomic/Molecular Massively Parallel Simulator) - https://docs.lammps.org/Manual.html
-- Abinit - https://docs.abinit.org/
-- Phonopy - https://phonopy.github.io/phonopy/
+- [LAMMPS](https://docs.lammps.org/Manual.html) (Large-scale Atomic/Molecular Massively Parallel Simulator)
+- [Abinit](https://docs.abinit.org/)
+- [Phonopy](https://phonopy.github.io/phonopy/)
 
 As well as structure and trajectory visualisation tools that we utilise extensively:
-- VMD - https://www.ks.uiuc.edu/Research/vmd/
-- OVITO - https://www.ovito.org/docs/current/
-- VESTA - https://jp-minerals.org/vesta/en/
-- v_sim - https://l_sim.gitlab.io/v_sim/
+- [VMD](https://www.ks.uiuc.edu/Research/vmd/)
+- [OVITO](https://www.ovito.org/docs/current/)
+- [VESTA](https://jp-minerals.org/vesta/en/)
+- [v_sim](https://l_sim.gitlab.io/v_sim/)
 
-Also, tools for post-processing simulation outputs:
-- Pizza.py - https://lammps.github.io/pizza/doc/Manual.html
+Also, tools for post-processing LAMMPS outputs:
+- [Pizza.py](https://lammps.github.io/pizza/doc/Manual.html) 
 
 Then, to plot the data after post-processing we use:
-- Gnuplot - http://www.gnuplot.info/
-- xmgrace - https://plasma-gate.weizmann.ac.il/Grace/
+- [Gnuplot](http://www.gnuplot.info/) 
+- [xmgrace](https://plasma-gate.weizmann.ac.il/Grace/)
 
 Finally, other miscellaneous tools
-- atomsk - https://atomsk.univ-lille.fr/tutorials.php
+- [atomsk](https://atomsk.univ-lille.fr/tutorials.php)
 
-For installation on your home computer, please see the above links, where you can navigate to find invididual installation guides.
+For installation on your home computer, please see the above links, where you can navigate to find individual installation guides.
 
 ## Tutorial Outline
 
-### Molecular Dynamics
+### Molecular dynamics
 
-Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, and follow the examples which demonstrate the calculation of equilibrium properties using the LAMMPS software package:
+Navigate to the [md](md/) folder for a discussion and introduction to the Molecular Dynamics (MD) technique, then follow the examples which demonstrate the calculation of equilibrium properties using the LAMMPS software package:
 1) [Lattice constant of cubic diamond Silicon](md/silicon)
 2) [Diffusion coefficient and radial distribution function of Argon gas](md/argon)
 
-Separate to the calculation of equilibrium properties, we also provide a tutorial to introduce the Nudged Elastic Band (NEB) method:
-- [Vacancy migration in cubic diamond Silicon](md/neb)
+### Quantum mechanics
 
-### Quantum Mechanics
-
+See [qm](qm/) for a brief introduction to Quantum mechanics and an overview of this tutorial, then follow the examples:
 1) [H<sub>2</sub> molecule: electronic properties](qm/1-h2)
 2) [H atom: electronic orbitals](qm/2-h)
 3) [H<sub>2</sub>O molecule: importance of geometry and the exchange correlation functional](qm/3-h2o)
 4) [Diamond Si: geometry optimisation, band structure, convergence studies](qm/4-si)
-5) [Carbon](5-c): Documentation TBC
+5) [Carbon](5-c): Documentation incomplete
 
 ### Phonons
 
 1) [Phonon band structure of the isolated H<sub>2</sub>O molecule](ph/1-h2o)
-2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation TBC
+2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation incomplete
+
+### Nudged elastic band method
+1) [Vacancy migration in cubic diamond Silicon](md/neb)

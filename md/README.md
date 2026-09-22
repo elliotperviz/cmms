@@ -1,25 +1,27 @@
 # Molecular Dynamics
 
-This molecular dynamics tutorial is separated into two parts:
+## Tutorial Outline
+
+In this section, we demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator ([LAMMPS](https://docs.lammps.org/)) to calculate equilibrium properties of simple systems. The tutorial is split into two parts:
+
 1. [Lattice constant of cubic diamond Silicon](silicon/)
 2. [Diffusion coefficient and radial distribution function of Argon gas](argon/)
 
-In the above examples, we demonstrate how to use the Large-scale Atomic/Molecular Massively Parallel Simulator (LAMMPS) software to calculate various equilibrium properties.
-
-Below, we provide an overview of molecular dynamics. The discussion is separated into different sections:
+LAMMPS implements Newton's equations of motion, otherwise known as **molecular dynamics**. Below, we provide a brief overview of molecular dynamics. The discussion is separated into different sections:
 - What is molecular dynamics, and some key practical considerations
 - The core molecular dynamics loop
 - A general workflow for equilibrium measurements
+
+For further reading, please see **Chapters 2 and 4** of the [lecture notes](../lecture_notes).
 
 ## What is Molecular Dynamics?
 
 <details>
 <summary>Click here to expand</summary>
-[Reference to relevant chapter in lecture notes]
-
+  
 Molecular Dynamics (MD) is a computational simulation method that we will employ to model materials at the resolution where matter is not continuous, but made of a discrete arrangement of atoms. In MD, we study the time evolution of a system of atoms via the dynamical variation of the system state (i.e. positions and momenta of the atoms) by integrating Newton's Equations of motion. The time integration is implemented numerically, such that we solve to obtain the state of the system at discrete *timesteps* in a chosen time window. In practice, the timestep must be small enough to resolve the fastest atomic vibrations (typically on the order of femtoseconds), which limits the total simulated timescales to nanosceconds or microseconds. The simulated system size is typically limited to nanometres, with the number of atoms ranging from thousands to millions. This is far smaller than most experimental samples, and long-wavelength or mesoscale phenomena are therefore not directly accessible in atomistic MD. Thus, we understand both the power and limitation of MD simulations: it provides a detailed atomistic description of materials behaviour, but it is a necessarily small and short-time view of materials behaviour.
 
-Suppose we specify the initial state at time t=0 and integrate - at the end of the integration we will have a deterministic *dynamical trajectory*, which tells us the variation of the system state as a function of time. When we perform an MD simulation, we might be interested in the dynamical variation of a particular observable property of the system, or perhaps its average values over time. Measuring the dynamical variation is simple, in the sense that if we are able to derive the observable property based on the positions and momenta of the particles, we simply perform this calculation at each timestep of the numerical integration and extract the output. Calculating the time average is also easy, we take the average of the dynamical variation of the observable property in time. However, the interpretation of the time average depends on some key factors:
+Suppose we specify the initial state at time t=0 and integrate Newton's equations - at the end of the integration we will have a deterministic *dynamical trajectory*, which tells us the variation of the system state as a function of time. When we perform an MD simulation, we might be interested in the dynamical variation of a particular observable property of the system, or perhaps its average values over time. Measuring the dynamical variation is simple, in the sense that if we are able to derive the observable property based on the positions and momenta of the particles, we simply perform this calculation at each timestep of the numerical integration and extract the output. Calculating the time average is also easy, we take the average of the dynamical variation of the observable property in time. However, the interpretation of the time average depends on some key factors:
 - Whether we want to measure *equilibrium* or *non-equilibrium* observable properties
 - The choice of statistical ensemble (effectively, the constraints we impose on the system)
 
@@ -33,7 +35,8 @@ So, if we wish to measure equilibrium properties, we **must** ensure that the sy
 
 Once equilibration is reached, time averages of observable properties that we calculate on the equilibrium trajectory, over a sufficiently long time window, can be taken as equivalent to ensemble averages (*the ergodic hypothesis*). This phase is the "production" stage of an equilibrium MD calculation, where we extract ensemble average values of desired observables via the time average at equilibrium. It is important to remember that the choice of ensemble determines which equilibrium properties are directly accessible. For example, in the NVE ensemble the total energy is fixed and cannot be measured as a fluctuating thermodynamic variable, whereas the temperature is obtained from the kinetic energy. In the NVT ensemble, the temperature is fixed via a thermostat, while energy fluctuates, so one can measure heat capacity from energy fluctuations. Commenting on the choice of ensemble more generally, other ensembles can be realised using different constraints, such as barostats to fix pressure in the NPT ensemble. The practical implementation of an ensemble in MD is analagous to choosing an experimental setup: it dictates which observables can be extracted naturally, and which are constrained; thermostats and barostats act as control mechanisms to reproduce the desired macroscopic conditions.
 
-In contrast, in non-equilibrium MD we deliberately drive the system away from equilibrium, for example by applying an external field, imposing a temperature gradient, or shearing the simulation box. In this case, the system does not sample a stationary statistical ensemble, and time averages describe transient or steady-state responses rather than equilibrium properties. While this is an important and active area of research, in these tutorial demonstrations we restrict ourselves to equilibrium MD, and we point the interested reader to [**reference material**] for further reading.
+In contrast, in non-equilibrium MD we deliberately drive the system away from equilibrium, for example by applying an external field, imposing a temperature gradient, or shearing the simulation box. In this case, the system does not sample a stationary statistical ensemble, and time averages describe transient or steady-state responses rather than equilibrium properties. While this is an important and active area of research, in these tutorial demonstrations we restrict ourselves to equilibrium MD.
+<!-- and we point the interested reader to [**reference material**] for further reading. -->
 
 Now, in fully *classical* MD we solve a coupled set of differential equations (N equations for N atoms), using interatomic forces derived from a pre-determined classical *force-field* (FF). The FF is an analytical expression for the potential energy of the system, from which the forces follow by differentiation. In practice, the FF is always approximate: it is parameterised for a specific material or class of systems, and its functional form determines the physical fidelity of the model. It may be as simple as a two-body Lennard-Jones potential or as complex as a many-body reactive or machine-learning potential. Further, because evaluating interactions between all particle pairs scales as N<sup>2</sup>, efficient algorithms such as neighbour lists and cutoffs are essential to make simulations tractable. Together, these factors set the limits on achievable system size, simulation time, and accuracy with available computing power.
 
@@ -88,30 +91,27 @@ For example, if equilibrating at a given temperature in the NVT ensemble, we mig
   - Perform statistical analysis of the collected data (e.g. averages, fluctuations, autocorrelation functions)
   - Derive physical observables of interest such as structural (e.g. RDFs), thermodynamic (e.g. pressure, specific heat) or dynamic (e.g. diffusion coefficient) properties
 
-## Periodic boundary conditions, finite-size effects and statistical fluctuations
+## Equilibrium averages
 
-Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space. This ensures that every atom has the correct crystalline environment at short range and that there are no artificial free surfaces at the simulation-cell boundaries.
+### Equilibrium and statistical reliability
 
-For some static properties, such as the cohesive energy, equilibrium lattice constant, elastic constants, or properties calculated directly from the periodic ground state, a single primitive or conventional cell can be therefore be sufficient to represent the infinite crystal.
-
-However, a finite periodic cell still imposes a finite spatial extent $L$. Consequently, only wavelengths compatible with the periodic cell can be represented. The smallest non-zero wavevector is of order
+An equilibrium MD simulation does not produce a constant value of an observable. Even when the system is fully equilibrated, microscopic quantities fluctuate continuously around their equilibrium values. For an observable $A$, what we ultimately want is its equilibrium ensemble average $\left<A\right>$. In MD, this is estimated from a sufficiently long trajectory:
 ```math
-q_{min} \approx \frac{2 \pi}{L},
+\bar{A} = \frac{1}{M} \sum_{k=1}^{M} A(t_k),
 ```
-so phenomena involving wavelenghts comparable to or larger than $L$, or correlations extending over distances comparable to $L$, cannot be represented correctly. This can lead to **finite-size effects**, even though the system has periodic boundary conditions. 
+where $M$ is the number of timesteps, and $t_k$ is the time at timestep $k$. As the trajectory becomes longer, the estimate of the mean generally becomes more stable because more statistically independent configurations are sampled. However, successive MD configurations are correlated, so the number of independent samples is smaller than the total number of recorded configurations. A rigorous estimate of the uncertainty in the mean therefore requires averaging these temporal correlations, for example using an autocorrelation analysis or block averaging.
 
-<!-- extensive: change depending on the size or amount of matter in a system. If you combine two identical samples, an extensive property adds up or doubles. 
-Intensive: stay the same no matter how much of a substance you have. They describe the local state or intrinsic makeup of a material rather than its total size.
--->
-This is a second distinct issue, associated with the number of atoms. Thermodynamic quantities are often sums of contributions from many atoms. For an extensive quantity
+### System size and statistical fluctuations
+
+The size of the simulation system affects the magnitude of the instantaneous fluctuations of the chosen observable property. For an extensive quantity
 ```math
 A = \sum_{i=1}^N a_i,
 ```
-the mean scales as $N$, while, for sufficiently short-ranged correlations,
+the mean scales as $N$. If the correlations between the $a_i$ are sufficiently short ranged, then
 ```math
 \mathrm{Var}(A) \propto N.
 ```
-Therefore, the standard deviation scales as
+and therefore
 ```math
 \sigma_A \propto \sqrt{N}.
 ```
@@ -119,19 +119,35 @@ For the corresponding intensive quantity A/N,
 ```math
 \sigma_{A/N} = \frac{\sigma_A}{N} \propto \frac{1}{\sqrt{N}}.
 ```
-Thus, increasing the number of atoms makes intensive quantities such as the energy per atom increasingly self-averaging: their relative statistical fluctuations become smaller. This is a statistical effect and should be distinguished from finite-size effects arising from the finite simulation cell dimensions.
+Thus, increasing the system size generally reduces the magnitude of instantaneous fluctuations in intensive quantities.
 
-In practice, both effects can be assessed by increasing the simulation-cell size (for example by creating periodic *replicas* or *supercells*) and checking whether the quantity of interest has converged.
+### Periodic boundary conditions and finite-size effects
 
-- **Finite-size** convergence: has the simulation cell become large enough to capture the relevant spatial correlations and wavelengths?
-- **Statistical** convergence: has the system and trajectory provided sufficiently small statistical uncertainty in the ensemble average
+Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space. This ensures that every atom has the correct crystalline environment at short range and that there are no artificial free surfaces at the simulation-cell boundaries. For some properties such as the cohesive energy, equilibrium lattice constant, elastic constants etc. a single primitive or conventional cell can therefore be sufficient to represent the infinite crystal. However, a finite periodic cell still imposes a finite spatial extent $L$. Consequently, only wavelengths compatible with the periodic cell can be represented. The smallest non-zero wavevector is of order
+```math
+q_{min} \approx \frac{2 \pi}{L},
+```
+so phenomena involving wavelengths comparable to or larger than $L$, or correlations extending over distances comparable to $L$, cannot be represented correctly. This can lead to variation in the ensemble average of the observable property as we vary the size of the system (called the **finite-size effect**), even though the system has periodic boundary conditions. 
 
-**Summary**: 
+<!-- extensive: change depending on the size or amount of matter in a system. If you combine two identical samples, an extensive property adds up or doubles. 
+Intensive: stay the same no matter how much of a substance you have. They describe the local state or intrinsic makeup of a material rather than its total size.
+-->
 
-When a small system with PBCs is enough (negligible finite size error)
-- Equilibrium lattice constant, cohesive energy, pressure–volume curve
+In practice, this is tested by increasing the simulation cell size, for example by creating larger periodic supercells, and checking whether the equilibrium average is stable or changes significantly. Once the equilibrium average is effectively independent of system size within a specified accuracy, we consider the property finite-size converged.
+
+**Examples**: 
+
+A small periodic cell may be sufficient when we are measuring (not an exhaustive list):
+- Equilibrium lattice constant,
+- cohesive energy
+- Pressure–volume curve
 - Elastic constants
 
-When a small system with PBCs is **not** enough (non-negligible finite size error)
-- Any property depending on phonon dispersion (e.g. Cv, α, κ)
-- Any correlation function (e.g. to obtain transport properties such as diffusion, viscosity, conductivity)
+A larger cell may be required when:
+- the property depends on long-wavelength phonons or a dense sampling of the phonon spectrum (e.g. heat capacity, thermal expansion, lattice thermal conductivity)
+- the property depends on spatial correlation functions extending over significant distances
+- transport properties are obtained from time-correlation functions
+- defects, interfaces, surfaces, or other non-periodic structures are present
+- other collective phenomena involving length scales comparable to or larger than the simulation cell.
+
+In all cases, the appropriate system size should ultimately be established by a finite-size convergence study.

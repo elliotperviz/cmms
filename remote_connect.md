@@ -107,7 +107,7 @@ Some extra setup is required in order to visualise plots or use GUI programs whe
 ### Step 6: Install an X server (if needed)
 
 - **macOS**: Install **XQuartz** (https://www.xquartz.org/)
-- **Windows**: Install VcXsrv (https://sourceforge.net/projects/vcxsrv/)
+- **Windows**: In the most recent version of WSL no additional installation is necessary, for older versions install VcXsrv (https://sourceforge.net/projects/vcxsrv/)
 - **Linux**: Use your default terminal emulator (no additional installation necessary)
 
 ### Step 7: Connect with X-forwarding

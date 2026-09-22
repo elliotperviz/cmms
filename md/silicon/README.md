@@ -31,34 +31,9 @@ Our starting point is the **cubic diamond-Si primitive cell**. This is the minim
  - Visualize the structure (open the file) in `vesta`<br>
    Check that the lattice vectors and atomic positions match a cubic diamond structure.
 
-A "POSCAR" file is one possible format in which we define the crystal structures as input to simulation codes. In particular, "POSCAR" files are used for the Vienna ab inito simulation package `vasp`. The primary purpose of this tool is to solve the Schrodinger equation, which is *not* the focus of this tutorial. However, the "POSCAR" file is convenient and portable, and is one of the most common formats in which you will see crystal structures defined in online databases (due to the widespread use of `vasp`).
+A "POSCAR" file is one possible format in which we define the crystal structures as input to simulation codes. In particular, "POSCAR" files are used for the Vienna ab inito simulation package `vasp`. The primary purpose of this tool is to solve the Schrodinger equation, which is *not* the focus of this tutorial. However, the "POSCAR" file is convenient and portable, and is one of the most common formats in which you will see crystal structures defined in online databases due to the widespread use of `vasp`.
 
-It is important to be aware that, even if we are technically simulating the bulk system via periodic boundary conditions, explicitly considering only the primitive (or conventional) cell is not always enough to measure bulk equilibrium properties.
-
-**Why?**
-<details>
-<summary>Click for the answer</summary>
-Periodic boundaries remove surface effects by replicating the simulation cell infinitely in space.
-This ensures that every atom has the correct crystalline environment at short range, and that forces at the boundary are continuous.
-
-Thus, for purely static properties (e.g. cohesive energy, equilibrium lattice constant, elastic constants, phonon dispersion at Γ), a single conventional cell under PBCs can already represent the infinite crystal adequately.
-
-But dynamic and collective phenomena depend on correlations and wavelengths that can extend beyond one unit cell — and PBCs alone cannot simulate wavelengths longer than the box length. Moreover, with only a handful of atoms, statistical fluctuations in extensive properties are large. Thus, we choose a larger system size, more representative of bulk. 
-
-In practice, the "correct" system size that can be used to obtain measurements of bulk properties is obtained via a convergence study, where we increase the system size and check how ensemble average quantities change. Once these quantities are ~ constant within a reasonable tolerance, we say that the system is *converged*.
-
-**Summary**: 
-
-When a small system with PBCs is enough (negligible finite size error)
-- Equilibrium lattice constant, cohesive energy, pressure–volume curve
-- Elastic constants
-
-When a small system with PBCs is **not** enough (non-negligible finite size error)
-- Any property depending on phonon dispersion (e.g. Cv, α, κ)
-- Any correlation function (e.g. to obtain transport properties such as diffusion, viscosity, conductivity)
-</details>
-
-Instead, we start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (`vasp`) format, while the latter is defined in LAMMPS format.
+We start from the *conventional* Si-diamond cell, containing 8 atoms. We have prepared two files, "BPOSCAR" and "Si.lmp". The former is the conventional cell in POSCAR (`vasp`) format, while the latter is defined in LAMMPS format.
 
 - Inspect "BPOSCAR" with `vim`/`less`/`cat` and visualize with `vesta`
 - Inspect "Si.lmp" with `vim`/`less`/`cat`
@@ -94,21 +69,22 @@ We should highlight a few aspects of the system setup here.
   where we now have output files "log.lammps", "min.data", and "min.lammpstrj". Recall (for example from the previous tutorial) the purpose of these different files, and check that the output has been produced correctly in each case.
   
 - Is the Tersoff potential approporiate for modelling interactions between Si atoms? (Check: do we achieve the desired tolerance on the minimisation of the interatomic forces?)
-- Visualize the minimisation (trajectory file "min.lammpstrj") with `vmd`
+- Visualize the minimisation (trajectory file "min.lammpstrj") with `vmd`/`ovito`
 - Extract the NVE trajectory from "log.lammps" using `grep` and `sed`/`awk` and plot the total energy as a function of time; fit a line of best fit via linear regression using `gnuplot`. Is the choice of timestep appropriate?
+  - For an automated extraction, try running `log2txt.py log.lammps out.dat -n`
 
 ### 2. Equilibration and measurement
 
 - Copy "min.data" (the final configuration after minimisation) and change directory into [2-equ](2-equ/)
   ```bash
-  cp min.data ../2-equ/
+  cp init.data ../2-equ/
   cd ../2-equ/
   ```
   
 - View the contents of the directory:
   ```bash
   perviell@postel 1-init$ ls
-  equ.in min.data
+  equ.in init.data
   ```
 
 In the first step, we minimised the potential and checked the validity of the timestep against the total energy in the NVE ensemble.
@@ -164,15 +140,15 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
   ```
   The directory should now contain the LAMMPS output files: "equ.data", "equ.lammpstrj", "log.lammps".
 
-  Inspect each of these output files (e.g. with `vim`/`less`/`cat`), particularly "log.lammps", to see that the simulation ran as expected, and there are no errors/warnings. Aditionally, you can visualize the trajectory ("equ.lammpstrj") using `vmd`.
+  Inspect each of these output files (e.g. with `vim`/`less`/`cat`), particularly "log.lammps", to see that the simulation ran as expected, and there are no errors/warnings. Additionally, you can visualize the trajectory ("equ.lammpstrj") using `vmd`.
 
 - Check that the system is properly equilibrated
 
   The first few ps of the NPT simulation are transient; only after the system reaches steady temperature and pressure should we measure the lattice constant.
 
-  Extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
+  Extract the thermodynamic output from "log.lammps" using `grep` and `sed`/`awk` or `log2txt.py`, and plot the different thermodynamic variables as a function of time using `gnuplot`.
 
-  Are the thermodynamic variables of interest approximately constant? According to our setup, we should have T ~ 300 K and P ~ 0 Bar. Is this the case? In `gnuplot` use linear regression to fit a straight line to the temperature and pressure.
+  Are the thermodynamic variables of interest approximately stationary? According to our setup, the temperature and pressure should fluctuate around approximately 300 K and 0 bar, respectively. After the initial transient, there should be no systematic drift in these quantities. Is this the case? In `gnuplot` use linear regression to fit a straight line to the temperature and pressure.
 
 - Once the system is equilibrated, extract the box dimensions over (lx, ly, lz) over the production portion of the trajectory. By definition, lx = ly = lz, and the Barostat is applied isotropically, so the variation of each component is identical, and it is equivalent to extract just one of them.
 
@@ -186,5 +162,6 @@ Now, lets equilibrate the system at 300K and measure the lattice constant.
 - The fluctuation of the pressure over the equilibrium trajectory is large, why is this the case?
   <details>
   <summary>Click to reveal answer</summary>
-   The fluctuation of the pressure over the equilibrium trajectory is large because we have a small system (8 atoms). According to the virial theorem, the instantaneous pressure fluctuates around the mean value. In small systems, these fluctuations are proportionally larger. Only the time-averaged pressure converges to the desired value (0 bar).
+  The instantaneous pressure fluctuates strongly because it is calculated from the instantaneous atomic positions and velocities. In LAMMPS, the pressure contains kinetic and configurational (Virial) contributions, both of which fluctuate as the atoms move. These fluctuations occur even when the system is fully equilibrated. They are particular;y large for our small 8-atom system; recall that statistical fluctuations of intensive quantities scale as $1/\sqrt{N}$.
+  Importantly, equilibration does not require the instantaneous fluctuations of the pressure to be below some threshold variation around 0 bar. What matters is that the pressure becomes statistically stationary and that its time average, over a sufficiently long production trajectory, is consistent with the target pressure within the statistical uncertainty.
   </details>

@@ -24,7 +24,7 @@ pair_style      tersoff
 ########################
 
 ### initial conf #######
-read_data       min.data # read a data file
+read_data       init.data # read a data file
 ########################
 
 ### force field (2) ####
