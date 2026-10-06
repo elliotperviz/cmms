@@ -73,6 +73,11 @@ class log:
     self.data = []
     self.style = -1
 
+    # individual thermo blocks
+    self.blocks = []
+    self.block_names = []
+    self.block_styles = []
+
     # flist = list of all log file names
 
     words = arglist[0].split()
@@ -94,19 +99,20 @@ class log:
   # read all thermo from all files
 
   def read_all(self):
-    self.read_header(self.flist[0])
-    if self.nvec == 0: raise Exception("log file has no values")
+    # Read all thermo blocks from all files.
+    #
+    # Blocks are retained separately initially so that the caller can
+    # subsequently select individual blocks or concatenate compatible
+    # blocks.
 
-    # read all files
+    for file in self.flist:
+      self.read_blocks(file)
 
-    for file in self.flist: self.read_one(file)
+    if len(self.blocks) == 0:
+      raise Exception("log file has no values")
 
-    # sort entries by timestep, cull duplicates
-
-    self.data.sort(key=(lambda elem: elem[0]))
-    self.cull()
-    self.nlen = len(self.data)
-    print("read %d log entries" % self.nlen)
+    # By default select all blocks.
+    self.select_blocks(None)
 
   # --------------------------------------------------------------------
 
@@ -122,7 +128,7 @@ class log:
       if self.nvec == 0: return -1
 
     self.eof = self.read_one(self.flist[0],self.eof)
-    return int(self.data[-1][0])
+    return self.data[-1][0]
 
   # --------------------------------------------------------------------
 
@@ -212,9 +218,247 @@ class log:
 
   # --------------------------------------------------------------------
 
+  def read_blocks(self,file):
+    """
+    Read all thermo blocks from one log file.
+  
+    Each block is stored independently in self.blocks together with
+    its thermo header and parsing style.
+  
+    A block ends at "Loop time of", or at the end of the file.
+    """
+  
+    if file[-3:] == ".gz":
+      f = popen("%s -c %s" % (PIZZA_GUNZIP,file),'r')
+      txt = f.read()
+      f.close()
+    else:
+      f = open(file,'r')
+      txt = f.read()
+      f.close()
+  
+    lines = txt.splitlines()
+  
+    i = 0
+  
+    while i < len(lines):
+  
+      # Find the beginning of the next thermo block.
+      line = lines[i].lstrip()
+  
+      if line.startswith("----- Step"):
+        style = 1
+        header = None
+  
+      elif line.startswith("Step "):
+        style = 2
+        header = line.split()
+  
+      elif line.startswith("Time "):
+        style = 2
+        header = line.split()
+  
+      else:
+        i += 1
+        continue
+  
+      # Find the end of this block.
+      j = i + 1
+  
+      while j < len(lines) and not lines[j].lstrip().startswith("Loop time of"):
+        j += 1
+  
+      block_lines = lines[i:j]
+      data = []
+  
+      # ------------------------------------------------------------
+      # Multi-line Pizza.py format
+      # ------------------------------------------------------------
+  
+      if style == 1:
+  
+        block_text = "\n".join(block_lines)
+  
+        sections = block_text.split("\n--")
+  
+        pat1 = re.compile(r"Step\s*(\S*)\s")
+        pat2 = re.compile(r"=\s*(\S*)")
+  
+        # Recover the thermo keywords.
+        s1 = block_text.find("----- Step")
+        s2 = block_text.find("\n--",s1)
+  
+        pattern = r"\s(\S*)\s*="
+        keywords = re.findall(pattern,block_text[s1:s2])
+        keywords.insert(0,"Step")
+  
+        for section in sections:
+  
+          match = re.search(pat1,section)
+  
+          if match is None:
+            continue
+  
+          word1 = [match.group(1)]
+          word2 = re.findall(pat2,section)
+  
+          words = word1 + word2
+  
+          if len(words) == len(keywords):
+            data.append(list(map(float,words)))
+  
+        header = keywords
+  
+      # ------------------------------------------------------------
+      # One-line format: Step ... or Time ...
+      # ------------------------------------------------------------
+  
+      else:
+  
+        # The first line is the header.
+        # Strip leading whitespace before splitting.
+        header = block_lines[0].split()
+  
+        for line in block_lines[1:]:
+  
+          words = line.split()
+  
+          if not words:
+            continue
+  
+          try:
+            values = list(map(float,words))
+          except ValueError:
+            continue
+  
+          if len(values) == len(header):
+            data.append(values)
+  
+      # Retain only blocks containing actual thermo data.
+      if len(data):
+  
+        self.blocks.append(data)
+        self.block_names.append(header)
+        self.block_styles.append(style)
+  
+      # Move past Loop time of.
+      if j < len(lines):
+        i = j + 1
+      else:
+        i = j
+
+  # --------------------------------------------------------------------
+
+  def select_blocks(self,blocklist=None):
+    """
+    Select thermo blocks for output.
+  
+    blocklist = None
+        Select all blocks.
+  
+    blocklist = [2]
+        Select block 2.
+  
+    blocklist = [2,3]
+        Select blocks 2 and 3 and concatenate them.
+  
+    Block numbers are 1-based.
+  
+    If more than one block is selected, all selected headers must
+    match exactly, including column order.
+    """
+  
+    if len(self.blocks) == 0:
+      raise Exception("log file has no thermo blocks")
+  
+    # Default: select all blocks.
+    if blocklist is None:
+      blocklist = list(range(1,len(self.blocks) + 1))
+  
+    # Validate block numbers.
+    for block in blocklist:
+      if block < 1 or block > len(self.blocks):
+        raise ValueError(
+          "thermo block %d does not exist (log contains %d blocks)"
+          % (block,len(self.blocks))
+        )
+  
+    # Convert from 1-based user numbering to Python indices.
+    indices = [block - 1 for block in blocklist]
+  
+    # ------------------------------------------------------------
+    # If multiple blocks are selected, their headers must match.
+    # ------------------------------------------------------------
+  
+    if len(indices) > 1:
+  
+      reference = self.block_names[indices[0]]
+  
+      for index in indices[1:]:
+  
+        if self.block_names[index] != reference:
+  
+          raise ValueError(
+            "selected thermo blocks have incompatible headers:\n"
+            "\n"
+            "block %d:\n%s\n"
+            "\n"
+            "block %d:\n%s"
+            % (
+              indices[0] + 1,
+              " ".join(self.block_names[indices[0]]),
+              index + 1,
+              " ".join(self.block_names[index])
+            )
+          )
+  
+    # ------------------------------------------------------------
+    # Set the public header information used by get() and write().
+    # ------------------------------------------------------------
+  
+    self.names = list(self.block_names[indices[0]])
+    self.nvec = len(self.names)
+  
+    self.ptr = {}
+  
+    for i,keyword in enumerate(self.names):
+      self.ptr[keyword] = i
+  
+    self.style = self.block_styles[indices[0]]
+  
+    # ------------------------------------------------------------
+    # Concatenate selected blocks.
+    # ------------------------------------------------------------
+  
+    self.data = []
+  
+    for index in indices:
+      self.data.extend(self.blocks[index])
+  
+    # ------------------------------------------------------------
+    # Existing Pizza.py behaviour:
+    #
+    # sort chronologically and remove duplicate first-column values.
+    #
+    # This is useful for sequential NVT -> NVE, etc., where the
+    # final timestep of one block may also be the first timestep
+    # of the next.
+    # ------------------------------------------------------------
+  
+    self.data.sort(key=(lambda elem: elem[0]))
+    self.cull()
+  
+    self.nlen = len(self.data)
+  
+    if self.nlen == 0:
+      raise Exception("selected thermo blocks contain no values")
+
+  # --------------------------------------------------------------------
+
   def read_header(self, file):
     str_multi = "----- Step"
     str_one = "Step "
+    str_time = "Time "
 
     if file[-3:] == ".gz":
       fp = popen("%s -c %s" % (PIZZA_GUNZIP,file),'r')
@@ -228,6 +472,9 @@ class log:
       self.style = 1
     elif txt.find(str_one) >= 0:
       self.firststr = str_one
+      self.style = 2
+    elif txt.find(str_time) >= 0:
+      self.firststr = str_time
       self.style = 2
     else:
       fp.close()
@@ -348,7 +595,7 @@ class log:
           self.data.append(list(map(float,words)))
 
       # print last timestep of chunk
-      print(int(self.data[len(self.data)-1][0]),)
+      print(self.data[len(self.data)-1][0],)
       sys.stdout.flush()
 
     return eof
