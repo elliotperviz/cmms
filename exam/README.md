@@ -19,7 +19,18 @@ If you encounter problems whilst performing your investigations that you cannot 
 
 The lab report is an opportunity to demonstrate that you know not just how to use molecular dynamics or quantum mechanics simulation tools, but also that you understand the physical meaning behind the input parameters that you choose and the validity of the results which you present (as opposed to using the simulation tool as a black box). 
 
-Thus, your task is to perform your own classical and quantum simulations, and investigate **at least** one property in each case. Note that you should not choose an overly complicated system, as you want the simulations to be able to run locally on the machines in the laboratory within reasonable time.
+Thus, your task is to perform your own a) classical and b) quantum simulations:
+- Investigate **at least one** material using each approach (you may choose the same material for both).
+- Calculate at **least one** property using each approach:
+  -  for a) an equilibrium ensemble-averaged property,
+  -  for b) a ground state property.
+
+When setting up your system in each case, you have to find an appropriate (a) force-field or (b) pseudopotential to provide as inputs. For reference, it is recommended to check the following repositories:
+
+(a) [NIST](https://www.ctcms.nist.gov/potentials/) Interatomic potential repository, <br>
+(b) [pseudo-dojo](https://www.pseudo-dojo.org/) or the [abinit](https://www.abinit.org/pseudopotential.html) website.
+
+Note that, when choosing (a) a force field for LAMMPS, you should check what properties the force-field you select has been benchmarked against. With (b), you should select the appropriate atoms from the norm-conserving pseudopotential table.
 
 Afterwards, you are required to write-up a lab report detailing the results of your investigation. The lab report must contain a **minimum** of two sections, one for each type of simulation (quantum/classical). A recommended lab report structure is to follow the style of a scientific paper, that is:
 - Abstract
