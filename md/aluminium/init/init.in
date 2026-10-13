@@ -1,0 +1,74 @@
+### simulation params ##
+variable	steps_dump   equal 1000   # steps
+########################
+
+### begin ##############
+clear
+box		tilt large
+units           metal  	# mass = grams/mole
+		       	# distance = Angstroms
+			# time = picoseconds
+		       	# energy = eV
+		       	# velocity = Angstroms/picosecond
+		       	# force = eV/Angstrom
+		       	# temperature = Kelvin
+		       	# pressure = bars
+			# charge = multiple of electron charge (1.0 is a proton)
+			# density = gram/cm^3
+boundary        p p p
+########################
+
+### force field (1) ####
+atom_style	atomic
+pair_style      {ENTER}
+########################
+
+### initial config #####
+read_data       {ENTER}
+replicate	6 6 6
+########################
+
+### force field (2) ####
+pair_coeff      * * {ENTER}
+########################
+
+### neighbor list ######
+neighbor        3.0 bin
+neigh_modify    delay 0 every 1 delay 0 check yes
+########################
+
+## start minimization ##
+thermo          1
+thermo_style    custom step lx ly lz pe fnorm fmax
+
+fix             f1 all box/relax iso 0.0 fixedpoint 0.0 0.0 0.0 nreset 1
+
+min_style       cg
+minimize        0.0 1.0e-10 1000000 1000000
+
+unfix		f1
+write_data	init.data
+### end minimization ###
+
+### print trajectory ###
+dump		traj all custom ${steps_dump} init.lammpstrj element x y z vx vy vz
+dump_modify 	traj element {ENTER}
+dump_modify 	traj sort id
+########################
+
+# initialize velocities
+#velocity        all create 300.0 111 mom yes rot yes
+
+# short NVE check 50ps ##
+timestep 	{ENTER}
+reset_timestep 	0
+
+thermo 		100
+thermo_style 	custom step temp press pe ke etotal
+
+fix		nve all nve
+
+run 		50000
+undump		traj
+unfix 		nve
+########################
