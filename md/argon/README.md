@@ -416,14 +416,14 @@ During the previous (cooling) step, the system arrives at 94.4K only in the last
 By using a Berendsen thermostat first, we gently hold the system at 94.4K, reducing fluctuations and preparing a smoother starting point. Once the system is closer to equilibrium, we remove the thermostat and allow it to evolve under pure NVE, maintaining the target temperature more reliably.
 </details>
 
-We also use a relatively weak coupling bewteen the Berendsen thermostat and system as compared to the previous heating/cooling steps.
+We also use a relatively weak coupling between the Berendsen thermostat and system as compared to the previous heating/cooling steps.
 
 Why?
 <details>
 <summary>Click for the answer</summary>
 Strong coupling between the thermostat and the system can create artificial correlations; when the thermostat is removed, these can manifest as sudden temperature fluctuations.
 
-A weaker coupling avoids overconstraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gradually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
+A weaker coupling avoids over-constraining the system, allowing it to relax more naturally. In more rigorous protocols, one would gradually reduce the thermostat coupling before fully removing it, optimally preparing the system for an NVE run at the target temperature.
 </details>
 
 Now run LAMMPS:
@@ -550,10 +550,10 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
   Using `gnuplot`, plot the MSD vs time. If everything went well, there should be a roughly linear relation between MSD and time. Use the fit functionality in `gnuplot` to fit a straight line to the data. The gradient of the slope is proportional to the diffusion coefficient. Note, **the gradient is not the final value** - you must utilise the Einstein relation for the diffusion coefficient to derive the final value of D (we discuss this equation in the lectures).
 
 - Plot the RDF as a function of time
-  If everything ran correctly, LAMMPS will have written "tmp.rdf". This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template "rdf.gp". <br>
+  If everything ran correctly, LAMMPS will have written "rdf.out". This contains the timeseries evolution of the RDF. This data requires pre-processing - we provide the script `rdf_pp.sh` for this purpose - before plotting with `gnuplot` using the template "rdf.gp". <br>
   When downloading the tutorial files, you should have already ran the install script for the [scripts](../../scripts/) folder, as outlined on the [homepage](../../). If not, you should do this now.
   ```bash
-  rdf_pp.sh tmp.rdf
+  rdf_pp.sh rdf.out
   gnuplot rdf.gp
   ```
 
