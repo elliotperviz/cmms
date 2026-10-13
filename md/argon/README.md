@@ -541,7 +541,7 @@ equ_final.data  log.lammps  prod.in  prod.lammpstrj  prod_final.data  rdf.gp  tm
 
 **Objectives**
 
-- Visualize the LAMMPS trajectory file "prod.lammpstrj" with `vmd`.
+- Visualise the LAMMPS trajectory file "prod.lammpstrj" with `vmd`.
 
 - Check that the system stays in equilibrium<br>
   Use e.g. `grep` and `sed`/`awk` to extract and format the thermodynamic output from "log.lammps", then `gnuplot` to plot and fit a straight line, and/or `movavg` to calculate the moving average and standard deviation.
