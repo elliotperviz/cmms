@@ -390,27 +390,27 @@ class log:
     # If multiple blocks are selected, their headers must match.
     # ------------------------------------------------------------
   
-    if len(indices) > 1:
+    #if len(indices) > 1:
+    #
+    #  reference = self.block_names[indices[0]]
+    #
+    #  for index in indices[1:]:
   
-      reference = self.block_names[indices[0]]
+    #    if self.block_names[index] != reference:
   
-      for index in indices[1:]:
-  
-        if self.block_names[index] != reference:
-  
-          raise ValueError(
-            "selected thermo blocks have incompatible headers:\n"
-            "\n"
-            "block %d:\n%s\n"
-            "\n"
-            "block %d:\n%s"
-            % (
-              indices[0] + 1,
-              " ".join(self.block_names[indices[0]]),
-              index + 1,
-              " ".join(self.block_names[index])
-            )
-          )
+    #      raise ValueError(
+    #        "selected thermo blocks have incompatible headers:\n"
+    #        "\n"
+    #        "block %d:\n%s\n"
+    #        "\n"
+    #        "block %d:\n%s"
+    #        % (
+    #          indices[0] + 1,
+    #          " ".join(self.block_names[indices[0]]),
+    #          index + 1,
+    #          " ".join(self.block_names[index])
+    #        )
+    #      )
   
     # ------------------------------------------------------------
     # Set the public header information used by get() and write().
