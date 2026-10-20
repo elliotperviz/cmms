@@ -66,7 +66,7 @@ class log:
 
   # --------------------------------------------------------------------
 
-  def __init__(self,*arglist):
+  def __init__(self,*arglist,blocks=None):
     self.nvec = 0
     self.names = []
     self.ptr = {}
@@ -88,7 +88,7 @@ class log:
 
     if len(arglist) == 1:
       self.increment = 0
-      self.read_all()
+      self.read_all(blocks)
     else:
       if len(self.flist) > 1:
         raise ValueError("Can only read one log file incrementally")
@@ -98,7 +98,7 @@ class log:
   # --------------------------------------------------------------------
   # read all thermo from all files
 
-  def read_all(self):
+  def read_all(self, blocklist=None):
     # Read all thermo blocks from all files.
     #
     # Blocks are retained separately initially so that the caller can
@@ -112,7 +112,7 @@ class log:
       raise Exception("log file has no values")
 
     # By default select all blocks.
-    self.select_blocks(None)
+    self.select_blocks(blocklist)
 
   # --------------------------------------------------------------------
 
@@ -390,27 +390,27 @@ class log:
     # If multiple blocks are selected, their headers must match.
     # ------------------------------------------------------------
   
-    #if len(indices) > 1:
-    #
-    #  reference = self.block_names[indices[0]]
-    #
-    #  for index in indices[1:]:
+    if len(indices) > 1:
+    
+      reference = self.block_names[indices[0]]
+    
+      for index in indices[1:]:
   
-    #    if self.block_names[index] != reference:
+        if self.block_names[index] != reference:
   
-    #      raise ValueError(
-    #        "selected thermo blocks have incompatible headers:\n"
-    #        "\n"
-    #        "block %d:\n%s\n"
-    #        "\n"
-    #        "block %d:\n%s"
-    #        % (
-    #          indices[0] + 1,
-    #          " ".join(self.block_names[indices[0]]),
-    #          index + 1,
-    #          " ".join(self.block_names[index])
-    #        )
-    #      )
+          raise ValueError(
+            "selected thermo blocks have incompatible headers:\n"
+            "\n"
+            "block %d:\n%s\n"
+            "\n"
+            "block %d:\n%s"
+            % (
+              indices[0] + 1,
+              " ".join(self.block_names[indices[0]]),
+              index + 1,
+              " ".join(self.block_names[index])
+            )
+          )
   
     # ------------------------------------------------------------
     # Set the public header information used by get() and write().

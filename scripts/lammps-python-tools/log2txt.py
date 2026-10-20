@@ -80,12 +80,7 @@ if args.blocks is not None:
             "e.g. -b 2 or -b 2,3"
         )
 
-lg = log(logfile)
-
-# Select blocks after the complete log has been parsed.
-# If blocks is None, all blocks are selected.
-if blocks is not None:
-    lg.select_blocks(blocks)
+lg = log(logfile, blocks=blocks)
 
 print("selected %d log entries" % lg.nlen)
 
