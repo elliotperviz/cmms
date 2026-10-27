@@ -95,4 +95,4 @@ See [qm](qm/) for a brief introduction to Quantum mechanics and an overview of t
 2) [Phonon band structure of crystalline bilayer MoS<sub>2</sub>](ph/2-mos2): Documentation incomplete
 
 ### Nudged elastic band method
-1) [Vacancy migration in cubic diamond Silicon](md/neb)
+1) [Vacancy migration in cubic diamond Silicon](neb/): Documentation incomplete
